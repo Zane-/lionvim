@@ -875,9 +875,9 @@ require('fine-cmdline').setup({
     position = {
       row = '95%',
     },
-		size = {
-			width = '100%',
-		},
+    size = {
+      width = '100%',
+    },
   },
 })
 
@@ -1162,6 +1162,7 @@ local config = {
       'neo-tree',
       'Outline',
       'packer',
+      'Searchbox',
       'TelescopePrompt',
       'toggleterm',
       'Trouble',
@@ -1474,6 +1475,7 @@ local cmp_disabled_filetypes = {
   'dap-repl',
   'dapui_console',
   'FineCmdlinePrompt',
+  'Searchbox',
   'TelescopePrompt',
 }
 
@@ -1551,6 +1553,21 @@ require('paperplanes').setup({
   provider = 'ix.io',
   provider_options = { insecure = true },
   cmd = 'curl',
+})
+
+----------------------------------
+--   searchbox.nvim config
+----------------------------------
+
+require('searchbox').setup({
+  popup = {
+    buf_options = {
+      filetype = 'Searchbox',
+    },
+    position = {
+      row = '0%',
+    },
+  },
 })
 
 ----------------------------------
