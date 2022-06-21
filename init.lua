@@ -26,6 +26,7 @@ local opt = vim.opt
 --           Options
 ----------------------------------
 opt.clipboard = 'unnamed' -- use system clipboard
+opt.cmdheight = 0
 opt.cursorline = true -- highlight current line
 opt.fillchars = { -- thicker borders between windows
   horiz = '━',
@@ -110,7 +111,8 @@ end
 g.mapleader = ','
 
 -- Easy command input
-nmap(';', ':')
+nmap(':', '<cmd>FineCmdline<cr>')
+nmap(';', '<cmd>FineCmdline<cr>')
 
 -- Quick Save/Quit
 nmap('<C-s>', '<cmd>w<cr>')
@@ -410,6 +412,7 @@ require('packer').startup({
       { 'rcarriga/nvim-notify' }, -- fancy notifications
       { 'RRethy/vim-illuminate' }, -- highlight symbol under cursor
       { 'VonHeikemen/searchbox.nvim' }, -- search popup
+      { 'VonHeikemen/fine-cmdline.nvim' }, -- command input popup
       { 'zane-/command_center.nvim' }, -- command palette
       { 'zane-/symbols-outline.nvim' }, -- menu for symbols
       { 'weilbith/nvim-code-action-menu' }, -- show menu for code actions
@@ -858,6 +861,27 @@ require('nvim-dap-virtual-text').setup({
 require('fidget').setup({})
 
 ----------------------------------
+--     fine-cmdline config
+----------------------------------
+
+require('fine-cmdline').setup({
+  cmdline = {
+    prompt = '❯ ',
+  },
+  popup = {
+    buf_options = {
+      filetype = 'FineCmdlinePrompt',
+    },
+    position = {
+      row = '95%',
+    },
+		size = {
+			width = '100%',
+		},
+  },
+})
+
+----------------------------------
 --        fm-nvim config
 ----------------------------------
 require('fm-nvim').setup({
@@ -1133,6 +1157,7 @@ local config = {
       'dapui_stacks',
       'dapui_scopes',
       'dapui_watches',
+      'FineCmdlinePrompt',
       'Fm',
       'neo-tree',
       'Outline',
@@ -1448,6 +1473,7 @@ cmp.setup.filetype('gitcommit', {
 local cmp_disabled_filetypes = {
   'dap-repl',
   'dapui_console',
+  'FineCmdlinePrompt',
   'TelescopePrompt',
 }
 
