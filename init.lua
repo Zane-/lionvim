@@ -26,6 +26,7 @@ local opt = vim.opt
 --           Options
 ----------------------------------
 opt.clipboard = 'unnamed' -- use system clipboard
+opt.cursorline = true -- highlight current line
 opt.fillchars = { -- thicker borders between windows
   horiz = '━',
   horizup = '┻',
@@ -141,9 +142,7 @@ nmap('<C-q>', '<cmd>close<cr>')
 nmap('<C-n>', '<cmd>enew<cr>')
 
 -- Replace
-nmap('rg', ':%s/')
 nmap('rl', ':s/')
-nmap('rw', ':%s/\\<<C-r><C-w>\\>/')
 
 -- Toggle search highlight
 nmap('<leader><space>', '<cmd>set hlsearch!<cr>')
@@ -193,8 +192,7 @@ nmap('<S-Right>', '<cmd>BufferLineMoveNext<cr>')
 nmap('ww', '<cmd>BufferLinePick<cr>')
 
 -- dap mappings
-nmap('<c-b>', '<cmd>lua require("dapui").toggle("sidebar")<cr>')
-nmap('bx', '<cmd>lua require("dapui").toggle("tray")<cr>')
+nmap('<c-b>', '<cmd>lua require("dapui").toggle()<cr>')
 vmap('be', '<cmd> lua require("dapui").eval()<cr>)')
 nmap('bb', '<cmd>DapToggleBreakpoint<cr>')
 nmap('bl', '<cmd>Telescope dap list_breakpoints<cr>')
@@ -222,6 +220,11 @@ nmap('<C-f>', '<cmd>NeoTreeFocusToggle<cr>')
 
 -- Ouroboros mappings
 nmap('go', '<cmd>Ouroboros<cr>')
+
+-- searchbox.nvim mappings
+nmap('/', '<cmd>SearchBoxMatchAll<cr>')
+nmap('rg', '<cmd>SearchBoxReplace<cr>')
+nmap('rw', ':SearchBoxReplace -- <C-r>=expand("<cword>")<cr><cr>')
 
 -- SnipRun mappings
 nmap('er', '<cmd>SnipRun<cr>')
@@ -391,10 +394,10 @@ require('packer').startup({
     use({
       { 'akinsho/bufferline.nvim' }, -- fancy buffer line
       { 'akinsho/toggleterm.nvim' }, -- better terminals
-      { 'zane-/command_center.nvim' }, -- command palette
       { 'folke/which-key.nvim' }, -- shortcut popup
       { 'folke/trouble.nvim' }, -- aesthetic diagnostics page
       { 'goolord/alpha-nvim' }, -- fancy start page
+      { 'j-hui/fidget.nvim' }, -- LSP progress indicator
       { 'kosayoda/nvim-lightbulb' }, -- show a lightbulb for code actions
       { 'kyazdani42/nvim-web-devicons' }, -- file icons
       { 'lewis6991/gitsigns.nvim' }, -- git integration
@@ -406,6 +409,8 @@ require('packer').startup({
       { 'nvim-neo-tree/neo-tree.nvim' }, -- filetree
       { 'rcarriga/nvim-notify' }, -- fancy notifications
       { 'RRethy/vim-illuminate' }, -- highlight symbol under cursor
+      { 'VonHeikemen/searchbox.nvim' }, -- search popup
+      { 'zane-/command_center.nvim' }, -- command palette
       { 'zane-/symbols-outline.nvim' }, -- menu for symbols
       { 'weilbith/nvim-code-action-menu' }, -- show menu for code actions
     })
@@ -819,17 +824,24 @@ fn.sign_define('DapStopped', {
 })
 
 dapui.setup({
-  sidebar = {
-    size = 25,
-    position = 'right',
-    elements = {
-      { id = 'watches', size = 0.1 },
-      { id = 'breakpoints', size = 0.2 },
-      { id = 'stacks', size = 0.2 },
-      { id = 'scopes', size = 0.5 },
+  layouts = {
+    {
+      elements = {
+        { id = 'watches', size = 0.1 },
+        { id = 'breakpoints', size = 0.2 },
+        { id = 'stacks', size = 0.2 },
+        { id = 'scopes', size = 0.5 },
+      },
+      size = 25,
+      position = 'right',
     },
-    tray = {
-      elements = { 'console', 'repl' },
+    {
+      elements = {
+        { id = 'console', size = 0.6 },
+        { id = 'repl', size = 0.4 },
+      },
+      size = 11,
+      position = 'bottom',
     },
   },
 })
@@ -839,6 +851,11 @@ require('dap-python').setup()
 require('nvim-dap-virtual-text').setup({
   commented = true,
 })
+
+----------------------------------
+--      fidget.nvim config
+----------------------------------
+require('fidget').setup({})
 
 ----------------------------------
 --        fm-nvim config
@@ -1216,6 +1233,12 @@ ins_left({
 })
 
 ins_left({
+  'branch',
+  icon = '',
+  color = { fg = colors.lavender, gui = 'bold' },
+})
+
+ins_left({
   'filesize',
   cond = conditions.buffer_not_empty,
   icon = '',
@@ -1226,13 +1249,7 @@ ins_left({
   icon = '',
 })
 
-ins_left({
-  'branch',
-  icon = '',
-  color = { fg = colors.lavender, gui = 'bold' },
-})
-
-ins_left({
+ins_right({
   'diff',
   symbols = { added = ' ', modified = '柳', removed = ' ' },
   diff_color = {
@@ -1244,17 +1261,11 @@ ins_left({
 })
 
 ins_right({
-  -- LSP server name
+  -- Filetype
   function()
-    local lsp_client = GetLspClientName()
-
-    if lsp_client == nil then
-      return 'ﰸ'
-    end
-
-    return '⟪' .. lsp_client .. '⟫'
+    return vim.api.nvim_buf_get_option(0, 'filetype')
   end,
-  icon = ' LSP',
+  icon = '',
   color = function()
     local lsp_client = GetLspClientName()
 
@@ -1309,6 +1320,9 @@ require('neo-tree').setup({
         staged = '',
         conflict = '',
       },
+    },
+    name = {
+      use_git_status_colors = false,
     },
   },
   filesystem = {
@@ -1618,7 +1632,22 @@ require('telescope').setup({
   },
   extensions = {
     cder = {
-      previewer_command = 'exa -a --color=always -T --level=3 --icons --git-ignore --long --no-permissions --no-user --no-filesize --git',
+      previewer_command = 'exa '
+        .. '-a '
+        .. '--color=always '
+        .. '-T '
+        .. '--level=3 '
+        .. '--icons '
+        .. '--git-ignore '
+        .. '--long '
+        .. '--no-permissions '
+        .. '--no-user '
+        .. '--no-filesize '
+        .. '--git '
+        .. '--ignore-glob=.git',
+    },
+    howdoi = {
+      enable_storage = true,
     },
     command_center = {
       components = { require('command_center').component.DESCRIPTION },
@@ -2098,7 +2127,6 @@ wk.register({
     O = 'Step out',
     t = 'Terminate',
     v = 'List variables',
-    x = 'Open console',
   },
   d = {
     name = 'Delete',
@@ -2237,7 +2265,8 @@ wk.register({
     ['<space>'] = 'Toggle search results highlight',
   },
   ['?'] = 'Open keymap',
-  ['<c-b>'] = 'Toggle DAP sidebar',
+  ['/'] = 'Search',
+  ['<c-b>'] = 'Toggle DAP UI',
   ['<c-f>'] = 'Toggle file tree',
   ['<c-h>'] = 'Go to window left',
   ['<C-j>'] = 'Go to window down',
