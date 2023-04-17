@@ -2,7 +2,7 @@
 --        Lionvim Config
 --
 -- Author: Zane B.
--- Last Modified: 2022-06-07
+-- Last Modified: 2023-04-17
 -- Dependencies:
 --   bat
 --   exa,
@@ -19,7 +19,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local cmd = vim.cmd
 local fn = vim.fn
 local g = vim.g
-local hi = vim.highlight.create
+local hi = vim.api.nvim_set_hl
 local opt = vim.opt
 
 ----------------------------------
@@ -448,103 +448,93 @@ require('packer').startup({
 g.catppuccin_flavor = 'mocha' -- latte, frappe, macchiato, mocha
 cmd([[ colorscheme catppuccin ]])
 
-local colors = require('catppuccin.api.colors').get_colors()
+local colors = require('catppuccin.palettes').get_palette('mocha')
 
-hi('StatusLine', { ctermbg = 0, guibg = colors.crust }, false)
-hi('Pmenu', { ctermbg = 0, guifg = colors.text, guibg = colors.mantle }, false)
+hi(0, 'StatusLine', { ctermbg = 0, bg = colors.crust })
+hi(0, 'Pmenu', { ctermbg = 0, fg = colors.text, bg = colors.mantle })
 
 -- Highlights for DAP
-hi(
+hi(0, 
   'DapBreakpoint',
-  { ctermbg = 0, guifg = colors.red, guibg = colors.mantle },
-  false
+  { ctermbg = 0, fg = colors.red, bg = colors.mantle }
 )
-hi(
+hi(0,
   'DapLogPoint',
-  { ctermbg = 0, guifg = colors.blue, guibg = colors.mantle },
-  false
+  { ctermbg = 0, fg = colors.blue, bg = colors.mantle }
 )
-hi(
+hi(0, 
   'DapStopped',
-  { ctermbg = 0, guifg = colors.green, guibg = colors.mantle },
-  false
+  { ctermbg = 0, fg = colors.green, bg = colors.mantle }
 )
-hi('DapUIVariable', { ctermbg = 0, guifg = colors.teal }, false)
-hi('DapUIScope', { ctermbg = 0, guifg = colors.blue }, false)
-hi('DapUIType', { ctermbg = 0, guifg = colors.lavender }, false)
-hi('DapUIValue', { ctermbg = 0, guibg = colors.mantle }, false)
-hi('DapUIModifiedValue', { ctermbg = 0, guifg = colors.sapphire }, false)
-hi('DapUIDecoration', { ctermbg = 0, guifg = colors.teal }, false)
-hi('DapUIThread', { ctermbg = 0, guifg = colors.green }, false)
-hi('DapUIStoppedThread', { ctermbg = 0, guifg = colors.blue }, false)
-hi('DapUIFrameName', { ctermbg = 0, guibg = colors.mantle }, false)
-hi('DapUISource', { ctermbg = 0, guifg = colors.green }, false)
-hi('DapUILineNumber', { ctermbg = 0, guifg = colors.teal }, false)
-hi('DapUIFloatBorder', { ctermbg = 0, guifg = colors.teal }, false)
-hi('DapUIWatchesEmpty', { ctermbg = 0, guifg = colors.blue }, false)
-hi('DapUIWatchesValue', { ctermbg = 0, guifg = colors.green }, false)
-hi('DapUIWatchesError', { ctermbg = 0, guifg = colors.red }, false)
-hi('DapUIBreakpointsPath', { ctermbg = 0, guifg = colors.teal }, false)
-hi('DapUIBreakpointsInfo', { ctermbg = 0, guifg = colors.green }, false)
-hi(
+hi(0, 'DapUIVariable', { ctermbg = 0, fg = colors.teal })
+hi(0, 'DapUIScope', { ctermbg = 0, fg = colors.blue })
+hi(0, 'DapUIType', { ctermbg = 0, fg = colors.lavender })
+hi(0, 'DapUIValue', { ctermbg = 0, bg = colors.mantle })
+hi(0, 'DapUIModifiedValue', { ctermbg = 0, fg = colors.sapphire })
+hi(0, 'DapUIDecoration', { ctermbg = 0, fg = colors.teal })
+hi(0, 'DapUIThread', { ctermbg = 0, fg = colors.green })
+hi(0, 'DapUIStoppedThread', { ctermbg = 0, fg = colors.blue })
+hi(0, 'DapUIFrameName', { ctermbg = 0, bg = colors.mantle })
+hi(0, 'DapUISource', { ctermbg = 0, fg = colors.green })
+hi(0, 'DapUILineNumber', { ctermbg = 0, fg = colors.teal })
+hi(0, 'DapUIFloatBorder', { ctermbg = 0, fg = colors.teal })
+hi(0, 'DapUIWatchesEmpty', { ctermbg = 0, fg = colors.blue })
+hi(0, 'DapUIWatchesValue', { ctermbg = 0, fg = colors.green })
+hi(0, 'DapUIWatchesError', { ctermbg = 0, fg = colors.red })
+hi(0, 'DapUIBreakpointsPath', { ctermbg = 0, fg = colors.teal })
+hi(0, 'DapUIBreakpointsInfo', { ctermbg = 0, fg = colors.green })
+hi(0, 
   'DapUIBreakpointsCurrentLine',
-  { ctermbg = 0, guifg = colors.surface1 },
-  false
+  { ctermbg = 0, fg = colors.surface1 }
 )
-hi(
+hi(0, 
   'DapUIBreakpointsLine',
-  { ctermbg = 0, guifg = colors.surface1, gui = 'bold' },
-  false
+  { ctermbg = 0, fg = colors.surface1 }
 )
-hi('DapUIBreakpointsDisabledLine', { ctermbg = 0, guifg = colors.red }, false)
+hi(0, 'DapUIBreakpointsDisabledLine', { ctermbg = 0, fg = colors.red })
 
 -- Highlights for leap
-hi('LeapMatch', { ctermbg = 0, guifg = colors.yellow, guibg = colors.surface0 })
-hi(
+hi(0, 'LeapMatch', { ctermbg = 0, fg = colors.yellow, bg = colors.surface0 })
+hi(0, 
   'LeapLabelPrimary',
-  { ctermbg = 0, guifg = colors.red, guibg = colors.surface0 }
+  { ctermbg = 0, fg = colors.red, bg = colors.surface0 }
 )
-hi(
+hi(0, 
   'LeapLabelSecondary',
-  { ctermbg = 0, guifg = colors.peach, guibg = colors.surface0 }
+  { ctermbg = 0, fg = colors.peach, bg = colors.surface0 }
 )
 
 -- Highlights for neo-tree
-hi('NeoTreeNormal', { ctermbg = 0, guibg = colors.mantle }, false)
-hi('NeoTreeNormalNC', { ctermbg = 0, guibg = colors.mantle }, false)
+hi(0, 'NeoTreeNormal', { ctermbg = 0, bg = colors.mantle })
+hi(0, 'NeoTreeNormalNC', { ctermbg = 0, bg = colors.mantle })
 
 -- Highlights for Sniprun
-hi(
+hi(0, 
   'SniprunVirtualTextOk',
-  { ctermbg = 0, guifg = colors.blue, guibg = colors.mantle },
-  false
+  { ctermbg = 0, fg = colors.blue, bg = colors.mantle }
 )
-hi(
+hi(0, 
   'SniprunVirtualTextErr',
-  { ctermbg = 0, guifg = colors.red, guibg = colors.mantle },
-  false
+  { ctermbg = 0, fg = colors.red, bg = colors.mantle }
 )
-hi(
+hi(0, 
   'SniprunFloatingWinOk',
-  { ctermbg = 0, guifg = colors.blue, guibg = colors.mantle },
-  false
+  { ctermbg = 0, fg = colors.blue, bg = colors.mantle }
 )
-hi(
+hi(0, 
   'SniprunFloatingWinErr',
-  { ctermbg = 0, guifg = colors.red, guibg = colors.mantle },
-  false
+  { ctermbg = 0, fg = colors.red, bg = colors.mantle }
 )
 
 -- Highlights for Telescope
-hi('TelescopePreviewTitle', { ctermbg = 0, guifg = colors.blue }, false)
-hi(
+hi(0, 'TelescopePreviewTitle', { ctermbg = 0, fg = colors.blue })
+hi(0, 
   'TelescopePromptTitle',
-  { ctermbg = 0, guifg = colors.text, guibg = colors.mantle },
-  false
+  { ctermbg = 0, fg = colors.text, bg = colors.mantle }
 )
 
 -- Highlights for trouble
-hi('TroubleNormal', { ctermbg = 0, guibg = colors.mantle }, false)
+hi(0, 'TroubleNormal', { ctermbg = 0, bg = colors.mantle })
 
 --================================
 --     Global Util Functions
@@ -1111,9 +1101,7 @@ end
 
 require('goto-preview').setup({})
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(
-  vim.lsp.protocol.make_client_capabilities()
-)
+local capabilities = require('cmp_nvim_lsp').default_capabilities
 
 local lsp_installer = require('nvim-lsp-installer')
 lsp_installer.on_server_ready(function(server)
