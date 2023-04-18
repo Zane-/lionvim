@@ -272,61 +272,6 @@ nmap('?', '<cmd>WhichKey<cr>')
 -- workspaces mappings
 nmap('wo', '<cmd>Telescope workspaces<cr>')
 
--- LSP mappings, these only bind when an LSP is attached
-local on_attach = function(_, bufnr)
-  g.code_action_menu_show_details = false
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', '<cmd>lua.vim.lsp.omnifunc')
-
-  nmap_buf(bufnr, 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>')
-  nmap_buf(bufnr, 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>')
-  nmap_buf(bufnr, 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>')
-  nmap_buf(bufnr, '<space>i', '<cmd>lua vim.lsp.buf.hover()<cr>')
-  nmap_buf(bufnr, '<space>h', '<cmd>lua vim.lsp.buf.signature_help()<cr>')
-  nmap_buf(bufnr, '<space>d', '<cmd>lua vim.lsp.buf.type_definition()<cr>')
-  nmap_buf(
-    bufnr,
-    '<space>wa',
-    '<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>'
-  )
-  nmap_buf(
-    bufnr,
-    '<space>wr',
-    '<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>'
-  )
-  nmap_buf(
-    bufnr,
-    '<space>wl',
-    '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>'
-  )
-  nmap_buf(bufnr, '<space>a', '<cmd>CodeActionMenu<cr>')
-  nmap_buf(bufnr, 'rn', '<cmd>lua vim.lsp.buf.rename()<cr>')
-
-  -- goto-preview mappings
-  nmap_buf(
-    bufnr,
-    'gp',
-    '<cmd>lua require("goto-preview").goto_preview_definition()<cr>'
-  )
-  nmap_buf(bufnr, 'gP', '<cmd>lua require("goto-preview").close_all_win()<cr>')
-  nmap_buf(
-    bufnr,
-    'gpi',
-    '<cmd>lua require("goto-preview").goto_preview_implementation()<cr>'
-  )
-  nmap_buf(
-    bufnr,
-    'gR',
-    '<cmd>lua require("goto-preview").goto_preview_references()<cr>'
-  )
-
-  -- symbols-outline mappings
-  nmap('<F4>', '<cmd>SymbolsOutline<cr>') -- toggle symbols outline
-
-  -- Trouble mappings
-  nmap_buf(bufnr, '<F3>', '<cmd>TroubleToggle workspace_diagnostics<cr>')
-  nmap_buf(bufnr, 'gr', '<cmd>TroubleToggle lsp_references<cr>')
-end
-
 -----------------------------------
 --            Plugins
 -----------------------------------
@@ -419,6 +364,7 @@ local plugins = {
 	'rktjmp/paperplanes.nvim', -- upload buffer online
 	'rmagatti/auto-session', -- sessions based on cwd
 	'roxma/vim-paste-easy', -- auto-enter paste mode on paste
+	'SmiteshP/nvim-navic', -- file breadcrumbs
 	'wellle/targets.vim', -- more text objects
 	'zane-/bufdelete.nvim', -- layout-preserving buffer deletion
 	'zane-/howdoi.nvim', -- howdoi queries with telescope
@@ -1084,20 +1030,81 @@ for type, icon in pairs(signs) do
   fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
+local capabilities = require('cmp_nvim_lsp').default_capabilities
+local navic = require('nvim-navic')
+
+local on_attach = function(client, bufnr)
+	if client.server_capabilities.documentSymbolProvider then
+			navic.attach(client, bufnr)
+	end
+	
+  g.code_action_menu_show_details = false
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', '<cmd>lua.vim.lsp.omnifunc')
+
+  nmap_buf(bufnr, 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>')
+  nmap_buf(bufnr, 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>')
+  nmap_buf(bufnr, 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>')
+  nmap_buf(bufnr, '<space>i', '<cmd>lua vim.lsp.buf.hover()<cr>')
+  nmap_buf(bufnr, '<space>h', '<cmd>lua vim.lsp.buf.signature_help()<cr>')
+  nmap_buf(bufnr, '<space>d', '<cmd>lua vim.lsp.buf.type_definition()<cr>')
+  nmap_buf(
+    bufnr,
+    '<space>wa',
+    '<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>'
+  )
+  nmap_buf(
+    bufnr,
+    '<space>wr',
+    '<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>'
+  )
+  nmap_buf(
+    bufnr,
+    '<space>wl',
+    '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>'
+  )
+  nmap_buf(bufnr, '<space>a', '<cmd>CodeActionMenu<cr>')
+  nmap_buf(bufnr, 'rn', '<cmd>lua vim.lsp.buf.rename()<cr>')
+
+  -- goto-preview mappings
+  nmap_buf(
+    bufnr,
+    'gp',
+    '<cmd>lua require("goto-preview").goto_preview_definition()<cr>'
+  )
+  nmap_buf(bufnr, 'gP', '<cmd>lua require("goto-preview").close_all_win()<cr>')
+  nmap_buf(
+    bufnr,
+    'gpi',
+    '<cmd>lua require("goto-preview").goto_preview_implementation()<cr>'
+  )
+  nmap_buf(
+    bufnr,
+    'gR',
+    '<cmd>lua require("goto-preview").goto_preview_references()<cr>'
+  )
+
+  -- symbols-outline mappings
+  nmap('<F4>', '<cmd>SymbolsOutline<cr>') -- toggle symbols outline
+
+  -- Trouble mappings
+  nmap_buf(bufnr, '<F3>', '<cmd>TroubleToggle workspace_diagnostics<cr>')
+  nmap_buf(bufnr, 'gr', '<cmd>TroubleToggle lsp_references<cr>')
+end
+
 require('goto-preview').setup()
 require('mason').setup()
 require('mason-lspconfig').setup()
-
 require('mason-lspconfig').setup_handlers {
 	-- The first entry (without a key) will be the default handler
 	-- and will be called for each installed server that doesn't have
 	-- a dedicated handler.
 	function (server_name) -- default handler (optional)
-			require('lspconfig')[server_name].setup {}
+		require('lspconfig')[server_name].setup({
+			on_attach = on_attach
+		})
 	end,
 }
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities
 
 ----------------------------------
 --       lualine config
@@ -1247,6 +1254,16 @@ ins_left({
 ins_left({
   'location',
   icon = '',
+})
+
+ins_left({
+  function()
+		if navic.is_available() then
+			return navic.get_location()
+		end
+    return ''
+  end,
+  padding = { right = 1 },
 })
 
 ins_right({
