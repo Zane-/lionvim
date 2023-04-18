@@ -323,6 +323,7 @@ local plugins = {
 	'rafamadriz/friendly-snippets', -- common snippets package
 	'skywind3000/asyncrun.vim', -- run commands async
 	'tpope/vim-surround', -- easily change surrounding brackets, quotes, etc.
+	'tpope/vim-repeat', -- support plugins for dot repeat
 	'windwp/nvim-autopairs', -- auto pair ( {, etc.	
   'windwp/nvim-ts-autotag', -- autoclose html, etc. tags
 	-- Telescope
