@@ -22,20 +22,6 @@ local g = vim.g
 local hi = vim.api.nvim_set_hl
 local opt = vim.opt
 
--- Bootstrapp package manager
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
-end
-vim.opt.rtp:prepend(lazypath)
-
 ----------------------------------
 --           Options
 ----------------------------------
@@ -344,6 +330,20 @@ end
 -----------------------------------
 --            Plugins
 -----------------------------------
+-- Bootstrap package manager
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
 local plugins = {	
 	-- Autocompletion
 	'hrsh7th/cmp-buffer',
@@ -421,8 +421,7 @@ local plugins = {
 	'zane-/cder.nvim', -- change working directory with telescope
 }
 
-require('lazy').setup({plugins})
-
+require('lazy').setup(plugins)
 ----------------------------------
 --            Colors
 ----------------------------------
