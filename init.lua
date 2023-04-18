@@ -207,7 +207,6 @@ nmap('bi', '<cmd>DapStepInto<cr>')
 nmap('bO', '<cmd>DapStepOut<cr>')
 
 -- fm-nvim mappings
-nmap('<leader>r', '<cmd>Ranger<cr>')
 map('t', '<A-r>', '<cmd>close<cr>')
 nmap('fz', '<cmd>Fzf<cr>')
 
@@ -2018,10 +2017,6 @@ command_center.add({
     cmd = '<cmd>SymbolsOutline<cr>',
   },
   {
-    description = 'Open ranger',
-    cmd = '<cmd>Ranger<cr>',
-  },
-  {
     description = 'Open floating terminal',
     cmd = '<cmd>ToggleTerm direction=float<cr>',
   },
@@ -2280,7 +2275,6 @@ wk.register({
     p = 'Upload buffer to ix.io',
     s = 'Open nvim config',
     t = 'Toggle floating terminal',
-    r = 'Open ranger',
     v = 'Toggle vtop',
     x = 'Toggle horizontal terminal',
     ['<space>'] = 'Toggle search results highlight',
