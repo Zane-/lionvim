@@ -214,9 +214,6 @@ nmap('rf', '<cmd>lua Format()<cr>')
 -- neo-tree mappings
 nmap('<C-f>', '<cmd>NeoTreeFocusToggle<cr>')
 
--- Ouroboros mappings
-nmap('go', '<cmd>Ouroboros<cr>')
-
 -- searchbox.nvim mappings
 nmap('/', '<cmd>SearchBoxMatchAll<cr>')
 nmap('rg', '<cmd>SearchBoxReplace<cr>')
@@ -297,12 +294,6 @@ local plugins = {
   -- Colorschemes
   { 'catppuccin/nvim', name = 'catppuccin' },
   'folke/tokyonight.nvim',
-  -- DAP
-  'mfussenegger/nvim-dap', -- debugger
-  'mfussenegger/nvim-dap-python', -- debugger config for python
-  'nvim-telescope/telescope-dap.nvim',
-  'rcarriga/nvim-dap-ui', -- UI for debugger
-  'theHamsta/nvim-dap-virtual-text',
   -- LSP
   'neovim/nvim-lspconfig', -- completion, go-to, etc.
   {
@@ -311,8 +302,14 @@ local plugins = {
   },
   'williamboman/mason-lspconfig.nvim', -- lsp support for mason
   'rmagatti/goto-preview', -- goto preview popup
+  -- DAP
+  'mfussenegger/nvim-dap', -- debugger
+  'mfussenegger/nvim-dap-python', -- debugger config for python
+	'jay-babu/mason-nvim-dap.nvim', -- dap installer
+  'nvim-telescope/telescope-dap.nvim',
+  'rcarriga/nvim-dap-ui', -- UI for debugger
+  'theHamsta/nvim-dap-virtual-text',
   -- Programming support
-  'jakemason/ouroboros', -- open corresponding .h/.cc C++ file
   'L3MON4D3/LuaSnip', -- snippet engine
   'mhartington/formatter.nvim', -- formatting
   { 'michaelb/sniprun', build = 'bash ./install.sh' }, -- execute code inline
@@ -371,6 +368,7 @@ local plugins = {
 }
 
 require('lazy').setup(plugins)
+
 ----------------------------------
 --            Colors
 ----------------------------------
@@ -484,7 +482,7 @@ end
 vim.notify = require('notify')
 
 local lionvim_notify_options = {
-  title = '🦁 Lionvim',
+  title = '🦁 lionvim',
   timeout = 1000,
 }
 
@@ -765,6 +763,10 @@ require('dap-python').setup()
 
 require('nvim-dap-virtual-text').setup({
   commented = true,
+})
+
+require('mason-nvim-dap').setup({
+	automatic_installation = true
 })
 
 ----------------------------------
