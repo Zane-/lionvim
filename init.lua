@@ -363,8 +363,12 @@ local plugins = {
 	'theHamsta/nvim-dap-virtual-text',
 	-- LSP
 	'neovim/nvim-lspconfig' , -- completion, go-to, etc.
+	{
+    'williamboman/mason.nvim',
+    build = ':MasonUpdate' -- :MasonUpdate updates registry contents
+	},		
+	'williamboman/mason-lspconfig.nvim', -- lsp support for mason
 	'rmagatti/goto-preview' , -- goto preview popup
-	'williamboman/nvim-lsp-installer', -- install lsp servers
 	-- Programming support
 	'jakemason/ouroboros', -- open corresponding .h/.cc C++ file
 	'L3MON4D3/LuaSnip', -- snippet engine
@@ -372,13 +376,13 @@ local plugins = {
 	{ 'michaelb/sniprun', build = 'bash ./install.sh' }, -- execute code inline
 	'natecraddock/workspaces.nvim',  -- workspace support
 	'numToStr/Comment.nvim', -- smart comments support
-	'nvim-treesitter/nvim-treesitter', -- additional syntax highlighting
+  "nvim-treesitter/nvim-treesitter", -- additional syntax highlighting
 	'nvim-treesitter/nvim-treesitter-textobjects', -- class and function textobjects
 	'rafamadriz/friendly-snippets', -- common snippets package
 	'skywind3000/asyncrun.vim', -- run commands async
 	'tpope/vim-surround', -- easily change surrounding brackets, quotes, etc.
-	'windwp/nvim-autopairs', -- auto pair ( {, etc.
-	'windwp/nvim-ts-autotag', -- autoclose html, etc. tags
+	'windwp/nvim-autopairs', -- auto pair ( {, etc.	
+  'windwp/nvim-ts-autotag', -- autoclose html, etc. tags
 	-- Telescope
 	{'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
 	'nvim-telescope/telescope.nvim', -- aesthetic finder popup
@@ -1080,18 +1084,20 @@ for type, icon in pairs(signs) do
   fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
-require('goto-preview').setup({})
+require('goto-preview').setup()
+require('mason').setup()
+require('mason-lspconfig').setup()
+
+require('mason-lspconfig').setup_handlers {
+	-- The first entry (without a key) will be the default handler
+	-- and will be called for each installed server that doesn't have
+	-- a dedicated handler.
+	function (server_name) -- default handler (optional)
+			require('lspconfig')[server_name].setup {}
+	end,
+}
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities
-
-local lsp_installer = require('nvim-lsp-installer')
-lsp_installer.on_server_ready(function(server)
-  local opts = {
-    capabilities = capabilities,
-    on_attach = on_attach,
-  }
-  server:setup(opts)
-end)
 
 ----------------------------------
 --       lualine config
@@ -1465,6 +1471,7 @@ cmp.setup.cmdline(':', {
 ----------------------------------
 --    nvim-treesitter config
 ----------------------------------
+require('nvim-ts-autotag').setup()
 require('nvim-treesitter.configs').setup({
   ensure_installed = {
     'c',
@@ -1475,6 +1482,7 @@ require('nvim-treesitter.configs').setup({
     'javascript',
     'lua',
     'python',
+		'typescript',
     'rust',
     'yaml',
   },
@@ -1507,6 +1515,7 @@ require('nvim-treesitter.configs').setup({
     enable = true,
   },
 })
+
 
 ----------------------------------
 --      paperplanes config
