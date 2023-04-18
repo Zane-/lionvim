@@ -326,6 +326,7 @@ local plugins = {
 	'tpope/vim-repeat', -- support plugins for dot repeat
 	'windwp/nvim-autopairs', -- auto pair ( {, etc.	
   'windwp/nvim-ts-autotag', -- autoclose html, etc. tags
+	'wintermute-cell/gitignore.nvim', -- gitignore generation
 	-- Telescope
 	{'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
 	'nvim-telescope/telescope.nvim', -- aesthetic finder popup
@@ -1891,6 +1892,10 @@ command_center.add({
   {
     description = 'Open git status',
     cmd = '<cmd>Telescope git_status<cr>',
+  },
+  {
+    description = 'Generate gitignore file',
+    cmd = '<cmd>Gitignore<cr>',
   },
   {
     description = 'Open quickfix history',
