@@ -211,9 +211,6 @@ nmap('fz', '<cmd>Fzf<cr>')
 -- formatter mappings
 nmap('rf', '<cmd>lua Format()<cr>')
 
--- leap mappings
-nmap('ws', '<cmd>lua leap_all_windows()<cr>')
-
 -- neo-tree mappings
 nmap('<C-f>', '<cmd>NeoTreeFocusToggle<cr>')
 
@@ -998,28 +995,8 @@ require('gitsigns').setup({})
 ----------------------------------
 --         leap config
 -----------------------------------
-require('leap').setup({
-  case_insensitive = true,
-  -- These keys are captured directly by the plugin at runtime.
-  special_keys = {
-    repeat_search = '<enter>',
-    next_match = '<enter>',
-    prev_match = '<tab>',
-    next_group = '<space>',
-    prev_group = '<tab>',
-    eol = '<space>',
-  },
-})
 
-require('leap').set_default_keymaps()
-
-function leap_all_windows()
-  require('leap').leap({
-    ['target-windows'] = vim.tbl_filter(function(win)
-      return vim.api.nvim_win_get_config(win).focusable
-    end, vim.api.nvim_tabpage_list_wins(0)),
-  })
-end
+require('leap').add_default_mappings()
 
 ----------------------------------
 --          LSP config
