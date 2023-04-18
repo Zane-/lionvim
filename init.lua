@@ -183,6 +183,9 @@ map('t', '<C-j>', [[<c-\><c-n><c-w>j]])
 map('t', '<C-k>', [[<c-\><c-n><c-w>k]])
 map('t', '<C-l>', [[<c-\><c-n><c-w>l]])
 
+-- aerial mappings
+nmap('<space>f', '<cmd>AerialToggle!<cr>')
+
 -- bufferline mappings
 nmap('<Left>', '<cmd>BufferLineCyclePrev<cr>')
 nmap('<Right>', '<cmd>BufferLineCycleNext<cr>')
@@ -240,9 +243,9 @@ nmap('fh', '<cmd>Telescope howdoi<cr>')
 nmap('cd', '<cmd>Telescope cder<cr>')
 nmap('<space>c', '<cmd>Telescope command_center<cr>')
 nmap('<leader>c', '<cmd>Telescope colorscheme<cr>')
-nmap('<F5>', '<cmd>Telescope man_pages<cr>')
-nmap('<F6>', '<cmd>Telescope help_tags<cr>')
-nmap('<F7>', '<cmd>Telescope keymaps<cr>')
+nmap('<F4>', '<cmd>Telescope man_pages<cr>')
+nmap('<F5>', '<cmd>Telescope help_tags<cr>')
+nmap('<F6>', '<cmd>Telescope keymaps<cr>')
 
 -- toggleterm mappings
 nmap('<leader>t', '<cmd>ToggleTerm direction=float<cr>')
@@ -348,11 +351,13 @@ local plugins = {
   'nvim-neo-tree/neo-tree.nvim', -- filetree
   'rcarriga/nvim-notify', -- fancy notifications
   'RRethy/vim-illuminate', -- highlight symbol under cursor
+	'stevearc/aerial.nvim', 
   'VonHeikemen/searchbox.nvim', -- search popup
   'VonHeikemen/fine-cmdline.nvim', -- command input popup
   'weilbith/nvim-code-action-menu', -- show menu for code actions
   'zane-/command_center.nvim', -- command palette
   'zane-/symbols-outline.nvim', -- menu for symbols
+	-- Utility
   'andrewradev/switch.vim', -- smart switch between stuff
   'is0n/fm-nvim', -- for ranger
   'ggandor/leap.nvim', -- navigation
@@ -485,6 +490,18 @@ local lionvim_notify_options = {
   title = '🦁 lionvim',
   timeout = 1000,
 }
+
+----------------------------------
+--         alpha config
+----------------------------------
+require('aerial').setup({
+  -- optionally use on_attach to set keymaps when aerial has attached to a buffer
+  on_attach = function(bufnr)
+    -- Jump forwards/backwards with '{' and '}'
+    vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', {buffer = bufnr})
+    vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', {buffer = bufnr})
+  end
+})
 
 ----------------------------------
 --         alpha config
@@ -1057,7 +1074,7 @@ local on_attach = function(client, bufnr)
   )
 
   -- symbols-outline mappings
-  nmap('<F4>', '<cmd>SymbolsOutline<cr>') -- toggle symbols outline
+  nmap('<space>s', '<cmd>SymbolsOutline<cr>') -- toggle symbols outline
 
   -- Trouble mappings
   nmap_buf(bufnr, '<F3>', '<cmd>TroubleToggle workspace_diagnostics<cr>')
@@ -2243,7 +2260,9 @@ wk.register({
     c = 'Open command palette',
     d = 'Open type definition for symbol',
     h = 'Open signature help',
+		f = 'Toggle function outline',
     i = 'Preview symbol information',
+		s = 'Toggle symbol outline',
     w = {
       name = 'Workspace',
       a = 'Add workspace folder',
@@ -2283,10 +2302,9 @@ wk.register({
   ['<F1>'] = 'Goto previous location',
   ['<F2>'] = 'Goto next location',
   ['<F3>'] = 'Toggle diagnostics menu',
-  ['<F4>'] = 'Toggle symbols outline',
-  ['<F5>'] = 'Search man pages',
-  ['<F6>'] = 'Search help tags',
-  ['<F7>'] = 'Open verbose keymap',
+  ['<F4>'] = 'Search man pages',
+  ['<F5>'] = 'Search help tags',
+  ['<F6>'] = 'Open verbose keymap',
   ['<s-left>'] = 'Move buffer left',
   ['<s-right>'] = 'Move buffer right',
   ['<s-up>'] = 'Move line up',
