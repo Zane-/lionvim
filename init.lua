@@ -2,7 +2,7 @@
 --        Lionvim Config
 --
 -- Author: Zane B.
--- Last Modified: 2023-04-17
+-- Last Modified: 2023-04-18
 -- Dependencies:
 --   bat
 --   exa,
@@ -397,6 +397,7 @@ require('packer').startup({
     use({
       { 'akinsho/bufferline.nvim' }, -- fancy buffer line
       { 'akinsho/toggleterm.nvim' }, -- better terminals
+      { 'eandrju/cellular-automaton.nvim' }, -- fancy animation
       { 'folke/which-key.nvim' }, -- shortcut popup
       { 'folke/trouble.nvim' }, -- aesthetic diagnostics page
       { 'goolord/alpha-nvim' }, -- fancy start page
@@ -414,14 +415,15 @@ require('packer').startup({
       { 'RRethy/vim-illuminate' }, -- highlight symbol under cursor
       { 'VonHeikemen/searchbox.nvim' }, -- search popup
       { 'VonHeikemen/fine-cmdline.nvim' }, -- command input popup
+      { 'weilbith/nvim-code-action-menu' }, -- show menu for code actions	
       { 'zane-/command_center.nvim' }, -- command palette
       { 'zane-/symbols-outline.nvim' }, -- menu for symbols
-      { 'weilbith/nvim-code-action-menu' }, -- show menu for code actions
     })
 
     use({ -- Utility
       { 'andrewradev/switch.vim' }, -- smart switch between stuff
       { 'is0n/fm-nvim' }, -- for ranger
+      { 'ggandor/leap.nvim' }, -- navigation
       { 'max397574/better-escape.nvim' }, -- better insert mode exit
       { 'rktjmp/paperplanes.nvim' }, -- upload buffer online
       { 'rmagatti/auto-session' }, -- sessions based on cwd
@@ -2083,6 +2085,18 @@ command_center.add({
   {
     description = 'Packer status',
     cmd = '<cmd>PackerStatus<cr>',
+  },
+  {
+    description = 'Packer status',
+    cmd = '<cmd>PackerStatus<cr>',
+  },
+  {
+    description = 'Make it rain',
+    cmd = '<cmd>CellularAutomaton make_it_rain<cr>',
+  },
+  {
+    description = 'Play game of life',
+    cmd = '<cmd>CellularAutomaton game_of_life<cr>',
   },
 })
 
