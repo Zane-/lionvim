@@ -273,101 +273,101 @@ nmap('wo', '<cmd>Telescope workspaces<cr>')
 --            Plugins
 -----------------------------------
 -- Bootstrap package manager
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
   vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
+    'git',
+    'clone',
+    '--filter=blob:none',
+    'https://github.com/folke/lazy.nvim.git',
+    '--branch=stable', -- latest stable release
     lazypath,
   })
 end
 vim.opt.rtp:prepend(lazypath)
 
-local plugins = {	
-	-- Autocompletion
-	'hrsh7th/cmp-buffer',
-	'hrsh7th/cmp-cmdline',
-	'hrsh7th/cmp-nvim-lsp',
-	'hrsh7th/cmp-path',
-	'hrsh7th/nvim-cmp',
-	'saadparwaiz1/cmp_luasnip',
-	-- Colorschemes
-	{ 'catppuccin/nvim', name = 'catppuccin' },
-	'folke/tokyonight.nvim',
-	-- DAP
-	'mfussenegger/nvim-dap', -- debugger
-	'mfussenegger/nvim-dap-python', -- debugger config for python
-	'nvim-telescope/telescope-dap.nvim',
-	'rcarriga/nvim-dap-ui', -- UI for debugger
-	'theHamsta/nvim-dap-virtual-text',
-	-- LSP
-	'neovim/nvim-lspconfig' , -- completion, go-to, etc.
-	{
+local plugins = {
+  -- Autocompletion
+  'hrsh7th/cmp-buffer',
+  'hrsh7th/cmp-cmdline',
+  'hrsh7th/cmp-nvim-lsp',
+  'hrsh7th/cmp-path',
+  'hrsh7th/nvim-cmp',
+  'saadparwaiz1/cmp_luasnip',
+  -- Colorschemes
+  { 'catppuccin/nvim', name = 'catppuccin' },
+  'folke/tokyonight.nvim',
+  -- DAP
+  'mfussenegger/nvim-dap', -- debugger
+  'mfussenegger/nvim-dap-python', -- debugger config for python
+  'nvim-telescope/telescope-dap.nvim',
+  'rcarriga/nvim-dap-ui', -- UI for debugger
+  'theHamsta/nvim-dap-virtual-text',
+  -- LSP
+  'neovim/nvim-lspconfig', -- completion, go-to, etc.
+  {
     'williamboman/mason.nvim',
-    build = ':MasonUpdate' -- :MasonUpdate updates registry contents
-	},		
-	'williamboman/mason-lspconfig.nvim', -- lsp support for mason
-	'rmagatti/goto-preview' , -- goto preview popup
-	-- Programming support
-	'jakemason/ouroboros', -- open corresponding .h/.cc C++ file
-	'L3MON4D3/LuaSnip', -- snippet engine
-	'mhartington/formatter.nvim', -- formatting
-	{ 'michaelb/sniprun', build = 'bash ./install.sh' }, -- execute code inline
-	'natecraddock/workspaces.nvim',  -- workspace support
-	'numToStr/Comment.nvim', -- smart comments support
-  "nvim-treesitter/nvim-treesitter", -- additional syntax highlighting
-	'nvim-treesitter/nvim-treesitter-textobjects', -- class and function textobjects
-	'rafamadriz/friendly-snippets', -- common snippets package
-	'skywind3000/asyncrun.vim', -- run commands async
-	'tpope/vim-surround', -- easily change surrounding brackets, quotes, etc.
-	'tpope/vim-repeat', -- support plugins for dot repeat
-	'windwp/nvim-autopairs', -- auto pair ( {, etc.	
+    build = ':MasonUpdate', -- :MasonUpdate updates registry contents
+  },
+  'williamboman/mason-lspconfig.nvim', -- lsp support for mason
+  'rmagatti/goto-preview', -- goto preview popup
+  -- Programming support
+  'jakemason/ouroboros', -- open corresponding .h/.cc C++ file
+  'L3MON4D3/LuaSnip', -- snippet engine
+  'mhartington/formatter.nvim', -- formatting
+  { 'michaelb/sniprun', build = 'bash ./install.sh' }, -- execute code inline
+  'natecraddock/workspaces.nvim', -- workspace support
+  'numToStr/Comment.nvim', -- smart comments support
+  'nvim-treesitter/nvim-treesitter', -- additional syntax highlighting
+  'nvim-treesitter/nvim-treesitter-textobjects', -- class and function textobjects
+  'rafamadriz/friendly-snippets', -- common snippets package
+  'skywind3000/asyncrun.vim', -- run commands async
+  'tpope/vim-surround', -- easily change surrounding brackets, quotes, etc.
+  'tpope/vim-repeat', -- support plugins for dot repeat
+  'windwp/nvim-autopairs', -- auto pair ( {, etc.
   'windwp/nvim-ts-autotag', -- autoclose html, etc. tags
-	'wintermute-cell/gitignore.nvim', -- gitignore generation
-	-- Telescope
-	{'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-	'nvim-telescope/telescope.nvim', -- aesthetic finder popup
-	'nvim-telescope/telescope-symbols.nvim', -- emoji + ascii symbols
-	'stevearc/dressing.nvim', -- use telescope for more things
-	-- UI
-	'akinsho/bufferline.nvim', -- fancy buffer line
-	'akinsho/toggleterm.nvim', -- better terminals
-	'eandrju/cellular-automaton.nvim', -- fancy animation
-	'folke/which-key.nvim', -- shortcut popup
-	'folke/trouble.nvim', -- aesthetic diagnostics page
-	'goolord/alpha-nvim', -- fancy start page
-	'j-hui/fidget.nvim', -- LSP progress indicator
-	'kosayoda/nvim-lightbulb', -- show a lightbulb for code actions
-	'kyazdani42/nvim-web-devicons', -- file icons
-	'lewis6991/gitsigns.nvim', -- git integration
-	'lukas-reineke/indent-blankline.nvim', -- identation lines
-	'munifTanjim/nui.nvim', -- UI dependency
-	'nvim-lualine/lualine.nvim', -- status line
-	'nvim-lua/plenary.nvim', -- UI dependency
-	'nvim-lua/popup.nvim', -- UI dependency
-	'nvim-neo-tree/neo-tree.nvim', -- filetree
-	'rcarriga/nvim-notify', -- fancy notifications
-	'RRethy/vim-illuminate', -- highlight symbol under cursor
-	'VonHeikemen/searchbox.nvim', -- search popup
-	'VonHeikemen/fine-cmdline.nvim', -- command input popup
-	'weilbith/nvim-code-action-menu', -- show menu for code actions	
-	'zane-/command_center.nvim', -- command palette
-	'zane-/symbols-outline.nvim', -- menu for symbols
-	'andrewradev/switch.vim', -- smart switch between stuff
-	'is0n/fm-nvim', -- for ranger
-	'ggandor/leap.nvim', -- navigation
-	'max397574/better-escape.nvim', -- better insert mode exit
-	'rktjmp/paperplanes.nvim', -- upload buffer online
-	'rmagatti/auto-session', -- sessions based on cwd
-	'roxma/vim-paste-easy', -- auto-enter paste mode on paste
-	'SmiteshP/nvim-navic', -- file breadcrumbs
-	'wellle/targets.vim', -- more text objects
-	'zane-/bufdelete.nvim', -- layout-preserving buffer deletion
-	'zane-/howdoi.nvim', -- howdoi queries with telescope
-	'zane-/cder.nvim', -- change working directory with telescope
+  'wintermute-cell/gitignore.nvim', -- gitignore generation
+  -- Telescope
+  { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+  'nvim-telescope/telescope.nvim', -- aesthetic finder popup
+  'nvim-telescope/telescope-symbols.nvim', -- emoji + ascii symbols
+  'stevearc/dressing.nvim', -- use telescope for more things
+  -- UI
+  'akinsho/bufferline.nvim', -- fancy buffer line
+  'akinsho/toggleterm.nvim', -- better terminals
+  'eandrju/cellular-automaton.nvim', -- fancy animation
+  'folke/which-key.nvim', -- shortcut popup
+  'folke/trouble.nvim', -- aesthetic diagnostics page
+  'goolord/alpha-nvim', -- fancy start page
+  'j-hui/fidget.nvim', -- LSP progress indicator
+  'kosayoda/nvim-lightbulb', -- show a lightbulb for code actions
+  'kyazdani42/nvim-web-devicons', -- file icons
+  'lewis6991/gitsigns.nvim', -- git integration
+  'lukas-reineke/indent-blankline.nvim', -- identation lines
+  'munifTanjim/nui.nvim', -- UI dependency
+  'nvim-lualine/lualine.nvim', -- status line
+  'nvim-lua/plenary.nvim', -- UI dependency
+  'nvim-lua/popup.nvim', -- UI dependency
+  'nvim-neo-tree/neo-tree.nvim', -- filetree
+  'rcarriga/nvim-notify', -- fancy notifications
+  'RRethy/vim-illuminate', -- highlight symbol under cursor
+  'VonHeikemen/searchbox.nvim', -- search popup
+  'VonHeikemen/fine-cmdline.nvim', -- command input popup
+  'weilbith/nvim-code-action-menu', -- show menu for code actions
+  'zane-/command_center.nvim', -- command palette
+  'zane-/symbols-outline.nvim', -- menu for symbols
+  'andrewradev/switch.vim', -- smart switch between stuff
+  'is0n/fm-nvim', -- for ranger
+  'ggandor/leap.nvim', -- navigation
+  'max397574/better-escape.nvim', -- better insert mode exit
+  'rktjmp/paperplanes.nvim', -- upload buffer online
+  'rmagatti/auto-session', -- sessions based on cwd
+  'roxma/vim-paste-easy', -- auto-enter paste mode on paste
+  'SmiteshP/nvim-navic', -- file breadcrumbs
+  'wellle/targets.vim', -- more text objects
+  'zane-/bufdelete.nvim', -- layout-preserving buffer deletion
+  'zane-/howdoi.nvim', -- howdoi queries with telescope
+  'zane-/cder.nvim', -- change working directory with telescope
 }
 
 require('lazy').setup(plugins)
@@ -383,18 +383,9 @@ hi(0, 'StatusLine', { ctermbg = 0, bg = colors.crust })
 hi(0, 'Pmenu', { ctermbg = 0, fg = colors.text, bg = colors.mantle })
 
 -- Highlights for DAP
-hi(0, 
-  'DapBreakpoint',
-  { ctermbg = 0, fg = colors.red, bg = colors.mantle }
-)
-hi(0,
-  'DapLogPoint',
-  { ctermbg = 0, fg = colors.blue, bg = colors.mantle }
-)
-hi(0, 
-  'DapStopped',
-  { ctermbg = 0, fg = colors.green, bg = colors.mantle }
-)
+hi(0, 'DapBreakpoint', { ctermbg = 0, fg = colors.red, bg = colors.mantle })
+hi(0, 'DapLogPoint', { ctermbg = 0, fg = colors.blue, bg = colors.mantle })
+hi(0, 'DapStopped', { ctermbg = 0, fg = colors.green, bg = colors.mantle })
 hi(0, 'DapUIVariable', { ctermbg = 0, fg = colors.teal })
 hi(0, 'DapUIScope', { ctermbg = 0, fg = colors.blue })
 hi(0, 'DapUIType', { ctermbg = 0, fg = colors.lavender })
@@ -412,23 +403,19 @@ hi(0, 'DapUIWatchesValue', { ctermbg = 0, fg = colors.green })
 hi(0, 'DapUIWatchesError', { ctermbg = 0, fg = colors.red })
 hi(0, 'DapUIBreakpointsPath', { ctermbg = 0, fg = colors.teal })
 hi(0, 'DapUIBreakpointsInfo', { ctermbg = 0, fg = colors.green })
-hi(0, 
-  'DapUIBreakpointsCurrentLine',
-  { ctermbg = 0, fg = colors.surface1 }
-)
-hi(0, 
-  'DapUIBreakpointsLine',
-  { ctermbg = 0, fg = colors.surface1 }
-)
+hi(0, 'DapUIBreakpointsCurrentLine', { ctermbg = 0, fg = colors.surface1 })
+hi(0, 'DapUIBreakpointsLine', { ctermbg = 0, fg = colors.surface1 })
 hi(0, 'DapUIBreakpointsDisabledLine', { ctermbg = 0, fg = colors.red })
 
 -- Highlights for leap
 hi(0, 'LeapMatch', { ctermbg = 0, fg = colors.yellow, bg = colors.surface0 })
-hi(0, 
+hi(
+  0,
   'LeapLabelPrimary',
   { ctermbg = 0, fg = colors.red, bg = colors.surface0 }
 )
-hi(0, 
+hi(
+  0,
   'LeapLabelSecondary',
   { ctermbg = 0, fg = colors.peach, bg = colors.surface0 }
 )
@@ -438,26 +425,31 @@ hi(0, 'NeoTreeNormal', { ctermbg = 0, bg = colors.mantle })
 hi(0, 'NeoTreeNormalNC', { ctermbg = 0, bg = colors.mantle })
 
 -- Highlights for Sniprun
-hi(0, 
+hi(
+  0,
   'SniprunVirtualTextOk',
   { ctermbg = 0, fg = colors.blue, bg = colors.mantle }
 )
-hi(0, 
+hi(
+  0,
   'SniprunVirtualTextErr',
   { ctermbg = 0, fg = colors.red, bg = colors.mantle }
 )
-hi(0, 
+hi(
+  0,
   'SniprunFloatingWinOk',
   { ctermbg = 0, fg = colors.blue, bg = colors.mantle }
 )
-hi(0, 
+hi(
+  0,
   'SniprunFloatingWinErr',
   { ctermbg = 0, fg = colors.red, bg = colors.mantle }
 )
 
 -- Highlights for Telescope
 hi(0, 'TelescopePreviewTitle', { ctermbg = 0, fg = colors.blue })
-hi(0, 
+hi(
+  0,
   'TelescopePromptTitle',
   { ctermbg = 0, fg = colors.text, bg = colors.mantle }
 )
@@ -565,7 +557,7 @@ sections.buttons = {
     button('f f', '  Find file  '),
     button('f r', 'ﮦ  Recent files  '),
     button('f g', '  Live grep'),
-    button('f m', '  Bookmarks'),	
+    button('f m', '  Bookmarks'),
     button('w o', '󰚝  Open Workspace'),
     button(', s', '  Configuration'),
     button('q a', '  Quit'),
@@ -1013,10 +1005,10 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities
 local navic = require('nvim-navic')
 
 local on_attach = function(client, bufnr)
-	if client.server_capabilities.documentSymbolProvider then
-			navic.attach(client, bufnr)
-	end
-	
+  if client.server_capabilities.documentSymbolProvider then
+    navic.attach(client, bufnr)
+  end
+
   g.code_action_menu_show_details = false
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', '<cmd>lua.vim.lsp.omnifunc')
 
@@ -1073,17 +1065,16 @@ end
 require('goto-preview').setup()
 require('mason').setup()
 require('mason-lspconfig').setup()
-require('mason-lspconfig').setup_handlers {
-	-- The first entry (without a key) will be the default handler
-	-- and will be called for each installed server that doesn't have
-	-- a dedicated handler.
-	function (server_name) -- default handler (optional)
-		require('lspconfig')[server_name].setup({
-			on_attach = on_attach
-		})
-	end,
-}
-
+require('mason-lspconfig').setup_handlers({
+  -- The first entry (without a key) will be the default handler
+  -- and will be called for each installed server that doesn't have
+  -- a dedicated handler.
+  function(server_name) -- default handler (optional)
+    require('lspconfig')[server_name].setup({
+      on_attach = on_attach,
+    })
+  end,
+})
 
 ----------------------------------
 --       lualine config
@@ -1237,9 +1228,9 @@ ins_left({
 
 ins_left({
   function()
-		if navic.is_available() then
-			return navic.get_location()
-		end
+    if navic.is_available() then
+      return navic.get_location()
+    end
     return ''
   end,
   padding = { right = 1 },
@@ -1379,11 +1370,8 @@ cmp.setup({
   end,
   formatting = {
     format = function(_, vim_item)
-      vim_item.kind = string.format(
-        '%s %s',
-        kind_icons[vim_item.kind],
-        vim_item.kind
-      )
+      vim_item.kind =
+        string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
       return vim_item
     end,
   },
@@ -1478,7 +1466,7 @@ require('nvim-treesitter.configs').setup({
     'javascript',
     'lua',
     'python',
-		'typescript',
+    'typescript',
     'rust',
     'yaml',
   },
@@ -1511,7 +1499,6 @@ require('nvim-treesitter.configs').setup({
     enable = true,
   },
 })
-
 
 ----------------------------------
 --      paperplanes config
@@ -2247,7 +2234,7 @@ wk.register({
   w = {
     name = 'Jump',
     s = 'Jump to text in any window',
-		o = 'Open workspace',
+    o = 'Open workspace',
     w = 'Jump to buffer',
   },
   ['<space>'] = {
@@ -2310,8 +2297,7 @@ wk.register({
 --      workspaces config
 ----------------------------------
 require('workspaces').setup({
-	hooks = {
-		open = { "Telescope find_files" },
-	}
+  hooks = {
+    open = { 'Telescope find_files' },
+  },
 })
-
