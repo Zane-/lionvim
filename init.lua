@@ -1457,6 +1457,7 @@ cmp.setup.cmdline(':', {
 ----------------------------------
 require('nvim-ts-autotag').setup()
 require('nvim-treesitter.configs').setup({
+	auto_install = true,
   ensure_installed = {
     'c',
     'cpp',
@@ -1494,9 +1495,6 @@ require('nvim-treesitter.configs').setup({
         ['ic'] = '@class.inner',
       },
     },
-  },
-  autotag = {
-    enable = true,
   },
 })
 
