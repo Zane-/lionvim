@@ -165,9 +165,6 @@ vmap('>', '>gv')
 -- Insert blank line with enter
 nmap('<cr>', 'o<Esc>')
 
--- Use w to jump to marks
-nmap('w', "'")
-
 -- Navigate diagnostics
 nmap('<F1>', '<cmd>lua vim.diagnostic.goto_prev()<cr>')
 nmap('<F2>', '<cmd>lua vim.diagnostic.goto_next()<cr>')
@@ -272,6 +269,9 @@ map('t', '<leader>p', '<cmd>lua ToggleIPython()<cr>')
 -- which-key mappings
 nmap('?', '<cmd>WhichKey<cr>')
 
+-- workspaces mappings
+nmap('wo', '<cmd>Telescope workspaces<cr>')
+
 -- LSP mappings, these only bind when an LSP is attached
 local on_attach = function(_, bufnr)
   g.code_action_menu_show_details = false
@@ -374,6 +374,7 @@ require('packer').startup({
       { 'L3MON4D3/LuaSnip' }, -- snippet engine
       { 'mhartington/formatter.nvim' }, -- formatting
       { 'michaelb/sniprun', run = 'bash ./install.sh' }, -- execute code inline
+      { 'natecraddock/workspaces.nvim'},  -- workspace support
       { 'numToStr/Comment.nvim' }, -- smart comments support
       { 'nvim-treesitter/nvim-treesitter' }, -- additional syntax highlighting
       { 'nvim-treesitter/nvim-treesitter-textobjects' }, -- class and function textobjects
@@ -420,8 +421,6 @@ require('packer').startup({
 
     use({ -- Utility
       { 'andrewradev/switch.vim' }, -- smart switch between stuff
-      { 'chentoast/marks.nvim' }, -- better bookmarks
-      { 'ggandor/leap.nvim' }, -- easy navigation
       { 'is0n/fm-nvim' }, -- for ranger
       { 'max397574/better-escape.nvim' }, -- better insert mode exit
       { 'rktjmp/paperplanes.nvim' }, -- upload buffer online
@@ -1313,11 +1312,6 @@ ins_right({
 lualine.setup(config)
 
 ----------------------------------
---         marks config
-----------------------------------
-require('marks').setup({})
-
-----------------------------------
 --       neo-tree config
 ----------------------------------
 require('neo-tree').setup({
@@ -1692,6 +1686,7 @@ require('telescope').load_extension('command_center')
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('howdoi')
 require('telescope').load_extension('cder')
+require('telescope').load_extension('workspaces')
 
 ---------------------------------
 --      toggleterm config
@@ -1823,6 +1818,10 @@ command_center.add({
   {
     description = 'Force quit',
     cmd = '<cmd>q!<cr>',
+  },
+  {
+    description = 'Open workspace',
+    cmd = '<cmd>Telescope workspaces<cr>',
   },
   {
     description = 'Open vertical split',
@@ -2170,11 +2169,6 @@ wk.register({
       c = 'a class',
       f = 'a function',
     },
-    m = {
-      name = 'Marks',
-      ['-'] = 'Delete all marks on current line',
-      ['<space>'] = 'Delete all marks in current buffer',
-    },
     s = 'Surrounding',
   },
   e = {
@@ -2190,7 +2184,6 @@ wk.register({
     f = 'Search for filename',
     g = 'Live grep',
     h = 'Search howdoi',
-    m = 'Seach marks',
     r = 'Search for recent file',
     s = 'Search for symbol',
     w = 'Search pattern in current file',
@@ -2218,13 +2211,6 @@ wk.register({
     r = 'Open references for symbol in quickfix',
     R = 'Search references for symbol',
     s = 'Switch symbol under cursor',
-  },
-  m = {
-    name = 'Marks',
-    [';'] = 'Toggle next available mark for current line',
-    [':'] = 'Preview mark',
-    ['['] = 'Goto previous mark',
-    [']'] = 'Goto next mark',
   },
   q = {
     name = 'Quit',
@@ -2263,7 +2249,7 @@ wk.register({
   w = {
     name = 'Jump',
     s = 'Jump to text in any window',
-    x = 'Jump to mark x',
+		o = 'Open workspace',
     w = 'Jump to buffer',
   },
   ['<space>'] = {
@@ -2321,3 +2307,13 @@ wk.register({
   ['<s-up>'] = 'Move line up',
   ['<s-down>'] = 'Move line down',
 })
+
+----------------------------------
+--      workspaces config
+----------------------------------
+require('workspaces').setup({
+	hooks = {
+		open = { "Telescope find_files" },
+	}
+})
+
