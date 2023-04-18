@@ -6,7 +6,7 @@ if [ -f ~/.config/nvim/init.lua ]; then
 fi
 
 mkdir -p ~/.config/nvim
-ln -sf ~/lionnvim/init.lua ~/.config/nvim/init.lua
+ln -sf ~/lionvim/init.lua ~/.config/nvim/init.lua
 
 echo "[+] Linked init.lua"
 
