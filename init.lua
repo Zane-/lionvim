@@ -22,6 +22,20 @@ local g = vim.g
 local hi = vim.api.nvim_set_hl
 local opt = vim.opt
 
+-- Bootstrapp package manager
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
 ----------------------------------
 --           Options
 ----------------------------------
@@ -330,118 +344,84 @@ end
 -----------------------------------
 --            Plugins
 -----------------------------------
+local plugins = {	
+	-- Autocompletion
+	'hrsh7th/cmp-buffer',
+	'hrsh7th/cmp-cmdline',
+	'hrsh7th/cmp-nvim-lsp',
+	'hrsh7th/cmp-path',
+	'hrsh7th/nvim-cmp',
+	'saadparwaiz1/cmp_luasnip',
+	-- Colorschemes
+	{ 'catppuccin/nvim', name = 'catppuccin' },
+	'folke/tokyonight.nvim',
+	-- DAP
+	'mfussenegger/nvim-dap', -- debugger
+	'mfussenegger/nvim-dap-python', -- debugger config for python
+	'nvim-telescope/telescope-dap.nvim',
+	'rcarriga/nvim-dap-ui', -- UI for debugger
+	'theHamsta/nvim-dap-virtual-text',
+	-- LSP
+	'neovim/nvim-lspconfig' , -- completion, go-to, etc.
+	'rmagatti/goto-preview' , -- goto preview popup
+	'williamboman/nvim-lsp-installer', -- install lsp servers
+	-- Programming support
+	'jakemason/ouroboros', -- open corresponding .h/.cc C++ file
+	'L3MON4D3/LuaSnip', -- snippet engine
+	'mhartington/formatter.nvim', -- formatting
+	{ 'michaelb/sniprun', build = 'bash ./install.sh' }, -- execute code inline
+	'natecraddock/workspaces.nvim',  -- workspace support
+	'numToStr/Comment.nvim', -- smart comments support
+	'nvim-treesitter/nvim-treesitter', -- additional syntax highlighting
+	'nvim-treesitter/nvim-treesitter-textobjects', -- class and function textobjects
+	'rafamadriz/friendly-snippets', -- common snippets package
+	'skywind3000/asyncrun.vim', -- run commands async
+	'tpope/vim-surround', -- easily change surrounding brackets, quotes, etc.
+	'windwp/nvim-autopairs', -- auto pair ( {, etc.
+	'windwp/nvim-ts-autotag', -- autoclose html, etc. tags
+	-- Telescope
+	{'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+	'nvim-telescope/telescope.nvim', -- aesthetic finder popup
+	'nvim-telescope/telescope-symbols.nvim', -- emoji + ascii symbols
+	'stevearc/dressing.nvim', -- use telescope for more things
+	-- UI
+	'akinsho/bufferline.nvim', -- fancy buffer line
+	'akinsho/toggleterm.nvim', -- better terminals
+	'eandrju/cellular-automaton.nvim', -- fancy animation
+	'folke/which-key.nvim', -- shortcut popup
+	'folke/trouble.nvim', -- aesthetic diagnostics page
+	'goolord/alpha-nvim', -- fancy start page
+	'j-hui/fidget.nvim', -- LSP progress indicator
+	'kosayoda/nvim-lightbulb', -- show a lightbulb for code actions
+	'kyazdani42/nvim-web-devicons', -- file icons
+	'lewis6991/gitsigns.nvim', -- git integration
+	'lukas-reineke/indent-blankline.nvim', -- identation lines
+	'munifTanjim/nui.nvim', -- UI dependency
+	'nvim-lualine/lualine.nvim', -- status line
+	'nvim-lua/plenary.nvim', -- UI dependency
+	'nvim-lua/popup.nvim', -- UI dependency
+	'nvim-neo-tree/neo-tree.nvim', -- filetree
+	'rcarriga/nvim-notify', -- fancy notifications
+	'RRethy/vim-illuminate', -- highlight symbol under cursor
+	'VonHeikemen/searchbox.nvim', -- search popup
+	'VonHeikemen/fine-cmdline.nvim', -- command input popup
+	'weilbith/nvim-code-action-menu', -- show menu for code actions	
+	'zane-/command_center.nvim', -- command palette
+	'zane-/symbols-outline.nvim', -- menu for symbols
+	'andrewradev/switch.vim', -- smart switch between stuff
+	'is0n/fm-nvim', -- for ranger
+	'ggandor/leap.nvim', -- navigation
+	'max397574/better-escape.nvim', -- better insert mode exit
+	'rktjmp/paperplanes.nvim', -- upload buffer online
+	'rmagatti/auto-session', -- sessions based on cwd
+	'roxma/vim-paste-easy', -- auto-enter paste mode on paste
+	'wellle/targets.vim', -- more text objects
+	'zane-/bufdelete.nvim', -- layout-preserving buffer deletion
+	'zane-/howdoi.nvim', -- howdoi queries with telescope
+	'zane-/cder.nvim', -- change working directory with telescope
+}
 
-require('packer').startup({
-  function()
-    -- This package manager
-    use('wbthomason/packer.nvim')
-
-    -- Autocompletion
-    use({
-      { 'hrsh7th/cmp-buffer' },
-      { 'hrsh7th/cmp-cmdline' },
-      { 'hrsh7th/cmp-nvim-lsp' },
-      { 'hrsh7th/cmp-path' },
-      { 'hrsh7th/nvim-cmp' },
-      { 'saadparwaiz1/cmp_luasnip' },
-    })
-
-    -- Colorschemes
-    use({
-      { 'catppuccin/nvim', as = 'catppuccin' },
-      { 'folke/tokyonight.nvim' },
-    })
-
-    -- DAP
-    use({
-      { 'mfussenegger/nvim-dap' }, -- debugger
-      { 'mfussenegger/nvim-dap-python' }, -- debugger config for python
-      { 'nvim-telescope/telescope-dap.nvim' },
-      { 'rcarriga/nvim-dap-ui' }, -- UI for debugger
-      { 'theHamsta/nvim-dap-virtual-text' },
-    })
-
-    -- LSP
-    use({
-      { 'neovim/nvim-lspconfig' }, -- completion, go-to, etc.
-      { 'rmagatti/goto-preview' }, -- goto preview popup
-      { 'williamboman/nvim-lsp-installer' }, -- install lsp servers
-    })
-
-    -- Programming support
-    use({
-      { 'jakemason/ouroboros' }, -- open corresponding .h/.cc C++ file
-      { 'L3MON4D3/LuaSnip' }, -- snippet engine
-      { 'mhartington/formatter.nvim' }, -- formatting
-      { 'michaelb/sniprun', run = 'bash ./install.sh' }, -- execute code inline
-      { 'natecraddock/workspaces.nvim'},  -- workspace support
-      { 'numToStr/Comment.nvim' }, -- smart comments support
-      { 'nvim-treesitter/nvim-treesitter' }, -- additional syntax highlighting
-      { 'nvim-treesitter/nvim-treesitter-textobjects' }, -- class and function textobjects
-      { 'rafamadriz/friendly-snippets' }, -- common snippets package
-      { 'skywind3000/asyncrun.vim' }, -- run commands async
-      { 'tpope/vim-surround' }, -- easily change surrounding brackets, quotes, etc.
-      { 'windwp/nvim-autopairs' }, -- auto pair ( {, etc.
-      { 'windwp/nvim-ts-autotag' }, -- autoclose html, etc. tags
-    })
-
-    -- Telescope
-    use({
-      { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
-      { 'nvim-telescope/telescope.nvim' }, -- aesthetic finder popup
-      { 'nvim-telescope/telescope-symbols.nvim' }, -- emoji + ascii symbols
-      { 'stevearc/dressing.nvim' }, -- use telescope for more things
-    })
-
-    -- UI
-    use({
-      { 'akinsho/bufferline.nvim' }, -- fancy buffer line
-      { 'akinsho/toggleterm.nvim' }, -- better terminals
-      { 'eandrju/cellular-automaton.nvim' }, -- fancy animation
-      { 'folke/which-key.nvim' }, -- shortcut popup
-      { 'folke/trouble.nvim' }, -- aesthetic diagnostics page
-      { 'goolord/alpha-nvim' }, -- fancy start page
-      { 'j-hui/fidget.nvim' }, -- LSP progress indicator
-      { 'kosayoda/nvim-lightbulb' }, -- show a lightbulb for code actions
-      { 'kyazdani42/nvim-web-devicons' }, -- file icons
-      { 'lewis6991/gitsigns.nvim' }, -- git integration
-      { 'lukas-reineke/indent-blankline.nvim' }, -- identation lines
-      { 'munifTanjim/nui.nvim' }, -- UI dependency
-      { 'nvim-lualine/lualine.nvim' }, -- status line
-      { 'nvim-lua/plenary.nvim' }, -- UI dependency
-      { 'nvim-lua/popup.nvim' }, -- UI dependency
-      { 'nvim-neo-tree/neo-tree.nvim' }, -- filetree
-      { 'rcarriga/nvim-notify' }, -- fancy notifications
-      { 'RRethy/vim-illuminate' }, -- highlight symbol under cursor
-      { 'VonHeikemen/searchbox.nvim' }, -- search popup
-      { 'VonHeikemen/fine-cmdline.nvim' }, -- command input popup
-      { 'weilbith/nvim-code-action-menu' }, -- show menu for code actions	
-      { 'zane-/command_center.nvim' }, -- command palette
-      { 'zane-/symbols-outline.nvim' }, -- menu for symbols
-    })
-
-    use({ -- Utility
-      { 'andrewradev/switch.vim' }, -- smart switch between stuff
-      { 'is0n/fm-nvim' }, -- for ranger
-      { 'ggandor/leap.nvim' }, -- navigation
-      { 'max397574/better-escape.nvim' }, -- better insert mode exit
-      { 'rktjmp/paperplanes.nvim' }, -- upload buffer online
-      { 'rmagatti/auto-session' }, -- sessions based on cwd
-      { 'roxma/vim-paste-easy' }, -- auto-enter paste mode on paste
-      { 'wellle/targets.vim' }, -- more text objects
-      { 'zane-/bufdelete.nvim' }, -- layout-preserving buffer deletion
-      { 'zane-/howdoi.nvim' }, -- howdoi queries with telescope
-      { 'zane-/cder.nvim' }, -- change working directory with telescope
-    })
-  end,
-  config = {
-    display = {
-      open_fn = function()
-        return require('packer.util').float({ border = 'single' })
-      end,
-    },
-  },
-})
+require('lazy').setup({plugins})
 
 ----------------------------------
 --            Colors
@@ -1151,7 +1131,6 @@ local config = {
       'Fm',
       'neo-tree',
       'Outline',
-      'packer',
       'Searchbox',
       'TelescopePrompt',
       'toggleterm',
@@ -2067,28 +2046,24 @@ command_center.add({
     cmd = '<cmd>checkhealth<cr>',
   },
   {
-    description = 'Packer install',
-    cmd = '<cmd>PackerInstall<cr>',
+    description = 'Lazy install',
+    cmd = '<cmd>Lazy cnstall<cr>',
   },
   {
-    description = 'Packer update',
-    cmd = '<cmd>PackerUpdate<cr>',
+    description = 'Lazy update',
+    cmd = '<cmd>Lazy update<cr>',
   },
   {
-    description = 'Packer sync',
-    cmd = '<cmd>PackerSync<cr>',
+    description = 'Lazy sync',
+    cmd = '<cmd>Lazy sync<cr>',
   },
   {
-    description = 'Packer clean',
-    cmd = '<cmd>PackerClean<cr>',
+    description = 'Lazy clean',
+    cmd = '<cmd>Lazy clean<cr>',
   },
   {
-    description = 'Packer status',
-    cmd = '<cmd>PackerStatus<cr>',
-  },
-  {
-    description = 'Packer status',
-    cmd = '<cmd>PackerStatus<cr>',
+    description = 'Lazy health',
+    cmd = '<cmd>Lazy health<cr>',
   },
   {
     description = 'Make it rain',
