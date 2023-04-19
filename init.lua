@@ -184,7 +184,7 @@ map('t', '<C-k>', [[<c-\><c-n><c-w>k]])
 map('t', '<C-l>', [[<c-\><c-n><c-w>l]])
 
 -- aerial mappings
-nmap('<space>f', '<cmd>AerialToggle!<cr>')
+nmap('<space>o', '<cmd>AerialToggle!<cr>')
 
 -- bufferline mappings
 nmap('<Left>', '<cmd>BufferLineCyclePrev<cr>')
@@ -1037,6 +1037,7 @@ local on_attach = function(client, bufnr)
   nmap_buf(bufnr, '<space>i', '<cmd>lua vim.lsp.buf.hover()<cr>')
   nmap_buf(bufnr, '<space>h', '<cmd>lua vim.lsp.buf.signature_help()<cr>')
   nmap_buf(bufnr, '<space>d', '<cmd>lua vim.lsp.buf.type_definition()<cr>')
+  nmap_buf(bufnr, '<space>f', '<cmd>Lspsaga lsp_finder<cr>')
   nmap_buf(
     bufnr,
     '<space>wa',
@@ -2267,7 +2268,8 @@ wk.register({
     c = 'Open command palette',
     d = 'Open type definition for symbol',
     h = 'Open signature help',
-    f = 'Toggle function outline',
+		f = 'Open finder for symbol',
+    o = 'Toggle function outline',
     i = 'Preview symbol information',
     s = 'Toggle symbol outline',
     w = {
@@ -2322,6 +2324,6 @@ wk.register({
 ----------------------------------
 require('workspaces').setup({
   hooks = {
-    open = { 'Telescope find_files' },
+    open = { 'Telescope oldfiles' },
   },
 })
