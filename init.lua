@@ -298,6 +298,7 @@ local plugins = {
   'folke/tokyonight.nvim',
   -- LSP
   'neovim/nvim-lspconfig', -- completion, go-to, etc.
+  'nvimdev/lspsaga.nvim', -- LSP enhancements
   {
     'williamboman/mason.nvim',
     build = ':MasonUpdate', -- :MasonUpdate updates registry contents
@@ -307,7 +308,7 @@ local plugins = {
   -- DAP
   'mfussenegger/nvim-dap', -- debugger
   'mfussenegger/nvim-dap-python', -- debugger config for python
-	'jay-babu/mason-nvim-dap.nvim', -- dap installer
+  'jay-babu/mason-nvim-dap.nvim', -- dap installer
   'nvim-telescope/telescope-dap.nvim',
   'rcarriga/nvim-dap-ui', -- UI for debugger
   'theHamsta/nvim-dap-virtual-text',
@@ -350,13 +351,13 @@ local plugins = {
   'nvim-neo-tree/neo-tree.nvim', -- filetree
   'rcarriga/nvim-notify', -- fancy notifications
   'RRethy/vim-illuminate', -- highlight symbol under cursor
-	'stevearc/aerial.nvim', 
+  'stevearc/aerial.nvim',
   'VonHeikemen/searchbox.nvim', -- search popup
   'VonHeikemen/fine-cmdline.nvim', -- command input popup
   'weilbith/nvim-code-action-menu', -- show menu for code actions
   'zane-/command_center.nvim', -- command palette
   'zane-/symbols-outline.nvim', -- menu for symbols
-	-- Utility
+  -- Utility
   'andrewradev/switch.vim', -- smart switch between stuff
   'is0n/fm-nvim', -- for ranger
   'ggandor/leap.nvim', -- navigation
@@ -497,9 +498,9 @@ require('aerial').setup({
   -- optionally use on_attach to set keymaps when aerial has attached to a buffer
   on_attach = function(bufnr)
     -- Jump forwards/backwards with '{' and '}'
-    vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', {buffer = bufnr})
-    vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', {buffer = bufnr})
-  end
+    vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', { buffer = bufnr })
+    vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', { buffer = bufnr })
+  end,
 })
 
 ----------------------------------
@@ -782,7 +783,7 @@ require('nvim-dap-virtual-text').setup({
 })
 
 require('mason-nvim-dap').setup({
-	automatic_installation = true
+  automatic_installation = true,
 })
 
 ----------------------------------
@@ -1051,16 +1052,11 @@ local on_attach = function(client, bufnr)
     '<space>wl',
     '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>'
   )
-  nmap_buf(bufnr, '<space>a', '<cmd>CodeActionMenu<cr>')
-  nmap_buf(bufnr, 'rn', '<cmd>lua vim.lsp.buf.rename()<cr>')
+  nmap_buf(bufnr, '<space>a', '<cmd>Lspsaga code_action<cr>')
+  nmap_buf(bufnr, 'rn', '<cmd>Lspsaga rename<cr>')
 
   -- goto-preview mappings
-  nmap_buf(
-    bufnr,
-    'gp',
-    '<cmd>lua require("goto-preview").goto_preview_definition()<cr>'
-  )
-  nmap_buf(bufnr, 'gP', '<cmd>lua require("goto-preview").close_all_win()<cr>')
+  nmap_buf(bufnr, 'gp', '<cmd>Lspsaga peek_definition<cr>')
   nmap_buf(
     bufnr,
     'gpi',
@@ -1093,6 +1089,8 @@ require('mason-lspconfig').setup_handlers({
     })
   end,
 })
+
+require('lspsaga').setup()
 
 ----------------------------------
 --       lualine config
@@ -1475,7 +1473,7 @@ cmp.setup.cmdline(':', {
 ----------------------------------
 require('nvim-ts-autotag').setup()
 require('nvim-treesitter.configs').setup({
-	auto_install = true,
+  auto_install = true,
   ensure_installed = {
     'c',
     'cpp',
@@ -2255,9 +2253,9 @@ wk.register({
     c = 'Open command palette',
     d = 'Open type definition for symbol',
     h = 'Open signature help',
-		f = 'Toggle function outline',
+    f = 'Toggle function outline',
     i = 'Preview symbol information',
-		s = 'Toggle symbol outline',
+    s = 'Toggle symbol outline',
     w = {
       name = 'Workspace',
       a = 'Add workspace folder',
