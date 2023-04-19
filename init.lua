@@ -351,7 +351,7 @@ local plugins = {
   'nvim-neo-tree/neo-tree.nvim', -- filetree
   'rcarriga/nvim-notify', -- fancy notifications
   'RRethy/vim-illuminate', -- highlight symbol under cursor
-  'stevearc/aerial.nvim',
+  'stevearc/aerial.nvim', -- function outline
   'VonHeikemen/searchbox.nvim', -- search popup
   'VonHeikemen/fine-cmdline.nvim', -- command input popup
   'weilbith/nvim-code-action-menu', -- show menu for code actions
@@ -1090,7 +1090,11 @@ require('mason-lspconfig').setup_handlers({
   end,
 })
 
-require('lspsaga').setup()
+require('lspsaga').setup({
+	symbol_in_winbar = {
+		enable = false
+	}
+})
 
 ----------------------------------
 --       lualine config
