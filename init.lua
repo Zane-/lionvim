@@ -151,7 +151,7 @@ nmap('<leader><space>', '<cmd>set hlsearch!<cr>')
 
 -- Open splits
 nmap('<C-v>', '<cmd>vsp<cr>')
-nmap('<C-x>', '<cmd>sp<cr>')
+nmap('<C-h>', '<cmd>sp<cr>')
 
 -- Trim trailing whitespace
 nmap('rtw', '<cmd>%s/\\s\\+$//<cr><cmd>nohlsearch<cr>')
@@ -233,7 +233,7 @@ nmap('fg', '<cmd>Telescope live_grep hidden=true<cr>')
 nmap('ff', '<cmd>Telescope find_files<cr>')
 nmap('<C-o>', '<cmd>Telescope find_files<cr>')
 nmap('fb', '<cmd>Telescope buffers<cr>')
-nmap('fw', '<cmd>Telescope current_buffer_fuzzy_find<cr>')
+nmap('fl', '<cmd>Telescope current_buffer_fuzzy_find<cr>')
 nmap('fm', '<cmd>Telescope marks<cr>')
 nmap('fr', '<cmd>Telescope oldfiles<cr>')
 nmap('fs', '<cmd>Telescope treesitter<cr>')
@@ -1095,16 +1095,31 @@ require('mason-lspconfig').setup_handlers({
 })
 
 GotoToPrevError = function()
-  require("lspsaga.diagnostic"):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+  require('lspsaga.diagnostic'):goto_prev({ severity = vim.diagnostic.severity.ERROR })
 end
 GotoToNextError = function()
-  require("lspsaga.diagnostic"):goto_next({ severity = vim.diagnostic.severity.ERROR })
+  require('lspsaga.diagnostic'):goto_next({ severity = vim.diagnostic.severity.ERROR })
 end
 
 require('lspsaga').setup({
 	symbol_in_winbar = {
 		enable = false
-	}
+	},
+	finder = {
+    max_height = 0.5,
+    min_width = 30,
+    force_max_height = false,
+    keys = {
+      jump_to = 'g',
+      expand_or_jump = 'o',
+      vsplit = 'v',
+      split = 'h',
+      tabe = 't',
+      tabnew = 'r',
+      quit = { 'q', '<ESC>' },
+      close_in_preview = '<ESC>',
+    },
+  },
 })
 
 ----------------------------------
@@ -2194,9 +2209,9 @@ wk.register({
     f = 'Search for filename',
     g = 'Live grep',
     h = 'Search howdoi',
+    l = 'Search pattern in current file',
     r = 'Search for recent file',
     s = 'Search for symbol',
-    w = 'Search pattern in current file',
     z = 'Search for filename with fzf',
   },
   g = {
