@@ -467,6 +467,9 @@ hi(
 -- Highlights for trouble
 hi(0, 'TroubleNormal', { ctermbg = 0, bg = colors.mantle })
 
+-- Highlights for symbols-outline
+hi(0, 'FocusedSymbol', { ctermbg = 0, bg = colors.mantle })
+
 --================================
 --     Global Util Functions
 --================================
