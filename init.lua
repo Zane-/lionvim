@@ -366,6 +366,7 @@ local plugins = {
   'zane-/symbols-outline.nvim', -- menu for symbols
   -- Utility
   'andrewradev/switch.vim', -- smart switch between stuff
+	'elihunter173/dirbuf.nvim', -- edit directory structure in a buffer
   'is0n/fm-nvim', -- for ranger
   'ggandor/leap.nvim', -- navigation
   'max397574/better-escape.nvim', -- better insert mode exit
