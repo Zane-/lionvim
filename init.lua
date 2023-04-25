@@ -2,7 +2,7 @@
 --        Lionvim Config
 --
 -- Author: Zane B.
--- Last Modified: 2023-04-18
+-- Last Modified: 2023-04-24
 -- Dependencies:
 --   bat
 --   exa,
@@ -233,15 +233,21 @@ nmap('fg', '<cmd>Telescope live_grep hidden=true<cr>')
 nmap('ff', '<cmd>Telescope find_files<cr>')
 nmap('<C-o>', '<cmd>Telescope find_files<cr>')
 nmap('fb', '<cmd>Telescope buffers<cr>')
-nmap('fw', '<cmd>Telescope current_buffer_fuzzy_find<cr>')
+nmap(
+  'fw',
+  '<cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false, prompt_title = "", winblend = 20, layout_config = { height = 40 }}))<cr>'
+)
 nmap('fm', '<cmd>Telescope marks<cr>')
-nmap('fr', '<cmd>Telescope oldfiles<cr>')
-nmap('fs', '<cmd>Telescope treesitter<cr>')
+nmap('fr', '<cmd>Telescope oldfiles prompt_title=Recents<cr>')
+nmap('fs', '<cmd>Telescope treesitter prompt_title=Symbols<cr>')
 nmap('rs', '<cmd>Telescope spell_suggest<cr>')
 nmap('fh', '<cmd>Telescope howdoi<cr>')
-nmap('cd', '<cmd>Telescope cder<cr>')
+nmap('cd', '<cmd>Telescope cder prompt_title=""<cr>')
 nmap('<space>c', '<cmd>Telescope command_center<cr>')
-nmap('<leader>c', '<cmd>Telescope colorscheme<cr>')
+nmap(
+  '<leader>c',
+  '<cmd>lua require("telescope.builtin").colorscheme(require("telescope.themes").get_dropdown({ winblend = 20, layout_config = { height = 20 }}))<cr>'
+)
 nmap('<F4>', '<cmd>Telescope man_pages<cr>')
 nmap('<F5>', '<cmd>Telescope help_tags<cr>')
 nmap('<F6>', '<cmd>Telescope keymaps<cr>')
@@ -327,8 +333,8 @@ local plugins = {
   'windwp/nvim-autopairs', -- auto pair ( {, etc.
   'windwp/nvim-ts-autotag', -- autoclose html, etc. tags
   'wintermute-cell/gitignore.nvim', -- gitignore generation
-	'zbirenbaum/copilot-cmp', -- cmp plugin for copilot
-	'zbirenbaum/copilot.lua', -- github copilot integration
+  'zbirenbaum/copilot-cmp', -- cmp plugin for copilot
+  'zbirenbaum/copilot.lua', -- github copilot integration
   -- Telescope
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
   'nvim-telescope/telescope.nvim', -- aesthetic finder popup
@@ -1080,8 +1086,8 @@ local on_attach = function(client, bufnr)
     '<cmd>lua require("goto-preview").goto_preview_references()<cr>'
   )
 
-	nmap_buf(bufnr, '[', '<cmd>lua GotoToPrevError()<cr>')
-	nmap_buf(bufnr, ']', '<cmd>lua GotoToNextError()<cr>')
+  nmap_buf(bufnr, '[', '<cmd>lua GotoToPrevError()<cr>')
+  nmap_buf(bufnr, ']', '<cmd>lua GotoToNextError()<cr>')
 
   -- symbols-outline mappings
   nmap('<space>s', '<cmd>SymbolsOutline<cr>') -- toggle symbols outline
@@ -1106,17 +1112,21 @@ require('mason-lspconfig').setup_handlers({
 })
 
 GotoToPrevError = function()
-  require('lspsaga.diagnostic'):goto_prev({ severity = vim.diagnostic.severity.ERROR })
+  require('lspsaga.diagnostic'):goto_prev({
+    severity = vim.diagnostic.severity.ERROR,
+  })
 end
 GotoToNextError = function()
-  require('lspsaga.diagnostic'):goto_next({ severity = vim.diagnostic.severity.ERROR })
+  require('lspsaga.diagnostic'):goto_next({
+    severity = vim.diagnostic.severity.ERROR,
+  })
 end
 
 require('lspsaga').setup({
-	symbol_in_winbar = {
-		enable = false
-	},
-	finder = {
+  symbol_in_winbar = {
+    enable = false,
+  },
+  finder = {
     max_height = 0.5,
     min_width = 30,
     force_max_height = false,
@@ -1411,7 +1421,7 @@ local kind_icons = {
   Event = '',
   Operator = '',
   TypeParameter = '',
-	Copilot = '',
+  Copilot = '',
 }
 
 cmp.setup({
@@ -1469,7 +1479,7 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
-		{ name = 'copilot', group_index = 2 },
+    { name = 'copilot', group_index = 2 },
   }, {
     { name = 'buffer' },
   }),
@@ -1799,11 +1809,11 @@ command_center.add({
   },
   {
     description = 'Open recent file',
-    cmd = '<cmd>Telescope oldfiles<cr>',
+    cmd = '<cmd>Telescope oldfiles prompt_title=Recents<cr>',
   },
   {
     description = 'Search in current file',
-    cmd = '<cmd>Telescope current_buffer_fuzzy_find<cr>',
+    cmd = '<cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false, prompt_title = "", winblend = 20, layout_config = { height = 40 }}))<cr>',
   },
   {
     description = 'Live grep',
@@ -2296,7 +2306,7 @@ wk.register({
     c = 'Open command palette',
     d = 'Open type definition for symbol',
     h = 'Open signature help',
-		f = 'Open finder for symbol',
+    f = 'Open finder for symbol',
     o = 'Toggle function outline',
     i = 'Preview symbol information',
     s = 'Toggle symbol outline',
@@ -2352,6 +2362,6 @@ wk.register({
 ----------------------------------
 require('workspaces').setup({
   hooks = {
-    open = { 'Telescope oldfiles' },
+    open = { 'Telescope oldfiles prompt_title=Recents' },
   },
 })
