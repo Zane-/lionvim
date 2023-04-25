@@ -232,7 +232,10 @@ vmap('r', '<Plug>SnipRun')
 nmap('fg', '<cmd>Telescope live_grep hidden=true<cr>')
 nmap('ff', '<cmd>Telescope find_files<cr>')
 nmap('<C-o>', '<cmd>Telescope find_files<cr>')
-nmap('fb', '<cmd>Telescope buffers<cr>')
+nmap(
+  'fb',
+  '<cmd>lua require("telescope.builtin").buffers(require("telescope.themes").get_dropdown({ previewer = false, layout_config = { height = 20 }}))<cr>'
+)
 nmap(
   'fw',
   '<cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false, prompt_title = "", layout_config = { height = 40 }}))<cr>'
