@@ -369,7 +369,7 @@ local plugins = {
   'zane-/symbols-outline.nvim', -- menu for symbols
   -- Utility
   'andrewradev/switch.vim', -- smart switch between stuff
-	'elihunter173/dirbuf.nvim', -- edit directory structure in a buffer
+  'elihunter173/dirbuf.nvim', -- edit directory structure in a buffer
   'is0n/fm-nvim', -- for ranger
   'ggandor/leap.nvim', -- navigation
   'max397574/better-escape.nvim', -- better insert mode exit
@@ -827,7 +827,7 @@ require('fine-cmdline').setup({
       filetype = 'FineCmdlinePrompt',
     },
     position = {
-      row = '95%',
+      row = '100%',
     },
     size = {
       width = '100%',
@@ -2132,6 +2132,10 @@ command_center.add({
   {
     description = 'Play game of life',
     cmd = '<cmd>CellularAutomaton game_of_life<cr>',
+  },
+  {
+    description = 'Edit directory in a buffer',
+    cmd = '<cmd>Dirbuf<cr>',
   },
 })
 
