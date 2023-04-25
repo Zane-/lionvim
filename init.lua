@@ -233,7 +233,7 @@ nmap('fg', '<cmd>Telescope live_grep hidden=true<cr>')
 nmap('ff', '<cmd>Telescope find_files<cr>')
 nmap('<C-o>', '<cmd>Telescope find_files<cr>')
 nmap('fb', '<cmd>Telescope buffers<cr>')
-nmap('fl', '<cmd>Telescope current_buffer_fuzzy_find<cr>')
+nmap('fw', '<cmd>Telescope current_buffer_fuzzy_find<cr>')
 nmap('fm', '<cmd>Telescope marks<cr>')
 nmap('fr', '<cmd>Telescope oldfiles<cr>')
 nmap('fs', '<cmd>Telescope treesitter<cr>')
@@ -327,6 +327,8 @@ local plugins = {
   'windwp/nvim-autopairs', -- auto pair ( {, etc.
   'windwp/nvim-ts-autotag', -- autoclose html, etc. tags
   'wintermute-cell/gitignore.nvim', -- gitignore generation
+	'zbirenbaum/copilot-cmp', -- cmp plugin for copilot
+	'zbirenbaum/copilot.lua', -- github copilot integration
   -- Telescope
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
   'nvim-telescope/telescope.nvim', -- aesthetic finder popup
@@ -686,6 +688,15 @@ require('bufferline').setup({
 --        Comment config
 ----------------------------------
 require('Comment').setup({})
+
+----------------------------------
+--        copilot config
+----------------------------------
+require('copilot_cmp').setup()
+require('copilot').setup({
+  suggestion = { enabled = false },
+  panel = { enabled = false },
+})
 
 ----------------------------------
 --          dap config
@@ -1400,6 +1411,7 @@ local kind_icons = {
   Event = '',
   Operator = '',
   TypeParameter = '',
+	Copilot = '',
 }
 
 cmp.setup({
@@ -1457,6 +1469,7 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
+		{ name = 'copilot', group_index = 2 },
   }, {
     { name = 'buffer' },
   }),
