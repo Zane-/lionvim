@@ -362,7 +362,6 @@ local plugins = {
   'stevearc/aerial.nvim', -- function outline
   'VonHeikemen/searchbox.nvim', -- search popup
   'VonHeikemen/fine-cmdline.nvim', -- command input popup
-  'weilbith/nvim-code-action-menu', -- show menu for code actions
   'zane-/command_center.nvim', -- command palette
   'zane-/symbols-outline.nvim', -- menu for symbols
   -- Utility
@@ -2010,10 +2009,6 @@ command_center.add({
   {
     description = 'Open DAP frames',
     cmd = '<cmd>Telescope dap frames<cr>',
-  },
-  {
-    description = 'Open code actions for symbol under cursor',
-    cmd = '<cmd>CodeActionMenu<cr>',
   },
   {
     description = 'Open references for symbol under cursor',
