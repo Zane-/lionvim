@@ -2231,9 +2231,9 @@ wk.register({
     f = 'Search for filename',
     g = 'Live grep',
     h = 'Search howdoi',
-    l = 'Search pattern in current file',
     r = 'Search for recent file',
     s = 'Search for symbol',
+    w = 'Search pattern in current file',
     z = 'Search for filename with fzf',
   },
   g = {
