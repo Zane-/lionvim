@@ -235,7 +235,7 @@ nmap('<C-o>', '<cmd>Telescope find_files<cr>')
 nmap('fb', '<cmd>Telescope buffers<cr>')
 nmap(
   'fw',
-  '<cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false, prompt_title = "", winblend = 20, layout_config = { height = 40 }}))<cr>'
+  '<cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false, prompt_title = "", layout_config = { height = 40 }}))<cr>'
 )
 nmap('fm', '<cmd>Telescope marks<cr>')
 nmap('fr', '<cmd>Telescope oldfiles prompt_title=Recents<cr>')
@@ -246,7 +246,7 @@ nmap('cd', '<cmd>Telescope cder prompt_title=""<cr>')
 nmap('<space>c', '<cmd>Telescope command_center<cr>')
 nmap(
   '<leader>c',
-  '<cmd>lua require("telescope.builtin").colorscheme(require("telescope.themes").get_dropdown({ winblend = 20, layout_config = { height = 20 }}))<cr>'
+  '<cmd>lua require("telescope.builtin").colorscheme(require("telescope.themes").get_dropdown({ layout_config = { height = 20 }}))<cr>'
 )
 nmap('<F4>', '<cmd>Telescope man_pages<cr>')
 nmap('<F5>', '<cmd>Telescope help_tags<cr>')
@@ -1813,7 +1813,7 @@ command_center.add({
   },
   {
     description = 'Search in current file',
-    cmd = '<cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false, prompt_title = "", winblend = 20, layout_config = { height = 40 }}))<cr>',
+    cmd = '<cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false, prompt_title = "", layout_config = { height = 40 }}))<cr>',
   },
   {
     description = 'Live grep',
@@ -2033,7 +2033,7 @@ command_center.add({
   },
   {
     description = 'Change colorscheme',
-    cmd = '<cmd>Telescope colorscheme<cr>',
+    cmd = '<cmd>lua require("telescope.builtin").colorscheme(require("telescope.themes").get_dropdown({ layout_config = { height = 20 }}))<cr>',
   },
   {
     description = 'Toggle paste mode',
