@@ -376,7 +376,6 @@ local plugins = {
   'max397574/better-escape.nvim', -- better insert mode exit
   'rktjmp/paperplanes.nvim', -- upload buffer online
   'rmagatti/auto-session', -- sessions based on cwd
-  'roxma/vim-paste-easy', -- auto-enter paste mode on paste
   'SmiteshP/nvim-navic', -- file breadcrumbs
   'wellle/targets.vim', -- more text objects
   'zane-/bufdelete.nvim', -- layout-preserving buffer deletion
@@ -2046,10 +2045,6 @@ command_center.add({
   {
     description = 'Change colorscheme',
     cmd = '<cmd>lua require("telescope.builtin").colorscheme(require("telescope.themes").get_dropdown({ layout_config = { height = 20 }}))<cr>',
-  },
-  {
-    description = 'Toggle paste mode',
-    cmd = '<cmd>set paste!<cr>',
   },
   {
     description = 'Toggle cursor line',
