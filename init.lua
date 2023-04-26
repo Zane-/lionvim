@@ -16,6 +16,7 @@
 --           Aliases
 ----------------------------------
 local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
 local cmd = vim.cmd
 local fn = vim.fn
 local g = vim.g
@@ -56,7 +57,7 @@ opt.timeoutlen = 300 -- quicker inputs
 opt.undofile = true -- persistent undo
 opt.updatetime = 300 -- faster update time
 
-vim.api.nvim_create_augroup('options', { clear = true })
+augroup('options', { clear = true })
 
 -- turn off linenumber for terminals and autoenter insert mode
 autocmd('TermOpen', {
@@ -606,7 +607,7 @@ require('alpha').setup({
   opts = {},
 })
 
-vim.api.nvim_create_augroup('alpha', { clear = true })
+augroup('alpha', { clear = true })
 
 -- Auto-launch alpha when last buffer is closed
 autocmd('User', {
@@ -713,7 +714,7 @@ require('copilot').setup({
 ----------------------------------
 --          dap config
 ----------------------------------
-vim.api.nvim_create_augroup('dap', { clear = true })
+augroup('dap', { clear = true })
 
 -- Auto-open DAP UI on events
 local dap, dapui = require('dap'), require('dapui')
@@ -1362,6 +1363,7 @@ lualine.setup(config)
 --       neo-tree config
 ----------------------------------
 require('neo-tree').setup({
+	close_if_last_window = false,
   default_component_configs = {
     git_status = {
       symbols = {
@@ -1388,6 +1390,14 @@ require('neo-tree').setup({
   },
 })
 
+augroup('neotree_start', { clear = true })
+autocmd('VimEnter', {
+  desc = 'Open Neo-Tree on startup',
+  group = 'neotree_start',
+  callback = function()
+		cmd('Neotree show')
+  end,
+})
 ----------------------------------
 --    nvim-autopairs config
 ----------------------------------
