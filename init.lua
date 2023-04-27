@@ -21,6 +21,7 @@ local cmd = vim.cmd
 local fn = vim.fn
 local g = vim.g
 local hi = vim.api.nvim_set_hl
+local notify = notify
 local opt = vim.opt
 
 ----------------------------------
@@ -56,6 +57,11 @@ opt.termguicolors = true -- enable 24-bit RGB color
 opt.timeoutlen = 300 -- quicker inputs
 opt.undofile = true -- persistent undo
 opt.updatetime = 300 -- faster update time
+
+-- Lionvim specific options
+g.enable_format_on_save = true -- whether or not to autoformat on save
+g.show_notification_on_format = false -- whether or not to show notifications on format
+g.show_neotree_on_startup = false -- whether or not to show neo-tree on startup
 
 augroup('options', { clear = true })
 
@@ -117,6 +123,7 @@ nmap(';', '<cmd>FineCmdline<cr>')
 
 -- Quick Save/Quit
 nmap('<C-s>', '<cmd>w<cr>')
+nmap('wf', '<cmd>w<cr>')
 nmap('qa', '<cmd>qa<cr>')
 nmap('qf', '<cmd>qa!<cr>')
 nmap('qs', '<cmd>wqa<cr>')
@@ -477,6 +484,13 @@ hi(0, 'FocusedSymbol', { ctermbg = 0, bg = colors.mantle })
 --================================
 --     Global Util Functions
 --================================
+notify = require('notify')
+
+local lionvim_notify_options = {
+  title = '🦁 lionvim',
+  timeout = 1000,
+}
+
 GetLspClientName = function()
   local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
   local clients = vim.lsp.get_active_clients()
@@ -495,15 +509,29 @@ GetLspClientName = function()
   return nil
 end
 
+ToggleFormatOnSave = function()
+  if g.enable_format_on_save then
+    g.enable_format_on_save = false
+    notify('Format on save disabled', 'info', lionvim_notify_options)
+  else
+    g.enable_format_on_save = true
+    notify('Format on save enabled', 'info', lionvim_notify_options)
+  end
+end
+
+ToggleFormatNotifications = function()
+  if g.show_notification_on_format then
+    g.show_notification_on_format = false
+    notify('Format notifications disabled', 'info', lionvim_notify_options)
+  else
+    g.show_notification_on_format = true
+    notify('Format notifications enabled', 'info', lionvim_notify_options)
+  end
+end
+
 --================================
 --        Plugin Configs
 --================================
-vim.notify = require('notify')
-
-local lionvim_notify_options = {
-  title = '🦁 lionvim',
-  timeout = 1000,
-}
 
 ----------------------------------
 --         alpha config
@@ -905,6 +933,9 @@ require('formatter').setup({
     ts = {
       require('formatter.defaults.prettier'),
     },
+    typescriptreact = {
+      require('formatter.defaults.prettier'),
+    },
     yaml = {
       require('formatter.defaults.prettier'),
     },
@@ -938,6 +969,8 @@ local formatters = {
       'markdown',
       'scss',
       'ts',
+      'typescript',
+      'typescriptreact',
       'yaml',
     },
     format = function()
@@ -963,7 +996,7 @@ local formatters = {
 
 local function format_notify(ft, formatter_name, format_success, format_source)
   if format_success then
-    vim.notify(
+    notify(
       'Formatted with ' .. format_source,
       'info',
       lionvim_notify_options
@@ -979,7 +1012,7 @@ local function format_notify(ft, formatter_name, format_success, format_source)
     notify_string = 'No registered formatter for ' .. ft
   end
 
-  vim.notify(
+  notify(
     'Format failed. '
       .. notify_string
       .. ' and no LSP server installed.\n\nTry installing an LSP server with :LspInstall',
@@ -1019,9 +1052,23 @@ function Format()
       vim.api.nvim_command('lua vim.lsp.buf.format()')
     end
   end
-
-  format_notify(ft, formatter_name, format_success, format_source)
+  if g.show_notification_on_format then
+    format_notify(ft, formatter_name, format_success, format_source)
+  end
 end
+
+-- Autoformat on save
+
+augroup('format', { clear = true })
+autocmd('BufWritePost', {
+  desc = 'Auto-format on save',
+  group = 'format',
+  callback = function()
+    if g.enable_format_on_save then
+      cmd('lua Format()')
+    end
+  end,
+})
 
 ----------------------------------
 --       gitsigns config
@@ -1362,7 +1409,7 @@ lualine.setup(config)
 --       neo-tree config
 ----------------------------------
 require('neo-tree').setup({
-	close_if_last_window = false,
+  close_if_last_window = false,
   default_component_configs = {
     git_status = {
       symbols = {
@@ -1394,9 +1441,12 @@ autocmd('VimEnter', {
   desc = 'Open Neo-Tree on startup',
   group = 'neotree_start',
   callback = function()
-		cmd('Neotree show')
+    if g.show_neotree_on_startup then
+      cmd('Neotree show')
+    end
   end,
 })
+
 ----------------------------------
 --    nvim-autopairs config
 ----------------------------------
@@ -1875,6 +1925,14 @@ command_center.add({
     cmd = '<cmd>q!<cr>',
   },
   {
+    description = 'Toggle format on save',
+    cmd = '<cmd>lua ToggleFormatOnSave()<cr>',
+  },
+  {
+    description = 'Toggle format notifications',
+    cmd = '<cmd>lua ToggleFormatNotifications()<cr>',
+  },
+  {
     description = 'Open workspace',
     cmd = '<cmd>Telescope workspaces<cr>',
   },
@@ -1900,7 +1958,7 @@ command_center.add({
   },
   {
     description = 'Reload config',
-    cmd = '<cmd>source ~/.config/nvim/init.lua<cr><cmd>lua vim.notify("Config reloaded", "info", { title = "🦁 Lionvim"})<cr>',
+    cmd = '<cmd>source ~/.config/nvim/init.lua<cr><cmd>lua notify("Config reloaded", "info", { title = "🦁 Lionvim"})<cr>',
   },
   {
     description = 'Rename symbol under cursor',
