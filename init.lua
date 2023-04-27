@@ -58,10 +58,10 @@ opt.timeoutlen = 300 -- quicker inputs
 opt.undofile = true -- persistent undo
 opt.updatetime = 300 -- faster update time
 
--- Lionvim specific options
-g.enable_format_on_save = true -- whether or not to autoformat on save
-g.show_notification_on_format = false -- whether or not to show notifications on format
-g.show_neotree_on_startup = false -- whether or not to show neo-tree on startup
+-- Lionvim-specific options
+g.ENABLE_FORMAT_ON_SAVE = true -- whether or not to autoformat on save
+g.SHOW_NOTIFICATION_ON_FORMAT = false -- whether or not to show notifications on format
+g.SHOW_NEOTREE_ON_STARTUP = false -- whether or not to show neo-tree on startup
 
 augroup('options', { clear = true })
 
@@ -510,21 +510,21 @@ GetLspClientName = function()
 end
 
 ToggleFormatOnSave = function()
-  if g.enable_format_on_save then
-    g.enable_format_on_save = false
+  if g.ENABLE_FORMAT_ON_SAVE then
+    g.ENABLE_FORMAT_ON_SAVE = false
     notify('Format on save disabled', 'info', lionvim_notify_options)
   else
-    g.enable_format_on_save = true
+    g.ENABLE_FORMAT_ON_SAVE = true
     notify('Format on save enabled', 'info', lionvim_notify_options)
   end
 end
 
 ToggleFormatNotifications = function()
-  if g.show_notification_on_format then
-    g.show_notification_on_format = false
+  if g.SHOW_NOTIFICATION_ON_FORMAT then
+    g.SHOW_NOTIFICATION_ON_FORMAT = false
     notify('Format notifications disabled', 'info', lionvim_notify_options)
   else
-    g.show_notification_on_format = true
+    g.SHOW_NOTIFICATION_ON_FORMAT = true
     notify('Format notifications enabled', 'info', lionvim_notify_options)
   end
 end
@@ -996,11 +996,7 @@ local formatters = {
 
 local function format_notify(ft, formatter_name, format_success, format_source)
   if format_success then
-    notify(
-      'Formatted with ' .. format_source,
-      'info',
-      lionvim_notify_options
-    )
+    notify('Formatted with ' .. format_source, 'info', lionvim_notify_options)
     return
   end
 
@@ -1052,7 +1048,7 @@ function Format()
       vim.api.nvim_command('lua vim.lsp.buf.format()')
     end
   end
-  if g.show_notification_on_format then
+  if g.SHOW_NOTIFICATION_ON_FORMAT then
     format_notify(ft, formatter_name, format_success, format_source)
   end
 end
@@ -1064,7 +1060,7 @@ autocmd('BufWritePost', {
   desc = 'Auto-format on save',
   group = 'format',
   callback = function()
-    if g.enable_format_on_save then
+    if g.ENABLE_FORMAT_ON_SAVE then
       cmd('lua Format()')
     end
   end,
@@ -1441,7 +1437,7 @@ autocmd('VimEnter', {
   desc = 'Open Neo-Tree on startup',
   group = 'neotree_start',
   callback = function()
-    if g.show_neotree_on_startup then
+    if g.SHOW_NEOTREE_ON_STARTUP then
       cmd('Neotree show')
     end
   end,
