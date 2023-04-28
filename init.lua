@@ -241,6 +241,15 @@ nmap('eq', '<cmd>SnipReset<cr>')
 nmap('ec', '<cmd>SnipClose<cr>')
 vmap('r', '<Plug>SnipRun')
 
+-- Telekasten mappings
+nmap('<leader>n', '<cmd>Telekasten panel<cr>')
+nmap('<leader>nn', '<cmd>Telekasten new_templated_note<cr>')
+nmap('<leader>nf', '<cmd>Telekasten find_notes<cr>')
+nmap('<leader>ns', '<cmd>Telekasten search_notes<cr>')
+nmap('<leader>nl', '<cmd>Telekasten insert_link<cr>')
+nmap('<leader>ni', '<cmd>Telekasten paste_img_and_link<cr>')
+nmap('<leader>nd', '<cmd>Telekasten goto_today<cr>')
+
 -- Telescope mappings
 nmap('fg', '<cmd>Telescope live_grep hidden=true<cr>')
 nmap('ff', '<cmd>Telescope find_files<cr>')
@@ -386,6 +395,7 @@ local plugins = {
   'ggandor/leap.nvim', -- navigation
   'is0n/fm-nvim', -- for ranger
   'max397574/better-escape.nvim', -- better insert mode exit
+  'renerocksai/telekasten.nvim', -- for taking notes
   'rktjmp/paperplanes.nvim', -- upload buffer online
   'rmagatti/auto-session', -- sessions based on cwd
   'SmiteshP/nvim-navic', -- file breadcrumbs
@@ -2452,6 +2462,15 @@ wk.register({
     g = 'Toggle lazygit',
     i = 'Toggle ipython',
     p = 'Upload buffer to ix.io',
+    n = {
+      name = 'Show notes command palette',
+      d = "Go to today's note",
+      f = 'Search for a note by title',
+      l = 'Insert a link to a note',
+      i = 'Paste an image and insert link',
+      n = 'Create a new note',
+      s = 'Search within notes',
+    },
     s = 'Open nvim config',
     t = 'Toggle floating terminal',
     v = 'Toggle vtop',
