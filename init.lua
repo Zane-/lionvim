@@ -1768,6 +1768,18 @@ require('telescope').setup({
   },
   extensions = {
     cder = {
+      dir_command = {
+        'fd',
+        '--type=d',
+        '--exclude=node_modules',
+        '--exclude=Library',
+        '--exclude=Pictures',
+        '--exclude=Music',
+        '--exclude=Movies',
+        '--exclude=Public',
+        '.',
+        os.getenv('HOME'),
+      },
       previewer_command = 'exa '
         .. '-a '
         .. '--color=always '
