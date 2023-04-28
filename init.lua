@@ -256,7 +256,7 @@ nmap('fr', '<cmd>Telescope oldfiles prompt_title=Recents<cr>')
 nmap('fs', '<cmd>Telescope treesitter prompt_title=Symbols<cr>')
 nmap('rs', '<cmd>Telescope spell_suggest<cr>')
 nmap('fh', '<cmd>Telescope howdoi<cr>')
-nmap('cd', '<cmd>Telescope cder prompt_title=""<cr>')
+nmap('cd', '<cmd>Telescope cder<cr>')
 nmap('<space>c', '<cmd>Telescope command_center<cr>')
 nmap(
   '<leader>c',
@@ -380,8 +380,9 @@ local plugins = {
   'zane-/symbols-outline.nvim', -- menu for symbols
   -- Utility
   'andrewradev/switch.vim', -- smart switch between stuff
-  'is0n/fm-nvim', -- for ranger
   'ggandor/leap.nvim', -- navigation
+  { 'iamcco/markdown-preview.nvim', build = 'cd app && npm install' }, -- live markdown preview
+  'is0n/fm-nvim', -- for ranger
   'max397574/better-escape.nvim', -- better insert mode exit
   'rktjmp/paperplanes.nvim', -- upload buffer online
   'rmagatti/auto-session', -- sessions based on cwd
@@ -2205,6 +2206,14 @@ command_center.add({
   {
     description = 'Lazy health',
     cmd = '<cmd>Lazy health<cr>',
+  },
+  {
+    description = 'Start live markdown preview',
+    cmd = '<cmd>MarkdownPreview<cr>',
+  },
+  {
+    description = 'Stop live markdown preview',
+    cmd = '<cmd>MarkdownPreviewStop<cr>',
   },
   {
     description = 'Make it rain',
