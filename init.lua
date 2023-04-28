@@ -224,6 +224,9 @@ nmap('rf', '<cmd>lua Format()<cr>')
 -- neo-tree mappings
 nmap('<C-f>', '<cmd>NeoTreeFocusToggle<cr>')
 
+-- oil mappings
+nmap('<C-c>', '<cmd>Oil --float .<cr>')
+
 -- searchbox.nvim mappings
 nmap('/', '<cmd>SearchBoxMatchAll<cr>')
 nmap('rg', '<cmd>SearchBoxReplace<cr>')
@@ -377,13 +380,13 @@ local plugins = {
   'zane-/symbols-outline.nvim', -- menu for symbols
   -- Utility
   'andrewradev/switch.vim', -- smart switch between stuff
-  'elihunter173/dirbuf.nvim', -- edit directory structure in a buffer
   'is0n/fm-nvim', -- for ranger
   'ggandor/leap.nvim', -- navigation
   'max397574/better-escape.nvim', -- better insert mode exit
   'rktjmp/paperplanes.nvim', -- upload buffer online
   'rmagatti/auto-session', -- sessions based on cwd
   'SmiteshP/nvim-navic', -- file breadcrumbs
+  'stevearc/oil.nvim', -- edit directory in a buffer
   'wellle/targets.vim', -- more text objects
   'zane-/bufdelete.nvim', -- layout-preserving buffer deletion
   'zane-/howdoi.nvim', -- howdoi queries with telescope
@@ -1228,6 +1231,7 @@ local config = {
       'FineCmdlinePrompt',
       'Fm',
       'neo-tree',
+      'oil',
       'Outline',
       'Searchbox',
       'TelescopePrompt',
@@ -1560,6 +1564,7 @@ local cmp_disabled_filetypes = {
   'FineCmdlinePrompt',
   'Searchbox',
   'TelescopePrompt',
+  'oil',
 }
 
 for _, filetype in pairs(cmp_disabled_filetypes) do
@@ -1627,6 +1632,11 @@ require('nvim-treesitter.configs').setup({
     },
   },
 })
+
+----------------------------------
+--         oil config
+----------------------------------
+require('oil').setup()
 
 ----------------------------------
 --      paperplanes config
@@ -2194,7 +2204,7 @@ command_center.add({
   },
   {
     description = 'Edit directory in a buffer',
-    cmd = '<cmd>Dirbuf<cr>',
+    cmd = '<cmd>Oil --float .<cr>',
   },
 })
 
@@ -2216,6 +2226,7 @@ wk.setup({
     },
   },
   key_labels = {
+    ['<C-C>'] = 'Ctrl + c',
     ['<C-B>'] = 'Ctrl + b',
     ['<C-H>'] = 'Ctrl + h',
     ['<C-J>'] = 'Ctrl + j',
@@ -2399,9 +2410,10 @@ wk.register({
   ['?'] = 'Open keymap',
   ['/'] = 'Search',
   ['<c-b>'] = 'Toggle DAP UI',
+  ['<c-c>'] = 'Edit directory in buffer',
   ['<c-f>'] = 'Toggle file tree',
   ['<c-h>'] = 'Go to window left',
-  ['<C-j>'] = 'Go to window down',
+  ['<c-j>'] = 'Go to window down',
   ['<c-k>'] = 'Go to window up',
   ['<c-l>'] = 'Go to window right',
   ['<c-q>'] = 'Close focused window',
