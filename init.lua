@@ -2,9 +2,10 @@
 --        Lionvim Config
 --
 -- Author: Zane B.
--- Last Modified: 2023-04-24
+-- Last Modified: 2023-04-27
 -- Dependencies:
 --   bat
+--   deno (for markdown previews)
 --   exa,
 --   fd,
 --   fzf > 0.30.0,
@@ -61,7 +62,8 @@ opt.updatetime = 300 -- faster update time
 -- Lionvim-specific options
 g.ENABLE_FORMAT_ON_SAVE = true -- whether or not to autoformat on save
 g.SHOW_NOTIFICATION_ON_FORMAT = false -- whether or not to show notifications on format
-g.SHOW_NEOTREE_ON_STARTUP = false -- whether or not to show neo-tree on startup
+g.show_neotree_on_startup = false -- whether or not to show neo-tree on startup
+g.auto_open_markdown_previews = true -- whether or not to automatically open markdown previews in deno
 
 augroup('options', { clear = true })
 
@@ -351,6 +353,7 @@ local plugins = {
   'zbirenbaum/copilot.lua', -- github copilot integration
   -- Telescope
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+  'nvim-telescope/telescope-media-files.nvim', -- previewer for media files
   'nvim-telescope/telescope.nvim', -- aesthetic finder popup
   'nvim-telescope/telescope-symbols.nvim', -- emoji + ascii symbols
   'stevearc/dressing.nvim', -- use telescope for more things
@@ -381,13 +384,13 @@ local plugins = {
   -- Utility
   'andrewradev/switch.vim', -- smart switch between stuff
   'ggandor/leap.nvim', -- navigation
-  { 'iamcco/markdown-preview.nvim', build = 'cd app && npm install' }, -- live markdown preview
   'is0n/fm-nvim', -- for ranger
   'max397574/better-escape.nvim', -- better insert mode exit
   'rktjmp/paperplanes.nvim', -- upload buffer online
   'rmagatti/auto-session', -- sessions based on cwd
   'SmiteshP/nvim-navic', -- file breadcrumbs
   'stevearc/oil.nvim', -- edit directory in a buffer
+  { 'toppair/peek.nvim', build = 'deno task --quiet build:fast' }, -- live markdown preview
   'wellle/targets.vim', -- more text objects
   'zane-/bufdelete.nvim', -- layout-preserving buffer deletion
   'zane-/howdoi.nvim', -- howdoi queries with telescope
@@ -1442,7 +1445,7 @@ autocmd('VimEnter', {
   desc = 'Open Neo-Tree on startup',
   group = 'neotree_start',
   callback = function()
-    if g.SHOW_NEOTREE_ON_STARTUP then
+    if g.show_neotree_on_startup then
       cmd('Neotree show')
     end
   end,
@@ -1650,6 +1653,32 @@ require('paperplanes').setup({
 })
 
 ----------------------------------
+--       peek.nvim config
+----------------------------------
+require('peek').setup({
+  -- auto_load through peek wasn't working for me so I created my own
+  -- autocmd below.
+  auto_load = false,
+})
+
+augroup('peek', { clear = true })
+autocmd('BufEnter', {
+  desc = 'Open peek on entering a markdown buffer',
+  group = 'peek',
+  callback = function()
+    if not g.auto_open_markdown_previews then
+      return
+    end
+
+    local peek = require('peek')
+    local ft = vim.api.nvim_buf_get_option(0, 'filetype')
+    if ft == 'markdown' and not peek.is_open() then
+      peek.open()
+    end
+  end,
+})
+
+----------------------------------
 --   searchbox.nvim config
 ----------------------------------
 
@@ -1806,10 +1835,11 @@ require('telescope').setup({
   },
 })
 
+require('telescope').load_extension('cder')
 require('telescope').load_extension('command_center')
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('howdoi')
-require('telescope').load_extension('cder')
+require('telescope').load_extension('media_files')
 require('telescope').load_extension('workspaces')
 
 ---------------------------------
@@ -2209,11 +2239,11 @@ command_center.add({
   },
   {
     description = 'Start live markdown preview',
-    cmd = '<cmd>MarkdownPreview<cr>',
+    cmd = '<cmd>lua require("peek").open()<cr>',
   },
   {
     description = 'Stop live markdown preview',
-    cmd = '<cmd>MarkdownPreviewStop<cr>',
+    cmd = '<cmd>lua require("peek").close()<cr>',
   },
   {
     description = 'Make it rain',
