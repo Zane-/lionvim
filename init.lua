@@ -65,6 +65,17 @@ g.SHOW_NOTIFICATION_ON_FORMAT = false -- whether or not to show notifications on
 g.show_neotree_on_startup = false -- whether or not to show neo-tree on startup
 g.auto_open_markdown_previews = true -- whether or not to automatically open markdown previews in deno
 
+-- Neovide-specific options
+if g.neovide then
+  g.neovide_transparency = 0.9
+  g.neovide_floating_blur_amount_x = 2.0
+  g.neovide_floating_blur_amount_y = 2.0
+  g.neovide_refresh_rate = 120
+  g.neovide_confirm_quit = true
+  g.neovide_remember_window_size = true
+  g.neovide_cursor_antialiasing = true
+end
+
 augroup('options', { clear = true })
 
 -- turn off linenumber for terminals and autoenter insert mode
@@ -122,6 +133,14 @@ g.mapleader = ','
 -- Easy command input
 nmap(':', '<cmd>FineCmdline<cr>')
 nmap(';', '<cmd>FineCmdline<cr>')
+
+-- Use Cmd+C/V for copy paste
+nmap('<D-v>', '"+p')
+map('t', '<D-v>', '"+p')
+imap('<D-v>', '<C-o>"+p')
+nmap('<D-c>', '"+y')
+map('t', '<D-c>', '"+y')
+imap('<D-c>', '<C-o>"+y')
 
 -- Quick Save/Quit
 nmap('<C-s>', '<cmd>w<cr>')
