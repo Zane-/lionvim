@@ -1187,9 +1187,6 @@ local on_attach = function(client, bufnr)
     '<cmd>lua require("goto-preview").goto_preview_references()<cr>'
   )
 
-  nmap_buf(bufnr, '[', '<cmd>lua GotoToPrevError()<cr>')
-  nmap_buf(bufnr, ']', '<cmd>lua GotoToNextError()<cr>')
-
   -- symbols-outline mappings
   nmap('<space>s', '<cmd>SymbolsOutline<cr>') -- toggle symbols outline
 
@@ -1211,17 +1208,6 @@ require('mason-lspconfig').setup_handlers({
     })
   end,
 })
-
-GotoToPrevError = function()
-  require('lspsaga.diagnostic'):goto_prev({
-    severity = vim.diagnostic.severity.ERROR,
-  })
-end
-GotoToNextError = function()
-  require('lspsaga.diagnostic'):goto_next({
-    severity = vim.diagnostic.severity.ERROR,
-  })
-end
 
 require('lspsaga').setup({
   symbol_in_winbar = {
