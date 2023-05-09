@@ -118,6 +118,9 @@ if g.neovide then
   imap('<D-c>', '<C-o>"+y')
 end
 
+-- git-blame.nvim options
+g.gitblame_enabled = 0
+
 augroup('options', { clear = true })
 
 -- turn off linenumber for terminals and autoenter insert mode
@@ -240,6 +243,9 @@ nmap('fz', '<cmd>Fzf<cr>')
 
 -- formatter mappings
 nmap('rf', '<cmd>lua Format()<cr>')
+
+-- git-blame.nvim mappings
+nmap('<leader>b', '<cmd>GitBlameToggle<cr>')
 
 -- neo-tree mappings
 nmap('<C-f>', '<cmd>NeoTreeFocusToggle<cr>')
@@ -365,6 +371,7 @@ local plugins = {
   'rcarriga/nvim-dap-ui', -- UI for debugger
   'theHamsta/nvim-dap-virtual-text',
   -- Programming support
+  'f-person/git-blame.nvim', -- inline git blame
   'L3MON4D3/LuaSnip', -- snippet engine
   'mhartington/formatter.nvim', -- formatting
   { 'michaelb/sniprun', build = 'bash ./install.sh' }, -- execute code inline
@@ -2485,6 +2492,7 @@ wk.register({
   },
   ['<leader>'] = {
     name = 'Misc',
+    b = 'Toggle git blame',
     c = {
       'Change colorscheme',
     },
