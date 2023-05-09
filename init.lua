@@ -25,6 +25,41 @@ local hi = vim.api.nvim_set_hl
 local notify = notify
 local opt = vim.opt
 
+local function map(mode, shortcut, command)
+  vim.api.nvim_set_keymap(
+    mode,
+    shortcut,
+    command,
+    { noremap = true, silent = true }
+  )
+end
+
+local function bufnr_map(bufnr, mode, shortcut, command)
+  vim.api.nvim_buf_set_keymap(
+    bufnr,
+    mode,
+    shortcut,
+    command,
+    { noremap = true, silent = true }
+  )
+end
+
+local function nmap(shortcut, command)
+  map('n', shortcut, command)
+end
+
+local function nmap_buf(bufnr, shortcut, command)
+  bufnr_map(bufnr, 'n', shortcut, command)
+end
+
+local function imap(shortcut, command)
+  map('i', shortcut, command)
+end
+
+local function vmap(shortcut, command)
+  map('v', shortcut, command)
+end
+
 ----------------------------------
 --           Options
 ----------------------------------
@@ -74,6 +109,13 @@ if g.neovide then
   g.neovide_confirm_quit = true
   g.neovide_remember_window_size = true
   g.neovide_cursor_antialiasing = true
+  -- Use Cmd+C/V for copy paste
+  nmap('<D-v>', '"+p')
+  map('t', '<D-v>', '"+p')
+  imap('<D-v>', '<C-o>"+p')
+  nmap('<D-c>', '"+y')
+  map('t', '<D-c>', '"+y')
+  imap('<D-c>', '<C-o>"+y')
 end
 
 augroup('options', { clear = true })
@@ -92,55 +134,12 @@ autocmd('TermOpen', {
 ----------------------------------
 --           Mappings
 ----------------------------------
-local function map(mode, shortcut, command)
-  vim.api.nvim_set_keymap(
-    mode,
-    shortcut,
-    command,
-    { noremap = true, silent = true }
-  )
-end
-
-local function bufnr_map(bufnr, mode, shortcut, command)
-  vim.api.nvim_buf_set_keymap(
-    bufnr,
-    mode,
-    shortcut,
-    command,
-    { noremap = true, silent = true }
-  )
-end
-
-local function nmap(shortcut, command)
-  map('n', shortcut, command)
-end
-
-local function nmap_buf(bufnr, shortcut, command)
-  bufnr_map(bufnr, 'n', shortcut, command)
-end
-
-local function imap(shortcut, command)
-  map('i', shortcut, command)
-end
-
-local function vmap(shortcut, command)
-  map('v', shortcut, command)
-end
-
 -- Remap leader to ,
 g.mapleader = ','
 
 -- Easy command input
 nmap(':', '<cmd>FineCmdline<cr>')
 nmap(';', '<cmd>FineCmdline<cr>')
-
--- Use Cmd+C/V for copy paste
-nmap('<D-v>', '"+p')
-map('t', '<D-v>', '"+p')
-imap('<D-v>', '<C-o>"+p')
-nmap('<D-c>', '"+y')
-map('t', '<D-c>', '"+y')
-imap('<D-c>', '<C-o>"+y')
 
 -- Quick Save/Quit
 nmap('<C-s>', '<cmd>w<cr>')
@@ -312,6 +311,9 @@ map('t', '<leader>v', '<cmd>lua ToggleVtop()<cr>')
 nmap('<leader>p', '<cmd>lua ToggleIPython()<cr>')
 map('t', '<leader>p', '<cmd>lua ToggleIPython()<cr>')
 
+-- treesj mappings
+nmap('tj', '<cmd>TSJToggle<cr>')
+
 -- which-key mappings
 nmap('?', '<cmd>WhichKey<cr>')
 
@@ -420,6 +422,7 @@ local plugins = {
   'SmiteshP/nvim-navic', -- file breadcrumbs
   'stevearc/oil.nvim', -- edit directory in a buffer
   { 'toppair/peek.nvim', build = 'deno task --quiet build:fast' }, -- live markdown preview
+  'Wansmer/treesj', -- join/split blocks of code
   'wellle/targets.vim', -- more text objects
   'zane-/bufdelete.nvim', -- layout-preserving buffer deletion
   'zane-/howdoi.nvim', -- howdoi queries with telescope
@@ -1924,6 +1927,12 @@ function ToggleIPython()
 end
 
 ----------------------------------
+--       trees config
+----------------------------------
+require('treesj').setup({
+  use_default_keymaps = false,
+})
+
 --       trouble config
 ----------------------------------
 require('trouble').setup({
