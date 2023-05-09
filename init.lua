@@ -289,6 +289,7 @@ nmap(
 nmap('fm', '<cmd>Telescope marks<cr>')
 nmap('fr', '<cmd>Telescope oldfiles prompt_title=Recents<cr>')
 nmap('fs', '<cmd>Telescope treesitter prompt_title=Symbols<cr>')
+nmap('fu', '<cmd>Telescope undo<cr>')
 nmap('rs', '<cmd>Telescope spell_suggest<cr>')
 nmap('fh', '<cmd>Telescope howdoi<cr>')
 nmap('cd', '<cmd>Telescope cder<cr>')
@@ -319,6 +320,9 @@ map('t', '<leader>p', '<cmd>lua ToggleIPython()<cr>')
 
 -- treesj mappings
 nmap('<leader>j', '<cmd>TSJToggle<cr>')
+
+-- undotree mappings
+nmap('<leader>u', '<cmd>UndotreeToggle<cr>')
 
 -- which-key mappings
 nmap('?', '<cmd>WhichKey<cr>')
@@ -420,9 +424,11 @@ local plugins = {
   'zane-/symbols-outline.nvim', -- menu for symbols
   -- Utility
   'andrewradev/switch.vim', -- smart switch between stuff
+  'debugloop/telescope-undo.nvim', -- undotree in telescope
   'ggandor/leap.nvim', -- navigation
   'is0n/fm-nvim', -- for ranger
   'max397574/better-escape.nvim', -- better insert mode exit
+  'mbbill/undotree', -- file history tree
   'renerocksai/telekasten.nvim', -- for taking notes
   'rktjmp/paperplanes.nvim', -- upload buffer online
   'rmagatti/auto-session', -- sessions based on cwd
@@ -1879,6 +1885,7 @@ require('telescope').load_extension('command_center')
 require('telescope').load_extension('fzf')
 require('telescope').load_extension('howdoi')
 require('telescope').load_extension('media_files')
+require('telescope').load_extension('undo')
 require('telescope').load_extension('workspaces')
 
 ---------------------------------
@@ -2511,6 +2518,7 @@ wk.register({
     },
     s = 'Open nvim config',
     t = 'Toggle floating terminal',
+    u = 'Toggle undo tree',
     v = 'Toggle vtop',
     x = 'Toggle horizontal terminal',
     ['<space>'] = 'Toggle search results highlight',
