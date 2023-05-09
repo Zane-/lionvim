@@ -312,7 +312,7 @@ nmap('<leader>p', '<cmd>lua ToggleIPython()<cr>')
 map('t', '<leader>p', '<cmd>lua ToggleIPython()<cr>')
 
 -- treesj mappings
-nmap('tj', '<cmd>TSJToggle<cr>')
+nmap('<leader>j', '<cmd>TSJToggle<cr>')
 
 -- which-key mappings
 nmap('?', '<cmd>WhichKey<cr>')
@@ -2489,6 +2489,7 @@ wk.register({
     },
     g = 'Toggle lazygit',
     i = 'Toggle ipython',
+		j = 'Toggle spliting/joining code block',
     p = 'Upload buffer to ix.io',
     n = {
       name = 'Show notes command palette',
