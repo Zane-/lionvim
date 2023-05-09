@@ -1181,7 +1181,7 @@ local on_attach = function(client, bufnr)
   nmap('<space>s', '<cmd>SymbolsOutline<cr>') -- toggle symbols outline
 
   -- Trouble mappings
-  nmap_buf(bufnr, '<F3>', '<cmd>TroubleToggle workspace_diagnostics<cr>')
+  nmap_buf(bufnr, '<space>t', '<cmd>TroubleToggle workspace_diagnostics<cr>')
   nmap_buf(bufnr, 'gr', '<cmd>TroubleToggle lsp_references<cr>')
 end
 
@@ -2475,6 +2475,7 @@ wk.register({
     o = 'Toggle function outline',
     i = 'Preview symbol information',
     s = 'Toggle symbol outline',
+    t = 'Toggle diagnostics menu',
     w = {
       name = 'Workspace',
       a = 'Add workspace folder',
@@ -2489,7 +2490,7 @@ wk.register({
     },
     g = 'Toggle lazygit',
     i = 'Toggle ipython',
-		j = 'Toggle spliting/joining code block',
+    j = 'Toggle spliting/joining code block',
     p = 'Upload buffer to ix.io',
     n = {
       name = 'Show notes command palette',
@@ -2523,7 +2524,6 @@ wk.register({
   ['<c-x>'] = 'Split window horizontally',
   ['<F1>'] = 'Goto previous location',
   ['<F2>'] = 'Goto next location',
-  ['<F3>'] = 'Toggle diagnostics menu',
   ['<F4>'] = 'Search man pages',
   ['<F5>'] = 'Search help tags',
   ['<F6>'] = 'Open verbose keymap',
