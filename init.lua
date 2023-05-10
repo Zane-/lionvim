@@ -268,8 +268,8 @@ nmap('<C-c>', '<cmd>Oil --float .<cr>')
 
 -- searchbox.nvim mappings
 nmap('/', '<cmd>SearchBoxMatchAll<cr>')
-nmap('rg', '<cmd>SearchBoxReplace<cr>')
-nmap('rw', ':SearchBoxReplace -- <C-r>=expand("<cword>")<cr><cr>')
+nmap('rg', '<cmd>SearchBoxReplace confirm=menu<cr>')
+nmap('rw', ':SearchBoxReplace confirm=menu -- <C-r>=expand("<cword>")<cr><cr>')
 
 -- SnipRun mappings
 nmap('er', '<cmd>SnipRun<cr>')
@@ -1725,7 +1725,6 @@ autocmd('BufEnter', {
 ----------------------------------
 --   searchbox.nvim config
 ----------------------------------
-
 require('searchbox').setup({
   popup = {
     buf_options = {
