@@ -162,6 +162,19 @@ nmap('k', 'gk')
 nmap('<S-Down>', '<cmd>m+<cr>')
 nmap('<S-Up>', '<cmd>m-2<cr>')
 
+-- Moves highlighted lines
+vmap('J', "<cmd>m '>+1<cr>gv=gv")
+vmap('K', "<cmd>m '<-2<cr>gv=gv")
+
+-- Keep cursor in middle when using Ctrl+u/d and searching
+nmap('<C-d>', '<C-d>zz')
+nmap('<C-u>', '<C-u>zz')
+nmap('n', 'nzzzv')
+nmap('N', 'Nzzzv')
+
+-- Keep cursor position when joining lines
+nmap('J', 'mzJ`z')
+
 -- Easy window navigation
 nmap('<C-h>', [[<c-\><c-n><c-w>h]])
 nmap('<C-j>', [[<c-\><c-n><c-w>j]])
