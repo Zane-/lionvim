@@ -237,6 +237,10 @@ nmap('<S-Left>', '<cmd>BufferLineMovePrev<cr>')
 nmap('<S-Right>', '<cmd>BufferLineMoveNext<cr>')
 nmap('ww', '<cmd>BufferLinePick<cr>')
 
+-- ChatGPT mappings
+nmap('<leader>c', '<cmd>ChatGPT<cr>')
+vmap('<leader>r', '<cmd>ChatGPTEditWithInstructions<cr>')
+
 -- dap mappings
 nmap('<c-b>', '<cmd>lua require("dapui").toggle()<cr>')
 vmap('be', '<cmd> lua require("dapui").eval()<cr>)')
@@ -308,7 +312,7 @@ nmap('fh', '<cmd>Telescope howdoi<cr>')
 nmap('cd', '<cmd>Telescope cder<cr>')
 nmap('<space>c', '<cmd>Telescope command_center<cr>')
 nmap(
-  '<leader>c',
+  '<leader>l',
   '<cmd>lua require("telescope.builtin").colorscheme(require("telescope.themes").get_dropdown({ layout_config = { height = 20 }}))<cr>'
 )
 nmap('<F4>', '<cmd>Telescope man_pages<cr>')
@@ -440,6 +444,7 @@ local plugins = {
   'debugloop/telescope-undo.nvim', -- undotree in telescope
   'ggandor/leap.nvim', -- navigation
   'is0n/fm-nvim', -- for ranger
+  'jackMort/ChatGPT.nvim', -- chatGPT integration
   'max397574/better-escape.nvim', -- better insert mode exit
   'mbbill/undotree', -- file history tree
   'renerocksai/telekasten.nvim', -- for taking notes
@@ -790,9 +795,16 @@ require('bufferline').setup({
 })
 
 ----------------------------------
+--        ChatGPT config
+----------------------------------
+require('chatgpt').setup({
+  api_key_cmd = 'cat ~/.config/.openai_api_key',
+})
+
+----------------------------------
 --        Comment config
 ----------------------------------
-require('Comment').setup({})
+require('Comment').setup()
 
 ----------------------------------
 --        copilot config
@@ -2499,11 +2511,12 @@ wk.register({
     name = 'Misc',
     b = 'Toggle git blame',
     c = {
-      'Change colorscheme',
+      'Open ChatGPT',
     },
     g = 'Toggle lazygit',
     i = 'Toggle ipython',
     j = 'Toggle spliting/joining code block',
+    l = 'Change colorscheme',
     p = 'Upload buffer to ix.io',
     n = {
       name = 'Show notes command palette',
