@@ -264,6 +264,9 @@ nmap('rf', '<cmd>lua Format()<cr>')
 -- git-blame.nvim mappings
 nmap('<leader>b', '<cmd>GitBlameToggle<cr>')
 
+-- leap.nvim mappings
+nmap('ws', '<cmd>lua SearchRef()<cr>')
+
 -- neo-tree mappings
 nmap('<C-f>', '<cmd>NeoTreeFocusToggle<cr>')
 
@@ -402,6 +405,7 @@ local plugins = {
   'nvim-treesitter/nvim-treesitter-textobjects', -- class and function textobjects
   'rafamadriz/friendly-snippets', -- common snippets package
   'skywind3000/asyncrun.vim', -- run commands async
+  'tpope/vim-fugitive', -- git
   'tpope/vim-surround', -- easily change surrounding brackets, quotes, etc.
   'tpope/vim-repeat', -- support plugins for dot repeat
   'windwp/nvim-autopairs', -- auto pair ( {, etc.
@@ -597,6 +601,29 @@ ToggleFormatNotifications = function()
     g.SHOW_NOTIFICATION_ON_FORMAT = true
     notify('Format notifications enabled', 'info', lionvim_notify_options)
   end
+end
+
+SearchRef = function()
+  local ref = require('illuminate.reference').buf_get_references(
+    vim.api.nvim_get_current_buf()
+  )
+  if not ref or #ref == 0 then
+    return false
+  end
+
+  local targets = {}
+  for _, v in pairs(ref) do
+    table.insert(targets, {
+      pos = { v[1][1] + 1, v[1][2] + 1 },
+    })
+  end
+
+  require('leap').leap({
+    targets = targets,
+    target_windows = { vim.api.nvim_get_current_win() },
+  })
+
+  return true
 end
 
 --================================
