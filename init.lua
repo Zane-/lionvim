@@ -267,6 +267,9 @@ nmap('<leader>b', '<cmd>GitBlameToggle<cr>')
 -- leap.nvim mappings
 nmap('ws', '<cmd>lua SearchRef()<cr>')
 
+-- muren.nvim mappings
+nmap('rs', '<cmd>MurenToggle<cr>')
+
 -- neo-tree mappings
 nmap('<C-f>', '<cmd>NeoTreeFocusToggle<cr>')
 
@@ -310,7 +313,6 @@ nmap('fm', '<cmd>Telescope marks<cr>')
 nmap('fr', '<cmd>Telescope oldfiles prompt_title=Recents<cr>')
 nmap('fs', '<cmd>Telescope treesitter prompt_title=Symbols<cr>')
 nmap('fu', '<cmd>Telescope undo<cr>')
-nmap('rs', '<cmd>Telescope spell_suggest<cr>')
 nmap('fh', '<cmd>Telescope howdoi<cr>')
 nmap('cd', '<cmd>Telescope cder<cr>')
 nmap('<space>c', '<cmd>Telescope command_center<cr>')
@@ -444,6 +446,7 @@ local plugins = {
   'zane-/command_center.nvim', -- command palette
   'zane-/symbols-outline.nvim', -- menu for symbols
   -- Utility
+  'AckslD/muren.nvim', -- multiple find and replace
   'andrewradev/switch.vim', -- smart switch between stuff
   'debugloop/telescope-undo.nvim', -- undotree in telescope
   'ggandor/leap.nvim', -- navigation
@@ -1493,6 +1496,11 @@ ins_right({
 lualine.setup(config)
 
 ----------------------------------
+--      muren.nvim config
+----------------------------------
+require('muren').setup()
+
+----------------------------------
 --       neo-tree config
 ----------------------------------
 require('neo-tree').setup({
@@ -2490,7 +2498,7 @@ wk.register({
     g = 'Replace all',
     l = 'Replace on line only',
     n = 'Rename symbol under cursor',
-    s = 'Suggest spelling for word under cursor',
+    s = 'Replace multiple patterns',
     t = {
       name = 'Trim',
       w = 'Trim ^M carriage characters',
