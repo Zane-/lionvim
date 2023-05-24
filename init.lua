@@ -413,8 +413,6 @@ local plugins = {
   'windwp/nvim-autopairs', -- auto pair ( {, etc.
   'windwp/nvim-ts-autotag', -- autoclose html, etc. tags
   'wintermute-cell/gitignore.nvim', -- gitignore generation
-  'zbirenbaum/copilot-cmp', -- cmp plugin for copilot
-  'zbirenbaum/copilot.lua', -- github copilot integration
   -- Telescope
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
   'nvim-telescope/telescope-media-files.nvim', -- previewer for media files
@@ -835,15 +833,6 @@ require('chatgpt').setup({
 --        Comment config
 ----------------------------------
 require('Comment').setup()
-
-----------------------------------
---        copilot config
-----------------------------------
-require('copilot_cmp').setup()
-require('copilot').setup({
-  suggestion = { enabled = false },
-  panel = { enabled = false },
-})
 
 ----------------------------------
 --          dap config
@@ -1504,7 +1493,7 @@ require('muren').setup()
 --       neo-tree config
 ----------------------------------
 require('neo-tree').setup({
-  close_if_last_window = false,
+  close_if_last_window = true,
   default_component_configs = {
     git_status = {
       symbols = {
@@ -1527,7 +1516,15 @@ require('neo-tree').setup({
     hide_dotfiles = false,
   },
   window = {
-    width = 25,
+    width = 32,
+  },
+  source_selector = {
+    sources = {
+      { source = 'filesystem', display_name = ' 󰉓 Files ' },
+      { source = 'buffers', display_name = '  Bufs ' },
+      { source = 'git_status', display_name = ' 󰊢 Git ' },
+    },
+    winbar = true,
   },
 })
 
@@ -1639,7 +1636,6 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'luasnip' },
-    { name = 'copilot', group_index = 2 },
   }, {
     { name = 'buffer' },
   }),
