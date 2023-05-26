@@ -96,7 +96,7 @@ opt.updatetime = 300 -- faster update time
 
 -- Lionvim-specific options
 g.ENABLE_FORMAT_ON_SAVE = true -- whether or not to autoformat on save
-g.SHOW_NOTIFICATION_ON_FORMAT = false -- whether or not to show notifications on format
+g.SHOW_NOTIFICATION_ON_FORMAT = true -- whether or not to show notifications on format
 g.show_neotree_on_startup = false -- whether or not to show neo-tree on startup
 g.auto_open_markdown_previews = true -- whether or not to automatically open markdown previews in deno
 
@@ -161,10 +161,6 @@ nmap('k', 'gk')
 -- Move lines with Shift + Up/Down
 nmap('<S-Down>', '<cmd>m+<cr>')
 nmap('<S-Up>', '<cmd>m-2<cr>')
-
--- Moves highlighted lines
-vmap('J', "<cmd>m '>+1<cr>gv=gv")
-vmap('K', "<cmd>m '<-2<cr>gv=gv")
 
 -- Keep cursor in middle when using Ctrl+u/d and searching
 nmap('<C-d>', '<C-d>zz')
@@ -1023,6 +1019,9 @@ require('formatter').setup({
     python = {
       require('formatter.filetypes.python').black,
     },
+    rust = {
+      require('formatter.filetypes.rust').rustfmt,
+    },
     scss = {
       require('formatter.defaults.prettier'),
     },
@@ -1071,6 +1070,17 @@ local formatters = {
     },
     format = function()
       if vim.fn.executable('prettier') == 1 then
+        vim.api.nvim_command('Format')
+        return true
+      end
+      return false
+    end,
+  },
+  rustfmt = {
+    name = 'rustfmt',
+    ft = { 'rust' },
+    format = function()
+      if vim.fn.executable('rustfmt') == 1 then
         vim.api.nvim_command('Format')
         return true
       end
