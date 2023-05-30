@@ -418,6 +418,7 @@ local plugins = {
   -- UI
   'akinsho/bufferline.nvim', -- fancy buffer line
   'akinsho/toggleterm.nvim', -- better terminals
+  'Bekaboo/dropbar.nvim', -- winbar with file context
   'eandrju/cellular-automaton.nvim', -- fancy animation
   'folke/which-key.nvim', -- shortcut popup
   'folke/trouble.nvim', -- aesthetic diagnostics page
@@ -451,7 +452,6 @@ local plugins = {
   'renerocksai/telekasten.nvim', -- for taking notes
   'rktjmp/paperplanes.nvim', -- upload buffer online
   'rmagatti/auto-session', -- sessions based on cwd
-  'SmiteshP/nvim-navic', -- file breadcrumbs
   'stevearc/oil.nvim', -- edit directory in a buffer
   { 'toppair/peek.nvim', build = 'deno task --quiet build:fast' }, -- live markdown preview
   'Wansmer/treesj', -- join/split blocks of code
@@ -1192,14 +1192,7 @@ for type, icon in pairs(signs) do
   fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities
-local navic = require('nvim-navic')
-
 local on_attach = function(client, bufnr)
-  if client.server_capabilities.documentSymbolProvider then
-    navic.attach(client, bufnr)
-  end
-
   g.code_action_menu_show_details = false
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', '<cmd>lua.vim.lsp.omnifunc')
 
@@ -1433,16 +1426,6 @@ ins_left({
 ins_left({
   'location',
   icon = '',
-})
-
-ins_left({
-  function()
-    if navic.is_available() then
-      return navic.get_location()
-    end
-    return ''
-  end,
-  padding = { right = 1 },
 })
 
 ins_right({
