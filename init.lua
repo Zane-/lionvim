@@ -1697,9 +1697,9 @@ require('nvim-treesitter.configs').setup({
   incremental_selection = {
     enable = true,
     keymaps = {
-      init_selection = 'vni',
-      node_incremental = 'vnn',
-      node_decremental = 'vnp',
+      init_selection = ']',
+      node_incremental = ']',
+      node_decremental = '[',
     },
   },
   textobjects = {
@@ -2499,12 +2499,6 @@ wk.register({
   S = 'Jump to text backwards',
   v = {
     name = 'Visual Mode',
-    n = {
-      name = 'Node selection',
-      i = 'Initialize node selection',
-      n = 'Increment node selection',
-      p = 'Decrement node selection',
-    },
     r = 'Execute code selection',
   },
   w = {
@@ -2560,6 +2554,8 @@ wk.register({
   },
   ['?'] = 'Open keymap',
   ['/'] = 'Search',
+  [']'] = 'Increment node selection',
+  ['['] = 'Decrement node selection',
   ['<c-b>'] = 'Toggle DAP UI',
   ['<c-c>'] = 'Edit directory in buffer',
   ['<c-f>'] = 'Toggle file tree',
