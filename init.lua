@@ -26,8 +26,7 @@ local hi = vim.api.nvim_set_hl
 local notify = notify
 local opt = vim.opt
 
-local function map(mode, shortcut, command)
-	vim.api.nvim_set_keymap(
+local function map(mode, shortcut, command) vim.api.nvim_set_keymap(
 		mode,
 		shortcut,
 		command,
@@ -379,88 +378,88 @@ local plugins = {
 	'folke/tokyonight.nvim',
 	-- LSP
 	'neovim/nvim-lspconfig', -- completion, go-to, etc.
-	'nvimdev/lspsaga.nvim',  -- LSP enhancements
+	'nvimdev/lspsaga.nvim', -- LSP enhancements
 	{
 		'williamboman/mason.nvim',
-		build = ':MasonUpdate',            -- :MasonUpdate updates registry contents
+		build = ':MasonUpdate',           -- :MasonUpdate updates registry contents
 	},
 	'williamboman/mason-lspconfig.nvim', -- lsp support for mason
-	'rmagatti/goto-preview',             -- goto preview popup
+	'rmagatti/goto-preview',            -- goto preview popup
 	-- DAP
-	'mfussenegger/nvim-dap',             -- debugger
-	'mfussenegger/nvim-dap-python',      -- debugger config for python
-	'nvim-neotest/nvim-nio',             -- req for dap
-	'jay-babu/mason-nvim-dap.nvim',      -- dap installer
+	'mfussenegger/nvim-dap',            -- debugger
+	'mfussenegger/nvim-dap-python',     -- debugger config for python
+	'nvim-neotest/nvim-nio',            -- req for dap
+	'jay-babu/mason-nvim-dap.nvim',     -- dap installer
 	'nvim-telescope/telescope-dap.nvim',
-	'rcarriga/nvim-dap-ui',              -- UI for debugger
+	'rcarriga/nvim-dap-ui',             -- UI for debugger
 	'theHamsta/nvim-dap-virtual-text',
 	-- Programming support
-	'f-person/git-blame.nvim',                           -- inline git blame
-	'L3MON4D3/LuaSnip',                                  -- snippet engine
-	'mhartington/formatter.nvim',                        -- formatting
+	'f-person/git-blame.nvim',                          -- inline git blame
+	'L3MON4D3/LuaSnip',                                 -- snippet engine
+	'mhartington/formatter.nvim',                       -- formatting
 	{ 'michaelb/sniprun', build = 'bash ./install.sh' }, -- execute code inline
-	'natecraddock/workspaces.nvim',                      -- workspace support
-	'numToStr/Comment.nvim',                             -- smart comments support
-	'nvim-treesitter/nvim-treesitter',                   -- additional syntax highlighting
-	'nvim-treesitter/nvim-treesitter-textobjects',       -- class and function textobjects
-	'rafamadriz/friendly-snippets',                      -- common snippets package
-	'skywind3000/asyncrun.vim',                          -- run commands async
-	'tpope/vim-fugitive',                                -- git
-	'tpope/vim-surround',                                -- easily change surrounding brackets, quotes, etc.
-	'tpope/vim-repeat',                                  -- support plugins for dot repeat
-	'windwp/nvim-autopairs',                             -- auto pair ( {, etc.
-	'windwp/nvim-ts-autotag',                            -- autoclose html, etc. tags
-	'wintermute-cell/gitignore.nvim',                    -- gitignore generation
+	'natecraddock/workspaces.nvim',                     -- workspace support
+	'numToStr/Comment.nvim',                            -- smart comments support
+	'nvim-treesitter/nvim-treesitter',                  -- additional syntax highlighting
+	'nvim-treesitter/nvim-treesitter-textobjects',      -- class and function textobjects
+	'rafamadriz/friendly-snippets',                     -- common snippets package
+	'skywind3000/asyncrun.vim',                         -- run commands async
+	'tpope/vim-fugitive',                               -- git
+	'tpope/vim-surround',                               -- easily change surrounding brackets, quotes, etc.
+	'tpope/vim-repeat',                                 -- support plugins for dot repeat
+	'windwp/nvim-autopairs',                            -- auto pair ( {, etc.
+	'windwp/nvim-ts-autotag',                           -- autoclose html, etc. tags
+	'wintermute-cell/gitignore.nvim',                   -- gitignore generation
 	-- Telescope
 	{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-	'nvim-telescope/telescope-media-files.nvim',                     -- previewer for media files
-	'nvim-telescope/telescope.nvim',                                 -- aesthetic finder popup
-	'nvim-telescope/telescope-symbols.nvim',                         -- emoji + ascii symbols
-	'stevearc/dressing.nvim',                                        -- use telescope for more things
+	'nvim-telescope/telescope-media-files.nvim',                                           -- previewer for media files
+	'nvim-telescope/telescope.nvim',                                                       -- aesthetic finder popup
+	'nvim-telescope/telescope-symbols.nvim',                                               -- emoji + ascii symbols
+	'stevearc/dressing.nvim',                                                              -- use telescope for more things
 	-- UI
-	'akinsho/bufferline.nvim',                                       -- fancy buffer line
-	'akinsho/toggleterm.nvim',                                       -- better terminals
-	'Bekaboo/dropbar.nvim',                                          -- winbar with file context
-	'eandrju/cellular-automaton.nvim',                               -- fancy animation
-	'folke/which-key.nvim',                                          -- shortcut popup
-	'folke/trouble.nvim',                                            -- aesthetic diagnostics page
-	'goolord/alpha-nvim',                                            -- fancy start page
-	'j-hui/fidget.nvim',                                             -- LSP progress indicator
-	'kosayoda/nvim-lightbulb',                                       -- show a lightbulb for code actions
-	'kyazdani42/nvim-web-devicons',                                  -- file icons
-	'lewis6991/gitsigns.nvim',                                       -- git integration
-	'lukas-reineke/indent-blankline.nvim',                           -- identation lines
-	'munifTanjim/nui.nvim',                                          -- UI dependency
-	'nvim-lualine/lualine.nvim',                                     -- status line
-	'nvim-lua/plenary.nvim',                                         -- UI dependency
-	'nvim-lua/popup.nvim',                                           -- UI dependency
-	'nvim-neo-tree/neo-tree.nvim',                                   -- filetree
-	'rcarriga/nvim-notify',                                          -- fancy notifications
-	'RRethy/vim-illuminate',                                         -- highlight symbol under cursor
-	'stevearc/aerial.nvim',                                          -- function outline
-	'VonHeikemen/searchbox.nvim',                                    -- search popup
-	'VonHeikemen/fine-cmdline.nvim',                                 -- command input popup
-	'zane-/command_center.nvim',                                     -- command palette
-	'zane-/symbols-outline.nvim',                                    -- menu for symbols
+	'akinsho/bufferline.nvim',                                                             -- fancy buffer line
+	'akinsho/toggleterm.nvim',                                                             -- better terminals
+	'Bekaboo/dropbar.nvim',                                                                -- winbar with file context
+	'eandrju/cellular-automaton.nvim',                                                     -- fancy animation
+	'folke/which-key.nvim',                                                                -- shortcut popup
+	'folke/trouble.nvim',                                                                  -- aesthetic diagnostics page
+	'goolord/alpha-nvim',                                                                  -- fancy start page
+	'j-hui/fidget.nvim',                                                                   -- LSP progress indicator
+	'kosayoda/nvim-lightbulb',                                                             -- show a lightbulb for code actions
+	'kyazdani42/nvim-web-devicons',                                                        -- file icons
+	'lewis6991/gitsigns.nvim',                                                             -- git integration
+	'lukas-reineke/indent-blankline.nvim',                                                 -- identation lines
+	'munifTanjim/nui.nvim',                                                                -- UI dependency
+	'nvim-lualine/lualine.nvim',                                                           -- status line
+	'nvim-lua/plenary.nvim',                                                               -- UI dependency
+	'nvim-lua/popup.nvim',                                                                 -- UI dependency
+	'nvim-neo-tree/neo-tree.nvim',                                                         -- filetree
+	'rcarriga/nvim-notify',                                                                -- fancy notifications
+	'RRethy/vim-illuminate',                                                               -- highlight symbol under cursor
+	'stevearc/aerial.nvim',                                                                -- function outline
+	'VonHeikemen/searchbox.nvim',                                                          -- search popup
+	'VonHeikemen/fine-cmdline.nvim',                                                       -- command input popup
+	'zane-/command_center.nvim',                                                           -- command palette
+	'zane-/symbols-outline.nvim',                                                          -- menu for symbols
 	-- Utility
-	'AckslD/muren.nvim',                                             -- multiple find and replace
-	'andrewradev/switch.vim',                                        -- smart switch between stuff
-	'debugloop/telescope-undo.nvim',                                 -- undotree in telescope
-	'ggandor/leap.nvim',                                             -- navigation
-	'is0n/fm-nvim',                                                  -- for ranger
-	'jackMort/ChatGPT.nvim',                                         -- chatGPT integration
-	'max397574/better-escape.nvim',                                  -- better insert mode exit
-	'mbbill/undotree',                                               -- file history tree
-	'renerocksai/telekasten.nvim',                                   -- for taking notes
-	'rktjmp/paperplanes.nvim',                                       -- upload buffer online
-	'rmagatti/auto-session',                                         -- sessions based on cwd
-	'stevearc/oil.nvim',                                             -- edit directory in a buffer
+	'AckslD/muren.nvim',                                                                   -- multiple find and replace
+	'andrewradev/switch.vim',                                                              -- smart switch between stuff
+	'debugloop/telescope-undo.nvim',                                                       -- undotree in telescope
+	'ggandor/leap.nvim',                                                                   -- navigation
+	'is0n/fm-nvim',                                                                        -- for ranger
+	'jackMort/ChatGPT.nvim',                                                               -- chatGPT integration
+	'max397574/better-escape.nvim',                                                        -- better insert mode exit
+	'mbbill/undotree',                                                                     -- file history tree
+	'renerocksai/telekasten.nvim',                                                         -- for taking notes
+	'rktjmp/paperplanes.nvim',                                                             -- upload buffer online
+	'rmagatti/auto-session',                                                               -- sessions based on cwd
+	'stevearc/oil.nvim',                                                                   -- edit directory in a buffer
 	{ 'toppair/peek.nvim',                        build = 'deno task --quiet build:fast' }, -- live markdown preview
-	'Wansmer/treesj',                                                -- join/split blocks of code
-	'wellle/targets.vim',                                            -- more text objects
-	'zane-/bufdelete.nvim',                                          -- layout-preserving buffer deletion
-	'zane-/howdoi.nvim',                                             -- howdoi queries with telescope
-	'zane-/cder.nvim',                                               -- change working directory with telescope
+	'Wansmer/treesj',                                                                      -- join/split blocks of code
+	'wellle/targets.vim',                                                                  -- more text objects
+	'zane-/bufdelete.nvim',                                                                -- layout-preserving buffer deletion
+	'zane-/howdoi.nvim',                                                                   -- howdoi queries with telescope
+	'zane-/cder.nvim',                                                                     -- change working directory with telescope
 }
 
 require('lazy').setup(plugins)
@@ -1363,7 +1362,7 @@ ins_left({
 	function()
 		return '▌'
 	end,
-	color = { fg = colors.lavender },  -- Sets highlighting of component
+	color = { fg = colors.lavender }, -- Sets highlighting of component
 	padding = { left = 0, right = 1 }, -- We don't need space before this
 })
 
@@ -2397,191 +2396,148 @@ wk.setup({
 })
 
 wk.register({
-	c = {
-		a = {
-			c = 'a class',
-			f = 'a function',
-		},
-		i = {
-			c = 'a class',
-			f = 'a function',
-		},
-		d = 'Change working directory',
-		s = 'Change surrounding',
-	},
-	b = {
-		name = 'Debug',
-		b = 'Toggle breakpoint',
-		c = 'Continue',
-		e = 'Evaluate expression under cursor',
-		f = 'List frames',
-		i = 'Step into',
-		l = 'List breakpoints',
-		o = 'Step over',
-		O = 'Step out',
-		t = 'Terminate',
-		v = 'List variables',
-	},
-	d = {
-		name = 'Delete',
-		a = {
-			name = 'Text objects',
-			c = 'a class',
-			f = 'a function',
-		},
-		i = {
-			c = 'a class',
-			f = 'a function',
-		},
-		s = 'Surrounding',
-	},
-	e = {
-		name = 'Code execution',
-		c = 'Clear all execution results',
-		l = 'Toggle live code execution',
-		r = 'Execute current line',
-		q = 'Stop currently executing code',
-	},
-	f = {
-		name = 'Search',
-		b = 'Search open buffer names',
-		f = 'Search for filename',
-		g = 'Live grep',
-		h = 'Search howdoi',
-		r = 'Search for recent file',
-		s = 'Search for symbol',
-		w = 'Search pattern in current file',
-		z = 'Search for filename with fzf',
-	},
-	g = {
-		name = 'Goto/Comments',
-		b = 'Toggle comment blockwise',
-		c = 'Toggle comment linewise',
-		['cc'] = 'Toggle comment for current line',
-		['ca'] = {
-			c = 'a class',
-			f = 'a function',
-		},
-		['ci'] = {
-			c = 'a class',
-			f = 'a function',
-		},
-		d = 'Goto definition for symbol',
-		D = 'Goto declaration for symbol',
-		i = 'Goto implementation for symbol',
-		p = 'Open definition preview for symbol',
-		P = 'Close all definition preview windows',
-		o = 'Goto header/implementation file',
-		r = 'Open references for symbol in quickfix',
-		R = 'Search references for symbol',
-		s = 'Switch symbol under cursor',
-	},
-	q = {
-		name = 'Quit',
-		a = 'Quit all without saving',
-		f = 'Force quit without saving',
-		s = 'Save all and quit',
-		q = 'Close current buffer',
-		w = 'Save and quit',
-	},
-	r = {
-		name = 'Refactor',
-		f = 'Format file',
-		g = 'Replace all',
-		l = 'Replace on line only',
-		n = 'Rename symbol under cursor',
-		s = 'Replace multiple patterns',
-		t = {
-			name = 'Trim',
-			w = 'Trim ^M carriage characters',
-			m = 'Trim trailing whitespace',
-		},
-		w = 'Replace word under cursor',
-	},
-	s = 'Jump to text forwards',
-	S = 'Jump to text backwards',
-	v = {
-		name = 'Visual Mode',
-		r = 'Execute code selection',
-	},
-	w = {
-		name = 'Jump',
-		s = 'Jump to text in any window',
-		o = 'Open workspace',
-		w = 'Jump to buffer',
-	},
-	['<space>'] = {
-		name = 'Util',
-		a = 'Open code action menu',
-		c = 'Open command palette',
-		d = 'Open type definition for symbol',
-		h = 'Open signature help',
-		f = 'Open finder for symbol',
-		o = 'Toggle function outline',
-		i = 'Preview symbol information',
-		s = 'Toggle symbol outline',
-		t = 'Toggle diagnostics menu',
-		w = {
-			name = 'Workspace',
-			a = 'Add workspace folder',
-			l = 'List workspace folders',
-			r = 'Remove workspace folder',
-		},
-	},
-	['<leader>'] = {
-		name = 'Misc',
-		b = 'Toggle git blame',
-		c = {
-			'Open ChatGPT',
-		},
-		g = 'Toggle lazygit',
-		i = 'Toggle ipython',
-		j = 'Toggle spliting/joining code block',
-		l = 'Change colorscheme',
-		p = 'Upload buffer to ix.io',
-		n = {
-			name = 'Show notes command palette',
-			d = "Go to today's note",
-			f = 'Search for a note by title',
-			l = 'Insert a link to a note',
-			i = 'Paste an image and insert link',
-			n = 'Create a new note',
-			s = 'Search within notes',
-		},
-		s = 'Open nvim config',
-		t = 'Toggle floating terminal',
-		u = 'Toggle undo tree',
-		v = 'Toggle vtop',
-		x = 'Toggle horizontal terminal',
-		['<space>'] = 'Toggle search results highlight',
-	},
-	['?'] = 'Open keymap',
-	['/'] = 'Search',
-	[']'] = 'Increment node selection',
-	['['] = 'Decrement node selection',
-	['<c-b>'] = 'Toggle DAP UI',
-	['<c-c>'] = 'Edit directory in buffer',
-	['<c-f>'] = 'Toggle file tree',
-	['<c-h>'] = 'Go to window left',
-	['<c-j>'] = 'Go to window down',
-	['<c-k>'] = 'Go to window up',
-	['<c-l>'] = 'Go to window right',
-	['<c-q>'] = 'Close focused window',
-	['<c-n>'] = 'New file',
-	['<c-o>'] = 'Open file',
-	['<c-s>'] = 'Save current buffer',
-	['<c-v>'] = 'Split window vertically',
-	['<c-x>'] = 'Split window horizontally',
-	['<F1>'] = 'Goto previous location',
-	['<F2>'] = 'Goto next location',
-	['<F4>'] = 'Search man pages',
-	['<F5>'] = 'Search help tags',
-	['<F6>'] = 'Open verbose keymap',
-	['<s-left>'] = 'Move buffer left',
-	['<s-right>'] = 'Move buffer right',
-	['<s-up>'] = 'Move line up',
-	['<s-down>'] = 'Move line down',
+	{ "/",               desc = "Search" },
+	{ "<F1>",            desc = "Goto previous location" },
+	{ "<F2>",            desc = "Goto next location" },
+	{ "<F4>",            desc = "Search man pages" },
+	{ "<F5>",            desc = "Search help tags" },
+	{ "<F6>",            desc = "Open verbose keymap" },
+	{ "<c-b>",           desc = "Toggle DAP UI" },
+	{ "<c-c>",           desc = "Edit directory in buffer" },
+	{ "<c-f>",           desc = "Toggle file tree" },
+	{ "<c-h>",           desc = "Go to window left" },
+	{ "<c-j>",           desc = "Go to window down" },
+	{ "<c-k>",           desc = "Go to window up" },
+	{ "<c-l>",           desc = "Go to window right" },
+	{ "<c-n>",           desc = "New file" },
+	{ "<c-o>",           desc = "Open file" },
+	{ "<c-q>",           desc = "Close focused window" },
+	{ "<c-s>",           desc = "Save current buffer" },
+	{ "<c-v>",           desc = "Split window vertically" },
+	{ "<c-x>",           desc = "Split window horizontally" },
+	{ "<leader>",        group = "Misc" },
+	{ "<leader><space>", desc = "Toggle search results highlight" },
+	{ "<leader>b",       desc = "Toggle git blame" },
+	{ "<leader>c",       desc = "Open ChatGPT" },
+	{ "<leader>g",       desc = "Toggle lazygit" },
+	{ "<leader>i",       desc = "Toggle ipython" },
+	{ "<leader>j",       desc = "Toggle spliting/joining code block" },
+	{ "<leader>l",       desc = "Change colorscheme" },
+	{ "<leader>n",       group = "Show notes command palette" },
+	{ "<leader>nd",      desc = "Go to today's note" },
+	{ "<leader>nf",      desc = "Search for a note by title" },
+	{ "<leader>ni",      desc = "Paste an image and insert link" },
+	{ "<leader>nl",      desc = "Insert a link to a note" },
+	{ "<leader>nn",      desc = "Create a new note" },
+	{ "<leader>ns",      desc = "Search within notes" },
+	{ "<leader>p",       desc = "Upload buffer to ix.io" },
+	{ "<leader>s",       desc = "Open nvim config" },
+	{ "<leader>t",       desc = "Toggle floating terminal" },
+	{ "<leader>u",       desc = "Toggle undo tree" },
+	{ "<leader>v",       desc = "Toggle vtop" },
+	{ "<leader>x",       desc = "Toggle horizontal terminal" },
+	{ "<s-down>",        desc = "Move line down" },
+	{ "<s-left>",        desc = "Move buffer left" },
+	{ "<s-right>",       desc = "Move buffer right" },
+	{ "<s-up>",          desc = "Move line up" },
+	{ "<space>",         group = "Util" },
+	{ "<space>a",        desc = "Open code action menu" },
+	{ "<space>c",        desc = "Open command palette" },
+	{ "<space>d",        desc = "Open type definition for symbol" },
+	{ "<space>f",        desc = "Open finder for symbol" },
+	{ "<space>h",        desc = "Open signature help" },
+	{ "<space>i",        desc = "Preview symbol information" },
+	{ "<space>o",        desc = "Toggle function outline" },
+	{ "<space>s",        desc = "Toggle symbol outline" },
+	{ "<space>t",        desc = "Toggle diagnostics menu" },
+	{ "<space>w",        group = "Workspace" },
+	{ "<space>wa",       desc = "Add workspace folder" },
+	{ "<space>wl",       desc = "List workspace folders" },
+	{ "<space>wr",       desc = "Remove workspace folder" },
+	{ "?",               desc = "Open keymap" },
+	{ "S",               desc = "Jump to text backwards" },
+	{ "[",               desc = "Decrement node selection" },
+	{ "]",               desc = "Increment node selection" },
+	{ "b",               group = "Debug" },
+	{ "bO",              desc = "Step out" },
+	{ "bb",              desc = "Toggle breakpoint" },
+	{ "bc",              desc = "Continue" },
+	{ "be",              desc = "Evaluate expression under cursor" },
+	{ "bf",              desc = "List frames" },
+	{ "bi",              desc = "Step into" },
+	{ "bl",              desc = "List breakpoints" },
+	{ "bo",              desc = "Step over" },
+	{ "bt",              desc = "Terminate" },
+	{ "bv",              desc = "List variables" },
+	{ "cac",             desc = "a class" },
+	{ "caf",             desc = "a function" },
+	{ "cd",              desc = "Change working directory" },
+	{ "cic",             desc = "a class" },
+	{ "cif",             desc = "a function" },
+	{ "cs",              desc = "Change surrounding" },
+	{ "d",               group = "Delete" },
+	{ "da",              group = "Text objects" },
+	{ "dac",             desc = "a class" },
+	{ "daf",             desc = "a function" },
+	{ "dic",             desc = "a class" },
+	{ "dif",             desc = "a function" },
+	{ "ds",              desc = "Surrounding" },
+	{ "e",               group = "Code execution" },
+	{ "ec",              desc = "Clear all execution results" },
+	{ "el",              desc = "Toggle live code execution" },
+	{ "eq",              desc = "Stop currently executing code" },
+	{ "er",              desc = "Execute current line" },
+	{ "f",               group = "Search" },
+	{ "fb",              desc = "Search open buffer names" },
+	{ "ff",              desc = "Search for filename" },
+	{ "fg",              desc = "Live grep" },
+	{ "fh",              desc = "Search howdoi" },
+	{ "fr",              desc = "Search for recent file" },
+	{ "fs",              desc = "Search for symbol" },
+	{ "fw",              desc = "Search pattern in current file" },
+	{ "fz",              desc = "Search for filename with fzf" },
+	{ "g",               group = "Goto/Comments" },
+	{ "gD",              desc = "Goto declaration for symbol" },
+	{ "gP",              desc = "Close all definition preview windows" },
+	{ "gR",              desc = "Search references for symbol" },
+	{ "gb",              desc = "Toggle comment blockwise" },
+	{ "gc",              desc = "Toggle comment linewise" },
+	{ "gcac",            desc = "a class" },
+	{ "gcaf",            desc = "a function" },
+	{ "gcc",             desc = "Toggle comment for current line" },
+	{ "gcic",            desc = "a class" },
+	{ "gcif",            desc = "a function" },
+	{ "gd",              desc = "Goto definition for symbol" },
+	{ "gi",              desc = "Goto implementation for symbol" },
+	{ "go",              desc = "Goto header/implementation file" },
+	{ "gp",              desc = "Open definition preview for symbol" },
+	{ "gr",              desc = "Open references for symbol in quickfix" },
+	{ "gs",              desc = "Switch symbol under cursor" },
+	{ "q",               group = "Quit" },
+	{ "qa",              desc = "Quit all without saving" },
+	{ "qf",              desc = "Force quit without saving" },
+	{ "qq",              desc = "Close current buffer" },
+	{ "qs",              desc = "Save all and quit" },
+	{ "qw",              desc = "Save and quit" },
+	{ "r",               group = "Refactor" },
+	{ "rf",              desc = "Format file" },
+	{ "rg",              desc = "Replace all" },
+	{ "rl",              desc = "Replace on line only" },
+	{ "rn",              desc = "Rename symbol under cursor" },
+	{ "rs",              desc = "Replace multiple patterns" },
+	{ "rt",              group = "Trim" },
+	{ "rtm",             desc = "Trim trailing whitespace" },
+	{ "rtw",             desc = "Trim ^M carriage characters" },
+	{ "rw",              desc = "Replace word under cursor" },
+	{ "s",               desc = "Jump to text forwards" },
+	{ "v",               group = "Visual Mode" },
+	{ "vr",              desc = "Execute code selection" },
+	{ "w",               group = "Jump" },
+	{ "wo",              desc = "Open workspace" },
+	{ "ws",              desc = "Jump to text in any window" },
+	{ "ww",              desc = "Jump to buffer" },
 })
+
 
 ----------------------------------
 --      workspaces config
