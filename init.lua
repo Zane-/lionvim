@@ -27,38 +27,38 @@ local notify = notify
 local opt = vim.opt
 
 local function map(mode, shortcut, command)
-  vim.api.nvim_set_keymap(
-    mode,
-    shortcut,
-    command,
-    { noremap = true, silent = true }
-  )
+	vim.api.nvim_set_keymap(
+		mode,
+		shortcut,
+		command,
+		{ noremap = true, silent = true }
+	)
 end
 
 local function bufnr_map(bufnr, mode, shortcut, command)
-  vim.api.nvim_buf_set_keymap(
-    bufnr,
-    mode,
-    shortcut,
-    command,
-    { noremap = true, silent = true }
-  )
+	vim.api.nvim_buf_set_keymap(
+		bufnr,
+		mode,
+		shortcut,
+		command,
+		{ noremap = true, silent = true }
+	)
 end
 
 local function nmap(shortcut, command)
-  map('n', shortcut, command)
+	map('n', shortcut, command)
 end
 
 local function nmap_buf(bufnr, shortcut, command)
-  bufnr_map(bufnr, 'n', shortcut, command)
+	bufnr_map(bufnr, 'n', shortcut, command)
 end
 
 local function imap(shortcut, command)
-  map('i', shortcut, command)
+	map('i', shortcut, command)
 end
 
 local function vmap(shortcut, command)
-  map('v', shortcut, command)
+	map('v', shortcut, command)
 end
 
 ----------------------------------
@@ -66,15 +66,15 @@ end
 ----------------------------------
 opt.clipboard = 'unnamed' -- use system clipboard
 opt.cmdheight = 0
-opt.cursorline = true -- highlight current line
-opt.fillchars = { -- thicker borders between windows
-  horiz = '━',
-  horizup = '┻',
-  horizdown = '┳',
-  vert = '┃',
-  vertleft = '┫',
-  vertright = '┣',
-  verthoriz = '╋',
+opt.cursorline = true     -- highlight current line
+opt.fillchars = {         -- thicker borders between windows
+	horiz = '━',
+	horizup = '┻',
+	horizdown = '┳',
+	vert = '┃',
+	vertleft = '┫',
+	vertright = '┣',
+	verthoriz = '╋',
 }
 opt.ignorecase = true -- ignore case when searching
 opt.laststatus = 3 -- one statusline for all windows
@@ -96,27 +96,27 @@ opt.undofile = true -- persistent undo
 opt.updatetime = 300 -- faster update time
 
 -- Lionvim-specific options
-g.ENABLE_FORMAT_ON_SAVE = true -- whether or not to autoformat on save
+g.ENABLE_FORMAT_ON_SAVE = true       -- whether or not to autoformat on save
 g.SHOW_NOTIFICATION_ON_FORMAT = true -- whether or not to show notifications on format
-g.show_neotree_on_startup = false -- whether or not to show neo-tree on startup
+g.show_neotree_on_startup = false    -- whether or not to show neo-tree on startup
 g.auto_open_markdown_previews = true -- whether or not to automatically open markdown previews in deno
 
 -- Neovide-specific options
 if g.neovide then
-  g.neovide_transparency = 0.9
-  g.neovide_floating_blur_amount_x = 2.0
-  g.neovide_floating_blur_amount_y = 2.0
-  g.neovide_refresh_rate = 120
-  g.neovide_confirm_quit = true
-  g.neovide_remember_window_size = true
-  g.neovide_cursor_antialiasing = true
-  -- Use Cmd+C/V for copy paste
-  nmap('<D-v>', '"+p')
-  map('t', '<D-v>', '"+p')
-  imap('<D-v>', '<C-o>"+p')
-  nmap('<D-c>', '"+y')
-  map('t', '<D-c>', '"+y')
-  imap('<D-c>', '<C-o>"+y')
+	g.neovide_transparency = 0.9
+	g.neovide_floating_blur_amount_x = 2.0
+	g.neovide_floating_blur_amount_y = 2.0
+	g.neovide_refresh_rate = 120
+	g.neovide_confirm_quit = true
+	g.neovide_remember_window_size = true
+	g.neovide_cursor_antialiasing = true
+	-- Use Cmd+C/V for copy paste
+	nmap('<D-v>', '"+p')
+	map('t', '<D-v>', '"+p')
+	imap('<D-v>', '<C-o>"+p')
+	nmap('<D-c>', '"+y')
+	map('t', '<D-c>', '"+y')
+	imap('<D-c>', '<C-o>"+y')
 end
 
 -- git-blame.nvim options
@@ -126,13 +126,13 @@ augroup('options', { clear = true })
 
 -- turn off linenumber for terminals and autoenter insert mode
 autocmd('TermOpen', {
-  group = 'options',
-  pattern = '*',
-  callback = function()
-    opt.number = false
-    opt.relativenumber = false
-    vim.api.nvim_command('startinsert')
-  end,
+	group = 'options',
+	pattern = '*',
+	callback = function()
+		opt.number = false
+		opt.relativenumber = false
+		vim.api.nvim_command('startinsert')
+	end,
 })
 
 ----------------------------------
@@ -268,7 +268,7 @@ nmap('ws', '<cmd>lua SearchRef()<cr>')
 nmap('rs', '<cmd>MurenToggle<cr>')
 
 -- neo-tree mappings
-nmap('<C-f>', '<cmd>NeoTreeFocusToggle<cr>')
+nmap('<C-f>', '<cmd>Neotree toggle<cr>')
 
 -- oil mappings
 nmap('<C-c>', '<cmd>Oil --float .<cr>')
@@ -299,12 +299,12 @@ nmap('fg', '<cmd>Telescope live_grep hidden=true<cr>')
 nmap('ff', '<cmd>Telescope find_files<cr>')
 nmap('<C-o>', '<cmd>Telescope find_files<cr>')
 nmap(
-  'fb',
-  '<cmd>lua require("telescope.builtin").buffers(require("telescope.themes").get_dropdown({ previewer = false, layout_config = { height = 20 }}))<cr>'
+	'fb',
+	'<cmd>lua require("telescope.builtin").buffers(require("telescope.themes").get_dropdown({ previewer = false, layout_config = { height = 20 }}))<cr>'
 )
 nmap(
-  'fw',
-  '<cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false, prompt_title = "", layout_config = { height = 40 }}))<cr>'
+	'fw',
+	'<cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false, prompt_title = "", layout_config = { height = 40 }}))<cr>'
 )
 nmap('fm', '<cmd>Telescope marks<cr>')
 nmap('fr', '<cmd>Telescope oldfiles prompt_title=Recents<cr>')
@@ -314,8 +314,8 @@ nmap('fh', '<cmd>Telescope howdoi<cr>')
 nmap('cd', '<cmd>Telescope cder<cr>')
 nmap('<space>c', '<cmd>Telescope command_center<cr>')
 nmap(
-  '<leader>l',
-  '<cmd>lua require("telescope.builtin").colorscheme(require("telescope.themes").get_dropdown({ layout_config = { height = 20 }}))<cr>'
+	'<leader>l',
+	'<cmd>lua require("telescope.builtin").colorscheme(require("telescope.themes").get_dropdown({ layout_config = { height = 20 }}))<cr>'
 )
 nmap('<F4>', '<cmd>Telescope man_pages<cr>')
 nmap('<F5>', '<cmd>Telescope help_tags<cr>')
@@ -355,112 +355,112 @@ nmap('wo', '<cmd>Telescope workspaces<cr>')
 -- Bootstrap package manager
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    'git',
-    'clone',
-    '--filter=blob:none',
-    'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable', -- latest stable release
-    lazypath,
-  })
+	vim.fn.system({
+		'git',
+		'clone',
+		'--filter=blob:none',
+		'https://github.com/folke/lazy.nvim.git',
+		'--branch=stable', -- latest stable release
+		lazypath,
+	})
 end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-  -- Autocompletion
-  'hrsh7th/cmp-buffer',
-  'hrsh7th/cmp-cmdline',
-  'hrsh7th/cmp-nvim-lsp',
-  'hrsh7th/cmp-path',
-  'hrsh7th/nvim-cmp',
-  'saadparwaiz1/cmp_luasnip',
-  -- Colorschemes
-  { 'catppuccin/nvim', name = 'catppuccin' },
-  'folke/tokyonight.nvim',
-  -- LSP
-  'neovim/nvim-lspconfig', -- completion, go-to, etc.
-  'nvimdev/lspsaga.nvim', -- LSP enhancements
-  {
-    'williamboman/mason.nvim',
-    build = ':MasonUpdate', -- :MasonUpdate updates registry contents
-  },
-  'williamboman/mason-lspconfig.nvim', -- lsp support for mason
-  'rmagatti/goto-preview', -- goto preview popup
-  -- DAP
-  'mfussenegger/nvim-dap', -- debugger
-  'mfussenegger/nvim-dap-python', -- debugger config for python
-	'nvim-neotest/nvim-nio', -- req for dap
-  'jay-babu/mason-nvim-dap.nvim', -- dap installer
-  'nvim-telescope/telescope-dap.nvim',
-  'rcarriga/nvim-dap-ui', -- UI for debugger
-  'theHamsta/nvim-dap-virtual-text',
-  -- Programming support
-  'f-person/git-blame.nvim', -- inline git blame
-  'L3MON4D3/LuaSnip', -- snippet engine
-  'mhartington/formatter.nvim', -- formatting
-  { 'michaelb/sniprun', build = 'bash ./install.sh' }, -- execute code inline
-  'natecraddock/workspaces.nvim', -- workspace support
-  'numToStr/Comment.nvim', -- smart comments support
-  'nvim-treesitter/nvim-treesitter', -- additional syntax highlighting
-  'nvim-treesitter/nvim-treesitter-textobjects', -- class and function textobjects
-  'rafamadriz/friendly-snippets', -- common snippets package
-  'skywind3000/asyncrun.vim', -- run commands async
-  'tpope/vim-fugitive', -- git
-  'tpope/vim-surround', -- easily change surrounding brackets, quotes, etc.
-  'tpope/vim-repeat', -- support plugins for dot repeat
-  'windwp/nvim-autopairs', -- auto pair ( {, etc.
-  'windwp/nvim-ts-autotag', -- autoclose html, etc. tags
-  'wintermute-cell/gitignore.nvim', -- gitignore generation
-  -- Telescope
-  { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
-  'nvim-telescope/telescope-media-files.nvim', -- previewer for media files
-  'nvim-telescope/telescope.nvim', -- aesthetic finder popup
-  'nvim-telescope/telescope-symbols.nvim', -- emoji + ascii symbols
-  'stevearc/dressing.nvim', -- use telescope for more things
-  -- UI
-  'akinsho/bufferline.nvim', -- fancy buffer line
-  'akinsho/toggleterm.nvim', -- better terminals
-  'Bekaboo/dropbar.nvim', -- winbar with file context
-  'eandrju/cellular-automaton.nvim', -- fancy animation
-  'folke/which-key.nvim', -- shortcut popup
-  'folke/trouble.nvim', -- aesthetic diagnostics page
-  'goolord/alpha-nvim', -- fancy start page
-  'j-hui/fidget.nvim', -- LSP progress indicator
-  'kosayoda/nvim-lightbulb', -- show a lightbulb for code actions
-  'kyazdani42/nvim-web-devicons', -- file icons
-  'lewis6991/gitsigns.nvim', -- git integration
-  'lukas-reineke/indent-blankline.nvim', -- identation lines
-  'munifTanjim/nui.nvim', -- UI dependency
-  'nvim-lualine/lualine.nvim', -- status line
-  'nvim-lua/plenary.nvim', -- UI dependency
-  'nvim-lua/popup.nvim', -- UI dependency
-  'nvim-neo-tree/neo-tree.nvim', -- filetree
-  'rcarriga/nvim-notify', -- fancy notifications
-  'RRethy/vim-illuminate', -- highlight symbol under cursor
-  'stevearc/aerial.nvim', -- function outline
-  'VonHeikemen/searchbox.nvim', -- search popup
-  'VonHeikemen/fine-cmdline.nvim', -- command input popup
-  'zane-/command_center.nvim', -- command palette
-  'zane-/symbols-outline.nvim', -- menu for symbols
-  -- Utility
-  'AckslD/muren.nvim', -- multiple find and replace
-  'andrewradev/switch.vim', -- smart switch between stuff
-  'debugloop/telescope-undo.nvim', -- undotree in telescope
-  'ggandor/leap.nvim', -- navigation
-  'is0n/fm-nvim', -- for ranger
-  'jackMort/ChatGPT.nvim', -- chatGPT integration
-  'max397574/better-escape.nvim', -- better insert mode exit
-  'mbbill/undotree', -- file history tree
-  'renerocksai/telekasten.nvim', -- for taking notes
-  'rktjmp/paperplanes.nvim', -- upload buffer online
-  'rmagatti/auto-session', -- sessions based on cwd
-  'stevearc/oil.nvim', -- edit directory in a buffer
-  { 'toppair/peek.nvim', build = 'deno task --quiet build:fast' }, -- live markdown preview
-  'Wansmer/treesj', -- join/split blocks of code
-  'wellle/targets.vim', -- more text objects
-  'zane-/bufdelete.nvim', -- layout-preserving buffer deletion
-  'zane-/howdoi.nvim', -- howdoi queries with telescope
-  'zane-/cder.nvim', -- change working directory with telescope
+	-- Autocompletion
+	'hrsh7th/cmp-buffer',
+	'hrsh7th/cmp-cmdline',
+	'hrsh7th/cmp-nvim-lsp',
+	'hrsh7th/cmp-path',
+	'hrsh7th/nvim-cmp',
+	'saadparwaiz1/cmp_luasnip',
+	-- Colorschemes
+	{ 'catppuccin/nvim',  name = 'catppuccin' },
+	'folke/tokyonight.nvim',
+	-- LSP
+	'neovim/nvim-lspconfig', -- completion, go-to, etc.
+	'nvimdev/lspsaga.nvim',  -- LSP enhancements
+	{
+		'williamboman/mason.nvim',
+		build = ':MasonUpdate',            -- :MasonUpdate updates registry contents
+	},
+	'williamboman/mason-lspconfig.nvim', -- lsp support for mason
+	'rmagatti/goto-preview',             -- goto preview popup
+	-- DAP
+	'mfussenegger/nvim-dap',             -- debugger
+	'mfussenegger/nvim-dap-python',      -- debugger config for python
+	'nvim-neotest/nvim-nio',             -- req for dap
+	'jay-babu/mason-nvim-dap.nvim',      -- dap installer
+	'nvim-telescope/telescope-dap.nvim',
+	'rcarriga/nvim-dap-ui',              -- UI for debugger
+	'theHamsta/nvim-dap-virtual-text',
+	-- Programming support
+	'f-person/git-blame.nvim',                           -- inline git blame
+	'L3MON4D3/LuaSnip',                                  -- snippet engine
+	'mhartington/formatter.nvim',                        -- formatting
+	{ 'michaelb/sniprun', build = 'bash ./install.sh' }, -- execute code inline
+	'natecraddock/workspaces.nvim',                      -- workspace support
+	'numToStr/Comment.nvim',                             -- smart comments support
+	'nvim-treesitter/nvim-treesitter',                   -- additional syntax highlighting
+	'nvim-treesitter/nvim-treesitter-textobjects',       -- class and function textobjects
+	'rafamadriz/friendly-snippets',                      -- common snippets package
+	'skywind3000/asyncrun.vim',                          -- run commands async
+	'tpope/vim-fugitive',                                -- git
+	'tpope/vim-surround',                                -- easily change surrounding brackets, quotes, etc.
+	'tpope/vim-repeat',                                  -- support plugins for dot repeat
+	'windwp/nvim-autopairs',                             -- auto pair ( {, etc.
+	'windwp/nvim-ts-autotag',                            -- autoclose html, etc. tags
+	'wintermute-cell/gitignore.nvim',                    -- gitignore generation
+	-- Telescope
+	{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+	'nvim-telescope/telescope-media-files.nvim',                     -- previewer for media files
+	'nvim-telescope/telescope.nvim',                                 -- aesthetic finder popup
+	'nvim-telescope/telescope-symbols.nvim',                         -- emoji + ascii symbols
+	'stevearc/dressing.nvim',                                        -- use telescope for more things
+	-- UI
+	'akinsho/bufferline.nvim',                                       -- fancy buffer line
+	'akinsho/toggleterm.nvim',                                       -- better terminals
+	'Bekaboo/dropbar.nvim',                                          -- winbar with file context
+	'eandrju/cellular-automaton.nvim',                               -- fancy animation
+	'folke/which-key.nvim',                                          -- shortcut popup
+	'folke/trouble.nvim',                                            -- aesthetic diagnostics page
+	'goolord/alpha-nvim',                                            -- fancy start page
+	'j-hui/fidget.nvim',                                             -- LSP progress indicator
+	'kosayoda/nvim-lightbulb',                                       -- show a lightbulb for code actions
+	'kyazdani42/nvim-web-devicons',                                  -- file icons
+	'lewis6991/gitsigns.nvim',                                       -- git integration
+	'lukas-reineke/indent-blankline.nvim',                           -- identation lines
+	'munifTanjim/nui.nvim',                                          -- UI dependency
+	'nvim-lualine/lualine.nvim',                                     -- status line
+	'nvim-lua/plenary.nvim',                                         -- UI dependency
+	'nvim-lua/popup.nvim',                                           -- UI dependency
+	'nvim-neo-tree/neo-tree.nvim',                                   -- filetree
+	'rcarriga/nvim-notify',                                          -- fancy notifications
+	'RRethy/vim-illuminate',                                         -- highlight symbol under cursor
+	'stevearc/aerial.nvim',                                          -- function outline
+	'VonHeikemen/searchbox.nvim',                                    -- search popup
+	'VonHeikemen/fine-cmdline.nvim',                                 -- command input popup
+	'zane-/command_center.nvim',                                     -- command palette
+	'zane-/symbols-outline.nvim',                                    -- menu for symbols
+	-- Utility
+	'AckslD/muren.nvim',                                             -- multiple find and replace
+	'andrewradev/switch.vim',                                        -- smart switch between stuff
+	'debugloop/telescope-undo.nvim',                                 -- undotree in telescope
+	'ggandor/leap.nvim',                                             -- navigation
+	'is0n/fm-nvim',                                                  -- for ranger
+	'jackMort/ChatGPT.nvim',                                         -- chatGPT integration
+	'max397574/better-escape.nvim',                                  -- better insert mode exit
+	'mbbill/undotree',                                               -- file history tree
+	'renerocksai/telekasten.nvim',                                   -- for taking notes
+	'rktjmp/paperplanes.nvim',                                       -- upload buffer online
+	'rmagatti/auto-session',                                         -- sessions based on cwd
+	'stevearc/oil.nvim',                                             -- edit directory in a buffer
+	{ 'toppair/peek.nvim',                        build = 'deno task --quiet build:fast' }, -- live markdown preview
+	'Wansmer/treesj',                                                -- join/split blocks of code
+	'wellle/targets.vim',                                            -- more text objects
+	'zane-/bufdelete.nvim',                                          -- layout-preserving buffer deletion
+	'zane-/howdoi.nvim',                                             -- howdoi queries with telescope
+	'zane-/cder.nvim',                                               -- change working directory with telescope
 }
 
 require('lazy').setup(plugins)
@@ -504,14 +504,14 @@ hi(0, 'DapUIBreakpointsDisabledLine', { ctermbg = 0, fg = colors.red })
 -- Highlights for leap
 hi(0, 'LeapMatch', { ctermbg = 0, fg = colors.yellow, bg = colors.surface0 })
 hi(
-  0,
-  'LeapLabelPrimary',
-  { ctermbg = 0, fg = colors.red, bg = colors.surface0 }
+	0,
+	'LeapLabelPrimary',
+	{ ctermbg = 0, fg = colors.red, bg = colors.surface0 }
 )
 hi(
-  0,
-  'LeapLabelSecondary',
-  { ctermbg = 0, fg = colors.peach, bg = colors.surface0 }
+	0,
+	'LeapLabelSecondary',
+	{ ctermbg = 0, fg = colors.peach, bg = colors.surface0 }
 )
 
 -- Highlights for neo-tree
@@ -520,32 +520,32 @@ hi(0, 'NeoTreeNormalNC', { ctermbg = 0, bg = colors.mantle })
 
 -- Highlights for Sniprun
 hi(
-  0,
-  'SniprunVirtualTextOk',
-  { ctermbg = 0, fg = colors.blue, bg = colors.mantle }
+	0,
+	'SniprunVirtualTextOk',
+	{ ctermbg = 0, fg = colors.blue, bg = colors.mantle }
 )
 hi(
-  0,
-  'SniprunVirtualTextErr',
-  { ctermbg = 0, fg = colors.red, bg = colors.mantle }
+	0,
+	'SniprunVirtualTextErr',
+	{ ctermbg = 0, fg = colors.red, bg = colors.mantle }
 )
 hi(
-  0,
-  'SniprunFloatingWinOk',
-  { ctermbg = 0, fg = colors.blue, bg = colors.mantle }
+	0,
+	'SniprunFloatingWinOk',
+	{ ctermbg = 0, fg = colors.blue, bg = colors.mantle }
 )
 hi(
-  0,
-  'SniprunFloatingWinErr',
-  { ctermbg = 0, fg = colors.red, bg = colors.mantle }
+	0,
+	'SniprunFloatingWinErr',
+	{ ctermbg = 0, fg = colors.red, bg = colors.mantle }
 )
 
 -- Highlights for Telescope
 hi(0, 'TelescopePreviewTitle', { ctermbg = 0, fg = colors.blue })
 hi(
-  0,
-  'TelescopePromptTitle',
-  { ctermbg = 0, fg = colors.text, bg = colors.mantle }
+	0,
+	'TelescopePromptTitle',
+	{ ctermbg = 0, fg = colors.text, bg = colors.mantle }
 )
 
 -- Highlights for trouble
@@ -560,69 +560,69 @@ hi(0, 'FocusedSymbol', { ctermbg = 0, bg = colors.mantle })
 notify = require('notify')
 
 local lionvim_notify_options = {
-  title = '🦁 lionvim',
-  timeout = 1000,
+	title = '🦁 lionvim',
+	timeout = 1000,
 }
 
 GetLspClientName = function()
-  local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
-  local clients = vim.lsp.get_active_clients()
+	local buf_ft = vim.api.nvim_buf_get_option(0, 'filetype')
+	local clients = vim.lsp.get_active_clients()
 
-  if next(clients) == nil then
-    return nil
-  end
+	if next(clients) == nil then
+		return nil
+	end
 
-  for _, client in ipairs(clients) do
-    local filetypes = client.config.filetypes
-    if filetypes and fn.index(filetypes, buf_ft) ~= -1 then
-      return client.name
-    end
-  end
+	for _, client in ipairs(clients) do
+		local filetypes = client.config.filetypes
+		if filetypes and fn.index(filetypes, buf_ft) ~= -1 then
+			return client.name
+		end
+	end
 
-  return nil
+	return nil
 end
 
 ToggleFormatOnSave = function()
-  if g.ENABLE_FORMAT_ON_SAVE then
-    g.ENABLE_FORMAT_ON_SAVE = false
-    notify('Format on save disabled', 'info', lionvim_notify_options)
-  else
-    g.ENABLE_FORMAT_ON_SAVE = true
-    notify('Format on save enabled', 'info', lionvim_notify_options)
-  end
+	if g.ENABLE_FORMAT_ON_SAVE then
+		g.ENABLE_FORMAT_ON_SAVE = false
+		notify('Format on save disabled', 'info', lionvim_notify_options)
+	else
+		g.ENABLE_FORMAT_ON_SAVE = true
+		notify('Format on save enabled', 'info', lionvim_notify_options)
+	end
 end
 
 ToggleFormatNotifications = function()
-  if g.SHOW_NOTIFICATION_ON_FORMAT then
-    g.SHOW_NOTIFICATION_ON_FORMAT = false
-    notify('Format notifications disabled', 'info', lionvim_notify_options)
-  else
-    g.SHOW_NOTIFICATION_ON_FORMAT = true
-    notify('Format notifications enabled', 'info', lionvim_notify_options)
-  end
+	if g.SHOW_NOTIFICATION_ON_FORMAT then
+		g.SHOW_NOTIFICATION_ON_FORMAT = false
+		notify('Format notifications disabled', 'info', lionvim_notify_options)
+	else
+		g.SHOW_NOTIFICATION_ON_FORMAT = true
+		notify('Format notifications enabled', 'info', lionvim_notify_options)
+	end
 end
 
 SearchRef = function()
-  local ref = require('illuminate.reference').buf_get_references(
-    vim.api.nvim_get_current_buf()
-  )
-  if not ref or #ref == 0 then
-    return false
-  end
+	local ref = require('illuminate.reference').buf_get_references(
+		vim.api.nvim_get_current_buf()
+	)
+	if not ref or #ref == 0 then
+		return false
+	end
 
-  local targets = {}
-  for _, v in pairs(ref) do
-    table.insert(targets, {
-      pos = { v[1][1] + 1, v[1][2] + 1 },
-    })
-  end
+	local targets = {}
+	for _, v in pairs(ref) do
+		table.insert(targets, {
+			pos = { v[1][1] + 1, v[1][2] + 1 },
+		})
+	end
 
-  require('leap').leap({
-    targets = targets,
-    target_windows = { vim.api.nvim_get_current_win() },
-  })
+	require('leap').leap({
+		targets = targets,
+		target_windows = { vim.api.nvim_get_current_win() },
+	})
 
-  return true
+	return true
 end
 
 --================================
@@ -633,12 +633,12 @@ end
 --         alpha config
 ----------------------------------
 require('aerial').setup({
-  -- optionally use on_attach to set keymaps when aerial has attached to a buffer
-  on_attach = function(bufnr)
-    -- Jump forwards/backwards with '{' and '}'
-    vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', { buffer = bufnr })
-    vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', { buffer = bufnr })
-  end,
+	-- optionally use on_attach to set keymaps when aerial has attached to a buffer
+	on_attach = function(bufnr)
+		-- Jump forwards/backwards with '{' and '}'
+		vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', { buffer = bufnr })
+		vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', { buffer = bufnr })
+	end,
 })
 
 ----------------------------------
@@ -647,139 +647,139 @@ require('aerial').setup({
 local sections = {}
 
 sections.header = {
-  type = 'text',
-  val = {
-    '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⢀⣠⠴⢞⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-    '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⣲⣿⡄⢀⡴⠋⣠⣾⣿⣿⣿⣿⣄⣀⣀⡀⠀⠀⠀⠀⠈⠓⠲⣦⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-    '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠎⣼⣿⣿⣿⡟⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢿⣿⣶⣦⣄⡀⠀⠀⠙⠻⣦⡀⠀⠀⠀⠀⠀⠀⠀',
-    '⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡿⠊⠉⠀⠀⠈⠉⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣄⡉⠛⢿⣷⣄⠀⠀⠈⢷⡄⠀⠀⠀⠀⠀⠀',
-    '⠀⠀⠀⠀⣀⡀⠤⠐⠒⡁⢴⣤⣤⡀⠀⠀⠀⣠⣼⣿⣿⣏⣀⣀⠀⠉⠛⢿⣿⣿⣿⣿⣿⣷⣄⠙⢿⣷⣄⠀⠀⠹⡄⠀⠀⠀⠀⠀',
-    '⢰⣦⣍⣁⠀⠀⠀⠀⠀⠀⢾⡉⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀⠀⢸⣿⣿⣿⣿⣿⣿⣷⡄⢻⣿⣆⠀⠀⠑⠀⠀⠀⠀⠀',
-    '⠈⠀⠀⠀⠀⠀⠀⠀⠠⠀⠀⠁⠁⠀⠀⠀⠀⢹⣿⣿⣿⣿⣿⣿⡿⠋⢀⣠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣆⢻⣿⡄⠀⠀⠁⠀⠀⠀⠀',
-    '⠀⠀⠀⠀⠀⠀⠀⠀⠀⢱⠀⠀⠀⠀⠀⠀⠀⣼⣿⣿⡻⢿⣿⣷⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣎⣿⣷⠀⠀⠀⠀⠀⠀⠀',
-    '⢀⠀⠀⠀⠀⠀⠀⠀⢸⠾⠀⢀⣠⣶⠀⣠⣾⣿⣿⣿⣿⣦⡉⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣾⣿⣇⠀⠀⠀⠀⠀⠀',
-    '⠀⢹⠁⠰⠉⠉⠒⢄⣸⡷⠿⠛⠉⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⢿⣿⣿⣿⣿⣿⡄⠀⠀⠀⠀⠀',
-    '⠀⠀⢇⡇⠀⠀⠀⠘⠁⣿⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠈⣿⣿⣿⣿⣿⣿⣦⡀⠀⠀⠀',
-    '⠀⠀⠀⠁⠀⠀⠀⠀⠀⣿⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⣿⣿⣯⠻⢿⣿⣿⣿⣷⣶⡆',
-    '⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⢀⣿⣿⣿⣷⣶⣶⣾⣿⡿⠟⠀',
-    '⠀⠀⠀⠀⠀⠀⠀⠀⢰⡏⢀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⣼⣿⣿⣿⣿⣿⡍⠁⠀⠀⠀⠀',
-    '⠀⠀⢀⠞⡄⠀⠀⢠⣿⣣⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⠏⣼⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀',
-    '⠀⠀⢸⣀⣇⠠⠔⢫⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢫⣾⣿⣿⣿⡿⢣⣿⣿⡇⠀⠀⠀⠀⠀',
-    '⠀⠀⠰⡀⠀⠀⠀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢇⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⠟⢁⣾⣿⣿⠁⠀⠀⠀⠀⠀',
-    '⠀⠀⠀⠑⡄⢸⣿⣿⣿⣿⢿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⢁⣴⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀',
-    '⠀⠀⠀⠀⠈⠚⠉⠉⠁⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⡇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⢛⣉⣤⣶⣿⣿⣿⡿⠃⠀⠀⠀⠀⠀⠀⠀',
-    '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⠟⡇⠈⣿⣿⣿⣿⣿⣿⣿⣿⣶⣾⣿⣿⣿⣿⣿⡿⠿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-    '⠀⠀⠀⠀⠀⠀⠀⠀⠀⢣⠀⠹⣿⣿⣿⣿⣿⡏⠀⣿⡀⢻⣿⣿⣿⣿⣿⣿⠟⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-    '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢧⡀⠈⠻⣿⣿⣿⡇⠀⠸⣷⡀⢿⣿⣿⣿⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-    '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢳⣄⠀⠈⠙⠿⣿⡄⠀⠘⢿⣦⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-    '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢷⣤⡀⠀⠀⠀⠀⠀⠀⠈⠛⠿⢿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-    '⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠳⠦⠄⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
-  },
-  opts = {
-    position = 'center',
-    hl = 'Label',
-  },
+	type = 'text',
+	val = {
+		'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⢀⣠⠴⢞⣿⣿⣿⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+		'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡠⣲⣿⡄⢀⡴⠋⣠⣾⣿⣿⣿⣿⣄⣀⣀⡀⠀⠀⠀⠀⠈⠓⠲⣦⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+		'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠎⣼⣿⣿⣿⡟⣠⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢿⣿⣶⣦⣄⡀⠀⠀⠙⠻⣦⡀⠀⠀⠀⠀⠀⠀⠀',
+		'⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡿⠊⠉⠀⠀⠈⠉⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣶⣄⡉⠛⢿⣷⣄⠀⠀⠈⢷⡄⠀⠀⠀⠀⠀⠀',
+		'⠀⠀⠀⠀⣀⡀⠤⠐⠒⡁⢴⣤⣤⡀⠀⠀⠀⣠⣼⣿⣿⣏⣀⣀⠀⠉⠛⢿⣿⣿⣿⣿⣿⣷⣄⠙⢿⣷⣄⠀⠀⠹⡄⠀⠀⠀⠀⠀',
+		'⢰⣦⣍⣁⠀⠀⠀⠀⠀⠀⢾⡉⠀⠀⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀⠀⢸⣿⣿⣿⣿⣿⣿⣷⡄⢻⣿⣆⠀⠀⠑⠀⠀⠀⠀⠀',
+		'⠈⠀⠀⠀⠀⠀⠀⠀⠠⠀⠀⠁⠁⠀⠀⠀⠀⢹⣿⣿⣿⣿⣿⣿⡿⠋⢀⣠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣆⢻⣿⡄⠀⠀⠁⠀⠀⠀⠀',
+		'⠀⠀⠀⠀⠀⠀⠀⠀⠀⢱⠀⠀⠀⠀⠀⠀⠀⣼⣿⣿⡻⢿⣿⣷⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣎⣿⣷⠀⠀⠀⠀⠀⠀⠀',
+		'⢀⠀⠀⠀⠀⠀⠀⠀⢸⠾⠀⢀⣠⣶⠀⣠⣾⣿⣿⣿⣿⣦⡉⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣾⣿⣇⠀⠀⠀⠀⠀⠀',
+		'⠀⢹⠁⠰⠉⠉⠒⢄⣸⡷⠿⠛⠉⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⢿⣿⣿⣿⣿⣿⡄⠀⠀⠀⠀⠀',
+		'⠀⠀⢇⡇⠀⠀⠀⠘⠁⣿⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⡀⢻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠈⣿⣿⣿⣿⣿⣿⣦⡀⠀⠀⠀',
+		'⠀⠀⠀⠁⠀⠀⠀⠀⠀⣿⠀⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠀⣿⣿⣯⠻⢿⣿⣿⣿⣷⣶⡆',
+		'⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⠀⢀⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⡏⢀⣿⣿⣿⣷⣶⣶⣾⣿⡿⠟⠀',
+		'⠀⠀⠀⠀⠀⠀⠀⠀⢰⡏⢀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⠃⣼⣿⣿⣿⣿⣿⡍⠁⠀⠀⠀⠀',
+		'⠀⠀⢀⠞⡄⠀⠀⢠⣿⣣⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣾⣿⣿⣿⣿⣿⣿⣿⣿⠏⣼⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⠀⠀',
+		'⠀⠀⢸⣀⣇⠠⠔⢫⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢫⣾⣿⣿⣿⡿⢣⣿⣿⡇⠀⠀⠀⠀⠀',
+		'⠀⠀⠰⡀⠀⠀⠀⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⢇⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣷⣿⣿⣿⣿⠟⢁⣾⣿⣿⠁⠀⠀⠀⠀⠀',
+		'⠀⠀⠀⠑⡄⢸⣿⣿⣿⣿⢿⣿⣿⣿⣿⣿⣿⣿⣿⡿⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⢁⣴⣿⣿⣿⠇⠀⠀⠀⠀⠀⠀',
+		'⠀⠀⠀⠀⠈⠚⠉⠉⠁⠀⢸⣿⣿⣿⣿⣿⣿⣿⣿⡇⢸⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠟⢛⣉⣤⣶⣿⣿⣿⡿⠃⠀⠀⠀⠀⠀⠀⠀',
+		'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⠟⡇⠈⣿⣿⣿⣿⣿⣿⣿⣿⣶⣾⣿⣿⣿⣿⣿⡿⠿⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+		'⠀⠀⠀⠀⠀⠀⠀⠀⠀⢣⠀⠹⣿⣿⣿⣿⣿⡏⠀⣿⡀⢻⣿⣿⣿⣿⣿⣿⠟⠉⠉⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+		'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢧⡀⠈⠻⣿⣿⣿⡇⠀⠸⣷⡀⢿⣿⣿⣿⣿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+		'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢳⣄⠀⠈⠙⠿⣿⡄⠀⠘⢿⣦⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+		'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢷⣤⡀⠀⠀⠀⠀⠀⠀⠈⠛⠿⢿⣿⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+		'⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠛⠳⠦⠄⠀⠀⠀⠀⠀⠀⠀⠀⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀',
+	},
+	opts = {
+		position = 'center',
+		hl = 'Label',
+	},
 }
 
 local function button(sc, txt)
-  local sc_ = sc:gsub('%s', ''):gsub('SPC', '<leader>')
+	local sc_ = sc:gsub('%s', ''):gsub('SPC', '<leader>')
 
-  local opts = {
-    position = 'center',
-    text = txt,
-    shortcut = sc,
-    cursor = 5,
-    width = 36,
-    align_shortcut = 'right',
-  }
+	local opts = {
+		position = 'center',
+		text = txt,
+		shortcut = sc,
+		cursor = 5,
+		width = 36,
+		align_shortcut = 'right',
+	}
 
-  return {
-    type = 'button',
-    val = txt,
-    on_press = function()
-      local key = vim.api.nvim_replace_termcodes(sc_, true, false, true)
-      vim.api.nvim_feedkeys(key, 'normal', false)
-    end,
-    opts = opts,
-  }
+	return {
+		type = 'button',
+		val = txt,
+		on_press = function()
+			local key = vim.api.nvim_replace_termcodes(sc_, true, false, true)
+			vim.api.nvim_feedkeys(key, 'normal', false)
+		end,
+		opts = opts,
+	}
 end
 
 sections.buttons = {
-  type = 'group',
-  val = {
-    button('f f', '  Find file  '),
-    button('f r', 'ﮦ  Recent files  '),
-    button('f g', '  Live grep'),
-    button('f m', '  Bookmarks'),
-    button('w o', '󰚝  Open Workspace'),
-    button(', s', '  Configuration'),
-    button('q a', '  Quit'),
-  },
-  opts = {
-    spacing = 1,
-  },
+	type = 'group',
+	val = {
+		button('f f', '  Find file  '),
+		button('f r', 'ﮦ  Recent files  '),
+		button('f g', '  Live grep'),
+		button('f m', '  Bookmarks'),
+		button('w o', '󰚝  Open Workspace'),
+		button(', s', '  Configuration'),
+		button('q a', '  Quit'),
+	},
+	opts = {
+		spacing = 1,
+	},
 }
 
 require('alpha').setup({
-  layout = {
-    { type = 'padding', val = fn.max({ 2, fn.floor(fn.winheight(0) * 0.1) }) },
-    sections.header,
-    { type = 'padding', val = 1 },
-    sections.buttons,
-  },
-  opts = {},
+	layout = {
+		{ type = 'padding', val = fn.max({ 2, fn.floor(fn.winheight(0) * 0.1) }) },
+		sections.header,
+		{ type = 'padding', val = 1 },
+		sections.buttons,
+	},
+	opts = {},
 })
 
 augroup('alpha', { clear = true })
 
 -- Auto-launch alpha when last buffer is closed
 autocmd('User', {
-  group = 'alpha',
-  pattern = 'BDeletePost',
-  callback = function(event)
-    local found_non_empty_buffer = false
+	group = 'alpha',
+	pattern = 'BDeletePost',
+	callback = function(event)
+		local found_non_empty_buffer = false
 
-    local buffers = {}
-    local len = 0
-    for buffer = 1, fn.bufnr('$') do
-      if fn.buflisted(buffer) == 1 then
-        len = len + 1
-        buffers[len] = buffer
-      end
-    end
+		local buffers = {}
+		local len = 0
+		for buffer = 1, fn.bufnr('$') do
+			if fn.buflisted(buffer) == 1 then
+				len = len + 1
+				buffers[len] = buffer
+			end
+		end
 
-    for _, bufnr in ipairs(buffers) do
-      if not found_non_empty_buffer then
-        local name = vim.api.nvim_buf_get_name(bufnr)
-        local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
+		for _, bufnr in ipairs(buffers) do
+			if not found_non_empty_buffer then
+				local name = vim.api.nvim_buf_get_name(bufnr)
+				local ft = vim.api.nvim_buf_get_option(bufnr, 'filetype')
 
-        if
-          bufnr ~= event.buf
-          and name ~= ''
-          and ft ~= 'alpha'
-          and not string.match(ft, 'dap')
-        then
-          found_non_empty_buffer = true
-        end
-      end
-    end
+				if
+						bufnr ~= event.buf
+						and name ~= ''
+						and ft ~= 'alpha'
+						and not string.match(ft, 'dap')
+				then
+					found_non_empty_buffer = true
+				end
+			end
+		end
 
-    if not found_non_empty_buffer then
-      vim.api.nvim_command('NeoTreeClose')
-      vim.api.nvim_command('SymbolsOutlineClose')
-      vim.api.nvim_command('lua require("dapui").close()')
-      vim.api.nvim_command('lua CloseHorizontalTerminal()')
-      vim.api.nvim_command('lua require("dap").repl.close()')
-      vim.api.nvim_command('Alpha')
-    end
-  end,
+		if not found_non_empty_buffer then
+			vim.api.nvim_command('Neotree close')
+			vim.api.nvim_command('SymbolsOutlineClose')
+			vim.api.nvim_command('lua require("dapui").close()')
+			vim.api.nvim_command('lua CloseHorizontalTerminal()')
+			vim.api.nvim_command('lua require("dap").repl.close()')
+			vim.api.nvim_command('Alpha')
+		end
+	end,
 })
 
 ----------------------------------
 --      auto-session config
 ----------------------------------
 require('auto-session').setup({
-  auto_session_suppress_dirs = { '~' },
+	auto_session_suppress_dirs = { '~' },
 })
 
 ----------------------------------
@@ -791,38 +791,38 @@ require('better_escape').setup()
 --       bufferline config
 ----------------------------------
 require('bufferline').setup({
-  options = {
-    always_show_bufferline = true,
-    buffer_close_icon = '',
-    close_icon = '',
-    custom_filter = function(buf_number, buf_numbers)
-      if vim.bo[buf_number].filetype ~= 'dap-repl' then
-        return true
-      end
-    end,
-    diagnostics = false,
-    enforce_regular_tabs = false,
-    left_trunc_marker = '',
-    max_name_length = 14,
-    max_prefix_length = 13,
-    modified_icon = '',
-    offsets = { { filetype = 'neo-tree', padding = 1 } },
-    right_trunc_marker = '',
-    separator_style = 'thin',
-    show_close_icon = false,
-    show_tab_indicators = true,
-    show_buffer_close_icons = true,
-    tab_size = 20,
-    themable = true,
-    view = 'multiwindow',
-  },
+	options = {
+		always_show_bufferline = true,
+		buffer_close_icon = '',
+		close_icon = '',
+		custom_filter = function(buf_number, buf_numbers)
+			if vim.bo[buf_number].filetype ~= 'dap-repl' then
+				return true
+			end
+		end,
+		diagnostics = false,
+		enforce_regular_tabs = false,
+		left_trunc_marker = '',
+		max_name_length = 14,
+		max_prefix_length = 13,
+		modified_icon = '',
+		offsets = { { filetype = 'neo-tree', padding = 1 } },
+		right_trunc_marker = '',
+		separator_style = 'thin',
+		show_close_icon = false,
+		show_tab_indicators = true,
+		show_buffer_close_icons = true,
+		tab_size = 20,
+		themable = true,
+		view = 'multiwindow',
+	},
 })
 
 ----------------------------------
 --        ChatGPT config
 ----------------------------------
 require('chatgpt').setup({
-  api_key_cmd = 'cat ~/.config/.openai_api_key',
+	api_key_cmd = 'cat ~/.config/.openai_api_key',
 })
 
 ----------------------------------
@@ -839,94 +839,94 @@ augroup('dap', { clear = true })
 local dap, dapui = require('dap'), require('dapui')
 
 dap.listeners.after.event_initialized['dapui_config'] = function()
-  dapui.open('sidebar')
+	dapui.open('sidebar')
 end
 
 dap.listeners.before.event_terminated['dapui_config'] = function()
-  dap.repl.close('sidebar')
-  dapui.close()
+	dap.repl.close('sidebar')
+	dapui.close()
 end
 
 dap.listeners.before.event_exited['dapui_config'] = function()
-  dap.repl.close('sidebar')
-  dapui.close()
+	dap.repl.close('sidebar')
+	dapui.close()
 end
 
 -- Auto-close the DAP repl
 dap.listeners.before.event_terminated['dap_repl_terminal'] = function()
-  dap.repl.close()
+	dap.repl.close()
 end
 dap.listeners.before.event_exited['dap_repl_terminal'] = function()
-  dap.repl.close()
+	dap.repl.close()
 end
 
 -- Gutter symbols
 fn.sign_define('DapBreakpoint', {
-  text = '',
-  texthl = 'DapBreakpoint',
-  linehl = 'DapBreakpoint',
-  numhl = 'DapBreakpoint',
+	text = '',
+	texthl = 'DapBreakpoint',
+	linehl = 'DapBreakpoint',
+	numhl = 'DapBreakpoint',
 })
 
 fn.sign_define('DapBreakpointCondition', {
-  text = 'ﳁ',
-  texthl = 'DapBreakpoint',
-  linehl = 'DapBreakpoint',
-  numhl = 'DapBreakpoint',
+	text = 'ﳁ',
+	texthl = 'DapBreakpoint',
+	linehl = 'DapBreakpoint',
+	numhl = 'DapBreakpoint',
 })
 
 fn.sign_define('DapBreakpointRejected', {
-  text = '',
-  texthl = 'DapBreakpoint',
-  linehl = 'DapBreakpoint',
-  numhl = 'DapBreakpoint',
+	text = '',
+	texthl = 'DapBreakpoint',
+	linehl = 'DapBreakpoint',
+	numhl = 'DapBreakpoint',
 })
 
 fn.sign_define('DapLogPoint', {
-  text = '',
-  texthl = 'DapLogPoint',
-  linehl = 'DapLogPoint',
-  numhl = 'DapLogPoint',
+	text = '',
+	texthl = 'DapLogPoint',
+	linehl = 'DapLogPoint',
+	numhl = 'DapLogPoint',
 })
 
 fn.sign_define('DapStopped', {
-  text = '',
-  texthl = 'DapStopped',
-  linehl = 'DapStopped',
-  numhl = 'DapStopped',
+	text = '',
+	texthl = 'DapStopped',
+	linehl = 'DapStopped',
+	numhl = 'DapStopped',
 })
 
 dapui.setup({
-  layouts = {
-    {
-      elements = {
-        { id = 'watches', size = 0.1 },
-        { id = 'breakpoints', size = 0.2 },
-        { id = 'stacks', size = 0.2 },
-        { id = 'scopes', size = 0.5 },
-      },
-      size = 25,
-      position = 'right',
-    },
-    {
-      elements = {
-        { id = 'console', size = 0.6 },
-        { id = 'repl', size = 0.4 },
-      },
-      size = 11,
-      position = 'bottom',
-    },
-  },
+	layouts = {
+		{
+			elements = {
+				{ id = 'watches',     size = 0.1 },
+				{ id = 'breakpoints', size = 0.2 },
+				{ id = 'stacks',      size = 0.2 },
+				{ id = 'scopes',      size = 0.5 },
+			},
+			size = 25,
+			position = 'right',
+		},
+		{
+			elements = {
+				{ id = 'console', size = 0.6 },
+				{ id = 'repl',    size = 0.4 },
+			},
+			size = 11,
+			position = 'bottom',
+		},
+	},
 })
 
 require('dap-python').setup()
 
 require('nvim-dap-virtual-text').setup({
-  commented = true,
+	commented = true,
 })
 
 require('mason-nvim-dap').setup({
-  automatic_installation = true,
+	automatic_installation = true,
 })
 
 ----------------------------------
@@ -939,48 +939,49 @@ require('fidget').setup({})
 ----------------------------------
 
 require('fine-cmdline').setup({
-  cmdline = {
-    prompt = '❯ ',
-  },
-  popup = {
-    buf_options = {
-      filetype = 'FineCmdlinePrompt',
-    },
-    position = {
-      row = '100%',
-    },
-    size = {
-      width = '100%',
-    },
-  },
+	cmdline = {
+		prompt = '❯ ',
+	},
+	popup = {
+		buf_options = {
+			filetype = 'FineCmdlinePrompt',
+		},
+		position = {
+			row = '100%',
+		},
+		size = {
+			width = '100%',
+		},
+	},
 })
 
 ----------------------------------
 --        fm-nvim config
 ----------------------------------
 require('fm-nvim').setup({
-  cmds = {
-    fzf_cmd = 'fzf --ansi --color="bg+:'
-      .. colors.surface0
-      .. ',border:'
-      .. colors.blue
-      .. ',fg+:'
-      .. colors.text
-      .. ',prompt:'
-      .. colors.flamingo
-      .. ',gutter:'
-      .. colors.base
-      .. '" --layout="reverse" --padding="0%,0%,5%" --prompt="  " --no-info --pointer="  " --preview-window="right:66%" --preview-window="border-left" --preview="bat --plain --color=always {}"',
-  },
-  ui = {
-    float = {
-      border = { '', '─', '', '', '', '', '', '' },
-      width = 1.0,
-      height = 0.53,
-      x = 0,
-      y = 0.95,
-    },
-  },
+	cmds = {
+		fzf_cmd = 'fzf --ansi --color="bg+:'
+				.. colors.surface0
+				.. ',border:'
+				.. colors.blue
+				.. ',fg+:'
+				.. colors.text
+				.. ',prompt:'
+				.. colors.flamingo
+				.. ',gutter:'
+				.. colors.base
+				..
+				'" --layout="reverse" --padding="0%,0%,5%" --prompt="  " --no-info --pointer="  " --preview-window="right:66%" --preview-window="border-left" --preview="bat --plain --color=always {}"',
+	},
+	ui = {
+		float = {
+			border = { '', '─', '', '', '', '', '', '' },
+			width = 1.0,
+			height = 0.53,
+			x = 0,
+			y = 0.95,
+		},
+	},
 })
 
 ----------------------------------
@@ -990,186 +991,186 @@ require('fm-nvim').setup({
 -- This setup call sets up the Format command used below, which just
 -- calls the command specified by formatter's defaults
 require('formatter').setup({
-  -- All formatter configurations are opt-in
-  filetype = {
-    css = {
-      require('formatter.defaults.prettier'),
-    },
-    html = {
-      require('formatter.defaults.prettier'),
-    },
-    js = {
-      require('formatter.defaults.prettier'),
-    },
-    jsx = {
-      require('formatter.defaults.prettier'),
-    },
-    json = {
-      require('formatter.defaults.prettier'),
-    },
-    less = {
-      require('formatter.defaults.prettier'),
-    },
-    lua = {
-      require('formatter.filetypes.lua').stylua,
-    },
-    markdown = {
-      require('formatter.defaults.prettier'),
-    },
-    python = {
-      require('formatter.filetypes.python').black,
-    },
-    rust = {
-      require('formatter.filetypes.rust').rustfmt,
-    },
-    scss = {
-      require('formatter.defaults.prettier'),
-    },
-    ts = {
-      require('formatter.defaults.prettier'),
-    },
-    typescriptreact = {
-      require('formatter.defaults.prettier'),
-    },
-    yaml = {
-      require('formatter.defaults.prettier'),
-    },
-  },
+	-- All formatter configurations are opt-in
+	filetype = {
+		css = {
+			require('formatter.defaults.prettier'),
+		},
+		html = {
+			require('formatter.defaults.prettier'),
+		},
+		js = {
+			require('formatter.defaults.prettier'),
+		},
+		jsx = {
+			require('formatter.defaults.prettier'),
+		},
+		json = {
+			require('formatter.defaults.prettier'),
+		},
+		less = {
+			require('formatter.defaults.prettier'),
+		},
+		lua = {
+			require('formatter.filetypes.lua').stylua,
+		},
+		markdown = {
+			require('formatter.defaults.prettier'),
+		},
+		python = {
+			require('formatter.filetypes.python').black,
+		},
+		rust = {
+			require('formatter.filetypes.rust').rustfmt,
+		},
+		scss = {
+			require('formatter.defaults.prettier'),
+		},
+		ts = {
+			require('formatter.defaults.prettier'),
+		},
+		typescriptreact = {
+			require('formatter.defaults.prettier'),
+		},
+		yaml = {
+			require('formatter.defaults.prettier'),
+		},
+	},
 })
 
 -- This table defines formatters and the filetypes they handle
 -- as well as a format function. The function should return true
 -- for success and false for failure.
 local formatters = {
-  black = {
-    name = 'black',
-    ft = { 'python' },
-    format = function()
-      if vim.fn.executable('black') == 1 then
-        vim.api.nvim_command('Format')
-        return true
-      end
-      return false
-    end,
-  },
-  prettier = {
-    name = 'prettier',
-    ft = {
-      'css',
-      'html',
-      'js',
-      'jsx',
-      'json',
-      'less',
-      'markdown',
-      'scss',
-      'ts',
-      'typescript',
-      'typescriptreact',
-      'yaml',
-    },
-    format = function()
-      if vim.fn.executable('prettier') == 1 then
-        vim.api.nvim_command('Format')
-        return true
-      end
-      return false
-    end,
-  },
-  rustfmt = {
-    name = 'rustfmt',
-    ft = { 'rust' },
-    format = function()
-      if vim.fn.executable('rustfmt') == 1 then
-        vim.api.nvim_command('Format')
-        return true
-      end
-      return false
-    end,
-  },
-  stylua = {
-    name = 'stylua',
-    ft = { 'lua' },
-    format = function()
-      if vim.fn.executable('stylua') == 1 then
-        vim.api.nvim_command('Format')
-        return true
-      end
-      return false
-    end,
-  },
+	black = {
+		name = 'black',
+		ft = { 'python' },
+		format = function()
+			if vim.fn.executable('black') == 1 then
+				vim.api.nvim_command('Format')
+				return true
+			end
+			return false
+		end,
+	},
+	prettier = {
+		name = 'prettier',
+		ft = {
+			'css',
+			'html',
+			'js',
+			'jsx',
+			'json',
+			'less',
+			'markdown',
+			'scss',
+			'ts',
+			'typescript',
+			'typescriptreact',
+			'yaml',
+		},
+		format = function()
+			if vim.fn.executable('prettier') == 1 then
+				vim.api.nvim_command('Format')
+				return true
+			end
+			return false
+		end,
+	},
+	rustfmt = {
+		name = 'rustfmt',
+		ft = { 'rust' },
+		format = function()
+			if vim.fn.executable('rustfmt') == 1 then
+				vim.api.nvim_command('Format')
+				return true
+			end
+			return false
+		end,
+	},
+	stylua = {
+		name = 'stylua',
+		ft = { 'lua' },
+		format = function()
+			if vim.fn.executable('stylua') == 1 then
+				vim.api.nvim_command('Format')
+				return true
+			end
+			return false
+		end,
+	},
 }
 
 local function format_notify(ft, formatter_name, format_success, format_source)
-  if format_success then
-    notify('Formatted with ' .. format_source, 'info', lionvim_notify_options)
-    return
-  end
+	if format_success then
+		notify('Formatted with ' .. format_source, 'info', lionvim_notify_options)
+		return
+	end
 
-  local notify_string = ''
+	local notify_string = ''
 
-  if formatter_name ~= nil then
-    notify_string = formatter_name .. ' executable not found'
-  else
-    notify_string = 'No registered formatter for ' .. ft
-  end
+	if formatter_name ~= nil then
+		notify_string = formatter_name .. ' executable not found'
+	else
+		notify_string = 'No registered formatter for ' .. ft
+	end
 
-  notify(
-    'Format failed. '
-      .. notify_string
-      .. ' and no LSP server installed.\n\nTry installing an LSP server with :LspInstall',
-    'error',
-    lionvim_notify_options
-  )
+	notify(
+		'Format failed. '
+		.. notify_string
+		.. ' and no LSP server installed.\n\nTry installing an LSP server with :LspInstall',
+		'error',
+		lionvim_notify_options
+	)
 end
 
 -- Formats using formatter.nvim if the current buffer's filetype is in
 -- one of the table entries above, otherwise fallback to LSP formatting.
 function Format()
-  local ft = vim.api.nvim_buf_get_option(0, 'filetype')
-  local formatter_name = nil
-  local format_success = false
-  local format_source = nil
+	local ft = vim.api.nvim_buf_get_option(0, 'filetype')
+	local formatter_name = nil
+	local format_success = false
+	local format_source = nil
 
-  for _, formatter in pairs(formatters) do
-    for _, registered_ft in pairs(formatter.ft) do
-      if ft == registered_ft then
-        format_success = formatter.format()
+	for _, formatter in pairs(formatters) do
+		for _, registered_ft in pairs(formatter.ft) do
+			if ft == registered_ft then
+				format_success = formatter.format()
 
-        if format_success then
-          format_source = formatter.name
-        end
+				if format_success then
+					format_source = formatter.name
+				end
 
-        formatter_name = formatter.name
-      end
-    end
-  end
+				formatter_name = formatter.name
+			end
+		end
+	end
 
-  if not format_success then
-    local lsp_name = GetLspClientName()
+	if not format_success then
+		local lsp_name = GetLspClientName()
 
-    if lsp_name ~= nil then
-      format_success = true
-      format_source = lsp_name
-      vim.api.nvim_command('lua vim.lsp.buf.format()')
-    end
-  end
-  if g.SHOW_NOTIFICATION_ON_FORMAT then
-    format_notify(ft, formatter_name, format_success, format_source)
-  end
+		if lsp_name ~= nil then
+			format_success = true
+			format_source = lsp_name
+			vim.api.nvim_command('lua vim.lsp.buf.format()')
+		end
+	end
+	if g.SHOW_NOTIFICATION_ON_FORMAT then
+		format_notify(ft, formatter_name, format_success, format_source)
+	end
 end
 
 -- Autoformat on save
 
 augroup('format', { clear = true })
 autocmd('BufWritePost', {
-  desc = 'Auto-format on save',
-  group = 'format',
-  callback = function()
-    if g.ENABLE_FORMAT_ON_SAVE then
-      cmd('lua Format()')
-    end
-  end,
+	desc = 'Auto-format on save',
+	group = 'format',
+	callback = function()
+		if g.ENABLE_FORMAT_ON_SAVE then
+			cmd('lua Format()')
+		end
+	end,
 })
 
 ----------------------------------
@@ -1188,93 +1189,93 @@ require('leap').add_default_mappings()
 ----------------------------------
 local signs = { Error = '', Warn = '', Hint = '', Info = '' }
 for type, icon in pairs(signs) do
-  local hl = 'DiagnosticSign' .. type
-  fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+	local hl = 'DiagnosticSign' .. type
+	fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
 local on_attach = function(client, bufnr)
-  g.code_action_menu_show_details = false
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', '<cmd>lua.vim.lsp.omnifunc')
+	g.code_action_menu_show_details = false
+	vim.api.nvim_buf_set_option(bufnr, 'omnifunc', '<cmd>lua.vim.lsp.omnifunc')
 
-  nmap_buf(bufnr, 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>')
-  nmap_buf(bufnr, 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>')
-  nmap_buf(bufnr, 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>')
-  nmap_buf(bufnr, '<space>i', '<cmd>lua vim.lsp.buf.hover()<cr>')
-  nmap_buf(bufnr, '<space>h', '<cmd>lua vim.lsp.buf.signature_help()<cr>')
-  nmap_buf(bufnr, '<space>d', '<cmd>lua vim.lsp.buf.type_definition()<cr>')
-  nmap_buf(bufnr, '<space>f', '<cmd>Lspsaga lsp_finder<cr>')
-  nmap_buf(
-    bufnr,
-    '<space>wa',
-    '<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>'
-  )
-  nmap_buf(
-    bufnr,
-    '<space>wr',
-    '<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>'
-  )
-  nmap_buf(
-    bufnr,
-    '<space>wl',
-    '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>'
-  )
-  nmap_buf(bufnr, '<space>a', '<cmd>Lspsaga code_action<cr>')
-  nmap_buf(bufnr, 'rn', '<cmd>Lspsaga rename<cr>')
+	nmap_buf(bufnr, 'gD', '<cmd>lua vim.lsp.buf.declaration()<cr>')
+	nmap_buf(bufnr, 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>')
+	nmap_buf(bufnr, 'gi', '<cmd>lua vim.lsp.buf.implementation()<cr>')
+	nmap_buf(bufnr, '<space>i', '<cmd>lua vim.lsp.buf.hover()<cr>')
+	nmap_buf(bufnr, '<space>h', '<cmd>lua vim.lsp.buf.signature_help()<cr>')
+	nmap_buf(bufnr, '<space>d', '<cmd>lua vim.lsp.buf.type_definition()<cr>')
+	nmap_buf(bufnr, '<space>f', '<cmd>Lspsaga lsp_finder<cr>')
+	nmap_buf(
+		bufnr,
+		'<space>wa',
+		'<cmd>lua vim.lsp.buf.add_workspace_folder()<cr>'
+	)
+	nmap_buf(
+		bufnr,
+		'<space>wr',
+		'<cmd>lua vim.lsp.buf.remove_workspace_folder()<cr>'
+	)
+	nmap_buf(
+		bufnr,
+		'<space>wl',
+		'<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<cr>'
+	)
+	nmap_buf(bufnr, '<space>a', '<cmd>Lspsaga code_action<cr>')
+	nmap_buf(bufnr, 'rn', '<cmd>Lspsaga rename<cr>')
 
-  -- goto-preview mappings
-  nmap_buf(bufnr, 'gp', '<cmd>Lspsaga peek_definition<cr>')
-  nmap_buf(
-    bufnr,
-    'gpi',
-    '<cmd>lua require("goto-preview").goto_preview_implementation()<cr>'
-  )
-  nmap_buf(
-    bufnr,
-    'gR',
-    '<cmd>lua require("goto-preview").goto_preview_references()<cr>'
-  )
+	-- goto-preview mappings
+	nmap_buf(bufnr, 'gp', '<cmd>Lspsaga peek_definition<cr>')
+	nmap_buf(
+		bufnr,
+		'gpi',
+		'<cmd>lua require("goto-preview").goto_preview_implementation()<cr>'
+	)
+	nmap_buf(
+		bufnr,
+		'gR',
+		'<cmd>lua require("goto-preview").goto_preview_references()<cr>'
+	)
 
-  -- symbols-outline mappings
-  nmap('<space>s', '<cmd>SymbolsOutline<cr>') -- toggle symbols outline
+	-- symbols-outline mappings
+	nmap('<space>s', '<cmd>SymbolsOutline<cr>') -- toggle symbols outline
 
-  -- Trouble mappings
-  nmap_buf(bufnr, '<space>t', '<cmd>TroubleToggle workspace_diagnostics<cr>')
-  nmap_buf(bufnr, 'gr', '<cmd>TroubleToggle lsp_references<cr>')
+	-- Trouble mappings
+	nmap_buf(bufnr, '<space>t', '<cmd>TroubleToggle workspace_diagnostics<cr>')
+	nmap_buf(bufnr, 'gr', '<cmd>TroubleToggle lsp_references<cr>')
 end
 
 require('goto-preview').setup()
 require('mason').setup()
 require('mason-lspconfig').setup()
 require('mason-lspconfig').setup_handlers({
-  -- The first entry (without a key) will be the default handler
-  -- and will be called for each installed server that doesn't have
-  -- a dedicated handler.
-  function(server_name) -- default handler (optional)
-    require('lspconfig')[server_name].setup({
-      on_attach = on_attach,
-    })
-  end,
+	-- The first entry (without a key) will be the default handler
+	-- and will be called for each installed server that doesn't have
+	-- a dedicated handler.
+	function(server_name) -- default handler (optional)
+		require('lspconfig')[server_name].setup({
+			on_attach = on_attach,
+		})
+	end,
 })
 
 require('lspsaga').setup({
-  symbol_in_winbar = {
-    enable = false,
-  },
-  finder = {
-    max_height = 0.5,
-    min_width = 30,
-    force_max_height = false,
-    keys = {
-      jump_to = 'g',
-      expand_or_jump = 'o',
-      vsplit = 'v',
-      split = 'h',
-      tabe = 't',
-      tabnew = 'r',
-      quit = { 'q', '<ESC>' },
-      close_in_preview = '<ESC>',
-    },
-  },
+	symbol_in_winbar = {
+		enable = false,
+	},
+	finder = {
+		max_height = 0.5,
+		min_width = 30,
+		force_max_height = false,
+		keys = {
+			jump_to = 'g',
+			expand_or_jump = 'o',
+			vsplit = 'v',
+			split = 'h',
+			tabe = 't',
+			tabnew = 'r',
+			quit = { 'q', '<ESC>' },
+			close_in_preview = '<ESC>',
+		},
+	},
 })
 
 ----------------------------------
@@ -1283,196 +1284,196 @@ require('lspsaga').setup({
 local lualine = require('lualine')
 
 local conditions = {
-  buffer_not_empty = function()
-    return fn.empty(fn.expand('%<cmd>t')) ~= 1
-  end,
-  hide_in_width = function()
-    return fn.winwidth(0) > 80
-  end,
-  check_git_workspace = function()
-    local filepath = fn.expand('%<cmd>p:h')
-    local gitdir = fn.finddir('.git', filepath .. ';')
-    return gitdir and #gitdir > 0 and #gitdir < #filepath
-  end,
+	buffer_not_empty = function()
+		return fn.empty(fn.expand('%<cmd>t')) ~= 1
+	end,
+	hide_in_width = function()
+		return fn.winwidth(0) > 80
+	end,
+	check_git_workspace = function()
+		local filepath = fn.expand('%<cmd>p:h')
+		local gitdir = fn.finddir('.git', filepath .. ';')
+		return gitdir and #gitdir > 0 and #gitdir < #filepath
+	end,
 }
 
 local config = {
-  options = {
-    -- Disable sections and component separators
-    component_separators = '',
-    disabled_filetypes = {
-      'alpha',
-      'dap-repl',
-      'dapui_breakpoints',
-      'dapui_console',
-      'dapui_hover',
-      'dapui_repl',
-      'dapui_stacks',
-      'dapui_scopes',
-      'dapui_watches',
-      'FineCmdlinePrompt',
-      'Fm',
-      'neo-tree',
-      'oil',
-      'Outline',
-      'Searchbox',
-      'TelescopePrompt',
-      'toggleterm',
-      'Trouble',
-    },
-    globalstatus = true,
-    section_separators = '',
-    theme = {
-      normal = { c = { bg = colors.crust } },
-      inactive = { c = { bg = colors.crust } },
-    },
-  },
-  sections = {
-    -- These are to remove the defaults
-    lualine_a = {},
-    lualine_b = {},
-    lualine_y = {},
-    lualine_z = {},
-    -- These will be filled later
-    lualine_c = {},
-    lualine_x = {},
-  },
-  inactive_sections = {
-    -- These are to remove the defaults
-    lualine_a = {},
-    lualine_b = {},
-    lualine_y = {},
-    lualine_z = {},
-    lualine_c = {},
-    lualine_x = {},
-  },
+	options = {
+		-- Disable sections and component separators
+		component_separators = '',
+		disabled_filetypes = {
+			'alpha',
+			'dap-repl',
+			'dapui_breakpoints',
+			'dapui_console',
+			'dapui_hover',
+			'dapui_repl',
+			'dapui_stacks',
+			'dapui_scopes',
+			'dapui_watches',
+			'FineCmdlinePrompt',
+			'Fm',
+			'neo-tree',
+			'oil',
+			'Outline',
+			'Searchbox',
+			'TelescopePrompt',
+			'toggleterm',
+			'Trouble',
+		},
+		globalstatus = true,
+		section_separators = '',
+		theme = {
+			normal = { c = { bg = colors.crust } },
+			inactive = { c = { bg = colors.crust } },
+		},
+	},
+	sections = {
+		-- These are to remove the defaults
+		lualine_a = {},
+		lualine_b = {},
+		lualine_y = {},
+		lualine_z = {},
+		-- These will be filled later
+		lualine_c = {},
+		lualine_x = {},
+	},
+	inactive_sections = {
+		-- These are to remove the defaults
+		lualine_a = {},
+		lualine_b = {},
+		lualine_y = {},
+		lualine_z = {},
+		lualine_c = {},
+		lualine_x = {},
+	},
 }
 
 -- Inserts a component in lualine_c at left section
 local function ins_left(component)
-  table.insert(config.sections.lualine_c, component)
+	table.insert(config.sections.lualine_c, component)
 end
 
 -- Inserts a component in lualine_x ot right section
 local function ins_right(component)
-  table.insert(config.sections.lualine_x, component)
+	table.insert(config.sections.lualine_x, component)
 end
 
 ins_left({
-  function()
-    return '▌'
-  end,
-  color = { fg = colors.lavender }, -- Sets highlighting of component
-  padding = { left = 0, right = 1 }, -- We don't need space before this
+	function()
+		return '▌'
+	end,
+	color = { fg = colors.lavender },  -- Sets highlighting of component
+	padding = { left = 0, right = 1 }, -- We don't need space before this
 })
 
 ins_left({
-  -- mode component
-  function()
-    return ''
-  end,
-  color = function()
-    -- auto change color according to neovims mode
-    local mode_color = {
-      n = colors.red,
-      i = colors.green,
-      v = colors.blue,
-      V = colors.blue,
-      c = colors.mauve,
-      no = colors.red,
-      s = colors.peach,
-      S = colors.peach,
-      [''] = colors.peach,
-      ic = colors.yellow,
-      R = colors.lavender,
-      Rv = colors.lavender,
-      cv = colors.red,
-      ce = colors.red,
-      r = colors.teal,
-      rm = colors.teal,
-      ['r?'] = colors.teal,
-      ['!'] = colors.red,
-      t = colors.red,
-    }
-    return { fg = mode_color[fn.mode()] }
-  end,
-  padding = { right = 1 },
+	-- mode component
+	function()
+		return ''
+	end,
+	color = function()
+		-- auto change color according to neovims mode
+		local mode_color = {
+			n = colors.red,
+			i = colors.green,
+			v = colors.blue,
+			V = colors.blue,
+			c = colors.mauve,
+			no = colors.red,
+			s = colors.peach,
+			S = colors.peach,
+			[''] = colors.peach,
+			ic = colors.yellow,
+			R = colors.lavender,
+			Rv = colors.lavender,
+			cv = colors.red,
+			ce = colors.red,
+			r = colors.teal,
+			rm = colors.teal,
+			['r?'] = colors.teal,
+			['!'] = colors.red,
+			t = colors.red,
+		}
+		return { fg = mode_color[fn.mode()] }
+	end,
+	padding = { right = 1 },
 })
 
 ins_left({
-  'filename',
-  cond = conditions.buffer_not_empty,
-  icon = '',
-  color = function()
-    if vim.api.nvim_buf_get_option(0, 'modified') then
-      return { fg = colors.red, gui = 'bold' }
-    end
-    return { fg = colors.blue, gui = 'bold' }
-  end,
+	'filename',
+	cond = conditions.buffer_not_empty,
+	icon = '',
+	color = function()
+		if vim.api.nvim_buf_get_option(0, 'modified') then
+			return { fg = colors.red, gui = 'bold' }
+		end
+		return { fg = colors.blue, gui = 'bold' }
+	end,
 })
 
 ins_left({
-  'branch',
-  icon = '',
-  color = { fg = colors.lavender, gui = 'bold' },
+	'branch',
+	icon = '',
+	color = { fg = colors.lavender, gui = 'bold' },
 })
 
 ins_left({
-  'filesize',
-  cond = conditions.buffer_not_empty,
-  icon = '',
+	'filesize',
+	cond = conditions.buffer_not_empty,
+	icon = '',
 })
 
 ins_left({
-  'location',
-  icon = '',
+	'location',
+	icon = '',
 })
 
 ins_right({
-  'diff',
-  symbols = { added = ' ', modified = '柳', removed = ' ' },
-  diff_color = {
-    added = { fg = colors.green },
-    modified = { fg = colors.peach },
-    removed = { fg = colors.red },
-  },
-  cond = conditions.hide_in_width,
+	'diff',
+	symbols = { added = ' ', modified = '柳', removed = ' ' },
+	diff_color = {
+		added = { fg = colors.green },
+		modified = { fg = colors.peach },
+		removed = { fg = colors.red },
+	},
+	cond = conditions.hide_in_width,
 })
 
 ins_right({
-  -- Filetype
-  function()
-    return vim.api.nvim_buf_get_option(0, 'filetype')
-  end,
-  icon = '',
-  color = function()
-    local lsp_client = GetLspClientName()
+	-- Filetype
+	function()
+		return vim.api.nvim_buf_get_option(0, 'filetype')
+	end,
+	icon = '',
+	color = function()
+		local lsp_client = GetLspClientName()
 
-    if lsp_client == nil then
-      return { fg = colors.red }
-    end
+		if lsp_client == nil then
+			return { fg = colors.red }
+		end
 
-    return { fg = colors.green, gui = 'bold' }
-  end,
+		return { fg = colors.green, gui = 'bold' }
+	end,
 })
 
 ins_right({
-  'diagnostics',
-  sources = { 'nvim_diagnostic' },
-  symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
-  diagnostics_color = {
-    color_error = { fg = colors.red },
-    color_warn = { fg = colors.yellow },
-    color_info = { fg = colors.teal },
-  },
+	'diagnostics',
+	sources = { 'nvim_diagnostic' },
+	symbols = { error = ' ', warn = ' ', info = ' ', hint = ' ' },
+	diagnostics_color = {
+		color_error = { fg = colors.red },
+		color_warn = { fg = colors.yellow },
+		color_info = { fg = colors.teal },
+	},
 })
 
 ins_right({
-  function()
-    return '▐'
-  end,
-  color = { fg = colors.lavender },
-  padding = { left = 1 },
+	function()
+		return '▐'
+	end,
+	color = { fg = colors.lavender },
+	padding = { left = 1 },
 })
 
 lualine.setup(config)
@@ -1486,50 +1487,50 @@ require('muren').setup()
 --       neo-tree config
 ----------------------------------
 require('neo-tree').setup({
-  close_if_last_window = true,
-  default_component_configs = {
-    git_status = {
-      symbols = {
-        added = '',
-        modified = '',
-        deleted = '',
-        renamed = '',
-        untracked = '?',
-        ignored = '',
-        unstaged = '',
-        staged = '',
-        conflict = '',
-      },
-    },
-    name = {
-      use_git_status_colors = false,
-    },
-  },
-  filesystem = {
-    hide_dotfiles = false,
-  },
-  window = {
-    width = 32,
-  },
-  source_selector = {
-    sources = {
-      { source = 'filesystem', display_name = ' 󰉓 Files ' },
-      { source = 'buffers', display_name = '  Bufs ' },
-      { source = 'git_status', display_name = ' 󰊢 Git ' },
-    },
-    winbar = true,
-  },
+	close_if_last_window = true,
+	default_component_configs = {
+		git_status = {
+			symbols = {
+				added = '',
+				modified = '',
+				deleted = '',
+				renamed = '',
+				untracked = '?',
+				ignored = '',
+				unstaged = '',
+				staged = '',
+				conflict = '',
+			},
+		},
+		name = {
+			use_git_status_colors = false,
+		},
+	},
+	filesystem = {
+		hide_dotfiles = false,
+	},
+	window = {
+		width = 32,
+	},
+	source_selector = {
+		sources = {
+			{ source = 'filesystem', display_name = ' 󰉓 Files ' },
+			{ source = 'buffers', display_name = '  Bufs ' },
+			{ source = 'git_status', display_name = ' 󰊢 Git ' },
+		},
+		winbar = true,
+	},
 })
 
 augroup('neotree_start', { clear = true })
 autocmd('VimEnter', {
-  desc = 'Open Neo-Tree on startup',
-  group = 'neotree_start',
-  callback = function()
-    if g.show_neotree_on_startup then
-      cmd('Neotree show')
-    end
-  end,
+	desc = 'Open Neo-Tree on startup',
+	group = 'neotree_start',
+	callback = function()
+		if g.show_neotree_on_startup then
+			cmd('Neotree show')
+		end
+	end,
 })
 
 ----------------------------------
@@ -1546,129 +1547,129 @@ local luasnip = require('luasnip')
 local cmp = require('cmp')
 
 local kind_icons = {
-  Text = '',
-  Method = '',
-  Function = '',
-  Constructor = '',
-  Field = '',
-  Variable = '',
-  Class = 'ﴯ',
-  Interface = '',
-  Module = '',
-  Property = 'ﰠ',
-  Unit = '',
-  Value = '',
-  Enum = '',
-  Keyword = '',
-  Snippet = '',
-  Color = '',
-  File = '',
-  Reference = '',
-  Folder = '',
-  EnumMember = '',
-  Constant = '',
-  Struct = '',
-  Event = '',
-  Operator = '',
-  TypeParameter = '',
-  Copilot = '',
+	Text = '',
+	Method = '',
+	Function = '',
+	Constructor = '',
+	Field = '',
+	Variable = '',
+	Class = 'ﴯ',
+	Interface = '',
+	Module = '',
+	Property = 'ﰠ',
+	Unit = '',
+	Value = '',
+	Enum = '',
+	Keyword = '',
+	Snippet = '',
+	Color = '',
+	File = '',
+	Reference = '',
+	Folder = '',
+	EnumMember = '',
+	Constant = '',
+	Struct = '',
+	Event = '',
+	Operator = '',
+	TypeParameter = '',
+	Copilot = '',
 }
 
 cmp.setup({
-  enabled = function()
-    -- disable completion in comments
-    local context = require('cmp.config.context')
-    -- keep command mode completion enabled when cursor is in a comment
-    if vim.api.nvim_get_mode().mode == 'c' then
-      return true
-    else
-      return not context.in_treesitter_capture('comment')
-        and not context.in_syntax_group('Comment')
-    end
-  end,
-  formatting = {
-    format = function(_, vim_item)
-      vim_item.kind =
-        string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
-      return vim_item
-    end,
-  },
-  snippet = {
-    expand = function(args)
-      require('luasnip').lsp_expand(args.body)
-    end,
-  },
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
-  },
-  mapping = cmp.mapping.preset.insert({
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_locally_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, { 'i', 'c' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { 'i', 'c' }),
-    ['<cr>'] = cmp.mapping.confirm({ select = true }),
-  }),
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-  }, {
-    { name = 'buffer' },
-  }),
+	enabled = function()
+		-- disable completion in comments
+		local context = require('cmp.config.context')
+		-- keep command mode completion enabled when cursor is in a comment
+		if vim.api.nvim_get_mode().mode == 'c' then
+			return true
+		else
+			return not context.in_treesitter_capture('comment')
+					and not context.in_syntax_group('Comment')
+		end
+	end,
+	formatting = {
+		format = function(_, vim_item)
+			vim_item.kind =
+					string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
+			return vim_item
+		end,
+	},
+	snippet = {
+		expand = function(args)
+			require('luasnip').lsp_expand(args.body)
+		end,
+	},
+	window = {
+		completion = cmp.config.window.bordered(),
+		documentation = cmp.config.window.bordered(),
+	},
+	mapping = cmp.mapping.preset.insert({
+		['<C-b>'] = cmp.mapping.scroll_docs(-4),
+		['<C-f>'] = cmp.mapping.scroll_docs(4),
+		['<C-Space>'] = cmp.mapping.complete(),
+		['<Tab>'] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			elseif luasnip.expand_or_locally_jumpable() then
+				luasnip.expand_or_jump()
+			else
+				fallback()
+			end
+		end, { 'i', 'c' }),
+		['<S-Tab>'] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item()
+			elseif luasnip.jumpable(-1) then
+				luasnip.jump(-1)
+			else
+				fallback()
+			end
+		end, { 'i', 'c' }),
+		['<cr>'] = cmp.mapping.confirm({ select = true }),
+	}),
+	sources = cmp.config.sources({
+		{ name = 'nvim_lsp' },
+		{ name = 'luasnip' },
+	}, {
+		{ name = 'buffer' },
+	}),
 })
 
 cmp.setup.filetype('gitcommit', {
-  sources = cmp.config.sources({
-    { name = 'cmp_git' },
-  }, {
-    { name = 'buffer' },
-  }),
+	sources = cmp.config.sources({
+		{ name = 'cmp_git' },
+	}, {
+		{ name = 'buffer' },
+	}),
 })
 
 local cmp_disabled_filetypes = {
-  'dap-repl',
-  'dapui_console',
-  'FineCmdlinePrompt',
-  'Searchbox',
-  'TelescopePrompt',
-  'oil',
+	'dap-repl',
+	'dapui_console',
+	'FineCmdlinePrompt',
+	'Searchbox',
+	'TelescopePrompt',
+	'oil',
 }
 
 for _, filetype in pairs(cmp_disabled_filetypes) do
-  cmp.setup.filetype(filetype, {
-    enabled = false,
-  })
+	cmp.setup.filetype(filetype, {
+		enabled = false,
+	})
 end
 
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline('/', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = 'buffer' },
-  },
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = {
+		{ name = 'buffer' },
+	},
 })
 
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } }),
+	mapping = cmp.mapping.preset.cmdline(),
+	sources = cmp.config.sources({ { name = 'path' } }, { { name = 'cmdline' } }),
 })
 
 ----------------------------------
@@ -1676,45 +1677,45 @@ cmp.setup.cmdline(':', {
 ----------------------------------
 require('nvim-ts-autotag').setup()
 require('nvim-treesitter.configs').setup({
-  auto_install = true,
-  ensure_installed = {
-    'c',
-    'cpp',
-    'css',
-    'html',
-    'java',
-    'javascript',
-    'lua',
-    'python',
-    'typescript',
-    'rust',
-    'yaml',
-  },
-  highlight = {
-    enable = true,
-    additional_vim_regex_highlighting = false,
-  },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = ']',
-      node_incremental = ']',
-      node_decremental = '[',
-    },
-  },
-  textobjects = {
-    select = {
-      enable = true,
-      -- Automatically jump forward to textobj, similar to targets.vim
-      lookahead = true,
-      keymaps = {
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
-      },
-    },
-  },
+	auto_install = true,
+	ensure_installed = {
+		'c',
+		'cpp',
+		'css',
+		'html',
+		'java',
+		'javascript',
+		'lua',
+		'python',
+		'typescript',
+		'rust',
+		'yaml',
+	},
+	highlight = {
+		enable = true,
+		additional_vim_regex_highlighting = false,
+	},
+	incremental_selection = {
+		enable = true,
+		keymaps = {
+			init_selection = ']',
+			node_incremental = ']',
+			node_decremental = '[',
+		},
+	},
+	textobjects = {
+		select = {
+			enable = true,
+			-- Automatically jump forward to textobj, similar to targets.vim
+			lookahead = true,
+			keymaps = {
+				['af'] = '@function.outer',
+				['if'] = '@function.inner',
+				['ac'] = '@class.outer',
+				['ic'] = '@class.inner',
+			},
+		},
+	},
 })
 
 ----------------------------------
@@ -1726,192 +1727,192 @@ require('oil').setup()
 --      paperplanes config
 ----------------------------------
 require('paperplanes').setup({
-  register = '+',
-  provider = 'ix.io',
-  provider_options = { insecure = true },
-  cmd = 'curl',
+	register = '+',
+	provider = 'ix.io',
+	provider_options = { insecure = true },
+	cmd = 'curl',
 })
 
 ----------------------------------
 --       peek.nvim config
 ----------------------------------
 require('peek').setup({
-  -- auto_load through peek wasn't working for me so I created my own
-  -- autocmd below.
-  auto_load = false,
+	-- auto_load through peek wasn't working for me so I created my own
+	-- autocmd below.
+	auto_load = false,
 })
 
 augroup('peek', { clear = true })
 autocmd('BufEnter', {
-  desc = 'Open peek on entering a markdown buffer',
-  group = 'peek',
-  callback = function()
-    if not g.auto_open_markdown_previews then
-      return
-    end
+	desc = 'Open peek on entering a markdown buffer',
+	group = 'peek',
+	callback = function()
+		if not g.auto_open_markdown_previews then
+			return
+		end
 
-    local peek = require('peek')
-    local ft = vim.api.nvim_buf_get_option(0, 'filetype')
-    if ft == 'markdown' and not peek.is_open() then
-      peek.open()
-    end
-  end,
+		local peek = require('peek')
+		local ft = vim.api.nvim_buf_get_option(0, 'filetype')
+		if ft == 'markdown' and not peek.is_open() then
+			peek.open()
+		end
+	end,
 })
 
 ----------------------------------
 --   searchbox.nvim config
 ----------------------------------
 require('searchbox').setup({
-  popup = {
-    buf_options = {
-      filetype = 'Searchbox',
-    },
-    position = {
-      row = '0%',
-    },
-  },
+	popup = {
+		buf_options = {
+			filetype = 'Searchbox',
+		},
+		position = {
+			row = '0%',
+		},
+	},
 })
 
 ----------------------------------
 --        sniprun config
 ----------------------------------
 require('sniprun').setup({
-  display = {
-    'TempFloatingWindow',
-  },
-  live_mode_toggle = 'enable',
+	display = {
+		'TempFloatingWindow',
+	},
+	live_mode_toggle = 'enable',
 })
 
 ----------------------------------
 --    symbols-outline config
 ----------------------------------
 g.symbols_outline = {
-  width = 25,
-  relative_width = false,
-  show_symbol_details = false,
-  window_bg_highlight = 'Pmenu',
-  keymaps = {
-    focus_location = 'f',
-    hover_symbol = 'i',
-    toggle_preview = 'p',
-  },
-  symbols = {
-    Array = { icon = '', hl = 'TSConstant' },
-    Boolean = { icon = '⊨', hl = 'TSBoolean' },
-    Class = { icon = 'ﴯ', hl = 'TSType' },
-    Constant = { icon = '', hl = 'TSConstant' },
-    Constructor = { icon = '', hl = 'TSConstructor' },
-    Enum = { icon = '', hl = 'TSType' },
-    EnumMember = { icon = '', hl = 'TSField' },
-    Event = { icon = '', hl = 'TSType' },
-    Field = { icon = '', hl = 'TSField' },
-    File = { icon = '', hl = 'TSURI' },
-    Function = { icon = '', hl = 'TSFunction' },
-    Interface = { icon = '', hl = 'TSType' },
-    Key = { icon = '', hl = 'TSType' },
-    Method = { icon = '', hl = 'TSMethod' },
-    Module = { icon = '', hl = 'TSNamespace' },
-    Namespace = { icon = '', hl = 'TSNamespace' },
-    Null = { icon = 'NULL', hl = 'TSType' },
-    Number = { icon = '#', hl = 'TSNumber' },
-    Object = { icon = '⦿', hl = 'TSType' },
-    Operator = { icon = '', hl = 'TSOperator' },
-    Package = { icon = '', hl = 'TSNamespace' },
-    Property = { icon = 'ﰠ', hl = 'TSMethod' },
-    String = { icon = '', hl = 'TSString' },
-    Struct = { icon = '', hl = 'TSType' },
-    TypeParameter = { icon = '', hl = 'TSParameter' },
-    Variable = { icon = '', hl = 'TSConstant' },
-  },
+	width = 25,
+	relative_width = false,
+	show_symbol_details = false,
+	window_bg_highlight = 'Pmenu',
+	keymaps = {
+		focus_location = 'f',
+		hover_symbol = 'i',
+		toggle_preview = 'p',
+	},
+	symbols = {
+		Array = { icon = '', hl = 'TSConstant' },
+		Boolean = { icon = '⊨', hl = 'TSBoolean' },
+		Class = { icon = 'ﴯ', hl = 'TSType' },
+		Constant = { icon = '', hl = 'TSConstant' },
+		Constructor = { icon = '', hl = 'TSConstructor' },
+		Enum = { icon = '', hl = 'TSType' },
+		EnumMember = { icon = '', hl = 'TSField' },
+		Event = { icon = '', hl = 'TSType' },
+		Field = { icon = '', hl = 'TSField' },
+		File = { icon = '', hl = 'TSURI' },
+		Function = { icon = '', hl = 'TSFunction' },
+		Interface = { icon = '', hl = 'TSType' },
+		Key = { icon = '', hl = 'TSType' },
+		Method = { icon = '', hl = 'TSMethod' },
+		Module = { icon = '', hl = 'TSNamespace' },
+		Namespace = { icon = '', hl = 'TSNamespace' },
+		Null = { icon = 'NULL', hl = 'TSType' },
+		Number = { icon = '#', hl = 'TSNumber' },
+		Object = { icon = '⦿', hl = 'TSType' },
+		Operator = { icon = '', hl = 'TSOperator' },
+		Package = { icon = '', hl = 'TSNamespace' },
+		Property = { icon = 'ﰠ', hl = 'TSMethod' },
+		String = { icon = '', hl = 'TSString' },
+		Struct = { icon = '', hl = 'TSType' },
+		TypeParameter = { icon = '', hl = 'TSParameter' },
+		Variable = { icon = '', hl = 'TSConstant' },
+	},
 }
 
 ----------------------------------
 --       Telescope config
 ----------------------------------
 require('telescope').setup({
-  defaults = {
-    borderchars = {
-      prompt = { '─', ' ', ' ', ' ', '─', '─', ' ', ' ' },
-      results = { ' ' },
-      preview = { ' ', ' ', ' ', '│', '│', ' ', ' ', ' ' },
-    },
-    color_devicons = true,
-    dynamic_preview_title = true,
-    entry_prefix = ' ',
-    file_ignore_patterns = {
-      '^.bundle/',
-      '^.git/',
-      '^node_modules/',
-      '^site-packages/',
-    },
-    initial_mode = 'insert',
-    layout_config = {
-      bottom_pane = {
-        height = 0.5,
-        preview_cutoff = 1,
-        preview_width = 0.65,
-        prompt_position = 'top',
-      },
-    },
-    layout_strategy = 'bottom_pane',
-    path_display = { 'truncate' },
-    pickers = {
-      find_files = {
-        hidden = true,
-      },
-    },
-    prompt_prefix = ' ',
-    results_title = false,
-    selection_caret = ' ',
-    selection_strategy = 'reset',
-    sorting_strategy = 'ascending',
-    use_less = true,
-    vimgrep_arguments = {
-      'rg',
-      '--column',
-      '--hidden',
-      '--line-number',
-      '--smart-case',
-    },
-    winblend = 0,
-  },
-  extensions = {
-    cder = {
-      dir_command = {
-        'fd',
-        '--type=d',
-        '--exclude=node_modules',
-        '--exclude=Library',
-        '--exclude=Pictures',
-        '--exclude=Music',
-        '--exclude=Movies',
-        '--exclude=Public',
-        '.',
-        os.getenv('HOME'),
-      },
-      previewer_command = 'exa '
-        .. '-a '
-        .. '--color=always '
-        .. '-T '
-        .. '--level=3 '
-        .. '--icons '
-        .. '--git-ignore '
-        .. '--long '
-        .. '--no-permissions '
-        .. '--no-user '
-        .. '--no-filesize '
-        .. '--git '
-        .. '--ignore-glob=.git',
-    },
-    howdoi = {
-      enable_storage = true,
-    },
-    command_center = {
-      components = { require('command_center').component.DESCRIPTION },
-      prompt_title = false,
-      prompt_prefix = '❯ ',
-    },
-  },
+	defaults = {
+		borderchars = {
+			prompt = { '─', ' ', ' ', ' ', '─', '─', ' ', ' ' },
+			results = { ' ' },
+			preview = { ' ', ' ', ' ', '│', '│', ' ', ' ', ' ' },
+		},
+		color_devicons = true,
+		dynamic_preview_title = true,
+		entry_prefix = ' ',
+		file_ignore_patterns = {
+			'^.bundle/',
+			'^.git/',
+			'^node_modules/',
+			'^site-packages/',
+		},
+		initial_mode = 'insert',
+		layout_config = {
+			bottom_pane = {
+				height = 0.5,
+				preview_cutoff = 1,
+				preview_width = 0.65,
+				prompt_position = 'top',
+			},
+		},
+		layout_strategy = 'bottom_pane',
+		path_display = { 'truncate' },
+		pickers = {
+			find_files = {
+				hidden = true,
+			},
+		},
+		prompt_prefix = ' ',
+		results_title = false,
+		selection_caret = ' ',
+		selection_strategy = 'reset',
+		sorting_strategy = 'ascending',
+		use_less = true,
+		vimgrep_arguments = {
+			'rg',
+			'--column',
+			'--hidden',
+			'--line-number',
+			'--smart-case',
+		},
+		winblend = 0,
+	},
+	extensions = {
+		cder = {
+			dir_command = {
+				'fd',
+				'--type=d',
+				'--exclude=node_modules',
+				'--exclude=Library',
+				'--exclude=Pictures',
+				'--exclude=Music',
+				'--exclude=Movies',
+				'--exclude=Public',
+				'.',
+				os.getenv('HOME'),
+			},
+			previewer_command = 'exa '
+					.. '-a '
+					.. '--color=always '
+					.. '-T '
+					.. '--level=3 '
+					.. '--icons '
+					.. '--git-ignore '
+					.. '--long '
+					.. '--no-permissions '
+					.. '--no-user '
+					.. '--no-filesize '
+					.. '--git '
+					.. '--ignore-glob=.git',
+		},
+		howdoi = {
+			enable_storage = true,
+		},
+		command_center = {
+			components = { require('command_center').component.DESCRIPTION },
+			prompt_title = false,
+			prompt_prefix = '❯ ',
+		},
+	},
 })
 
 require('telescope').load_extension('cder')
@@ -1926,71 +1927,71 @@ require('telescope').load_extension('workspaces')
 --      toggleterm config
 ---------------------------------
 require('toggleterm').setup({
-  shade_terminals = false,
+	shade_terminals = false,
 })
 
 local Terminal = require('toggleterm.terminal').Terminal
 
 local horizontal = Terminal:new({
-  direction = 'horizontal',
-  hidden = true,
+	direction = 'horizontal',
+	hidden = true,
 })
 
 function ToggleHorizontalTerminal()
-  horizontal:toggle()
+	horizontal:toggle()
 end
 
 function CloseHorizontalTerminal()
-  horizontal:close()
+	horizontal:close()
 end
 
 local vtop = Terminal:new({
-  cmd = 'vtop',
-  direction = 'float',
-  hidden = true,
+	cmd = 'vtop',
+	direction = 'float',
+	hidden = true,
 })
 
 function ToggleVtop()
-  vtop:toggle()
+	vtop:toggle()
 end
 
 local lazygit = Terminal:new({
-  cmd = 'lazygit',
-  direction = 'float',
-  hidden = true,
+	cmd = 'lazygit',
+	direction = 'float',
+	hidden = true,
 })
 
 function ToggleLazygit()
-  lazygit:toggle()
+	lazygit:toggle()
 end
 
 local ipython = Terminal:new({
-  cmd = 'ipython',
-  direction = 'float',
-  hidden = true,
+	cmd = 'ipython',
+	direction = 'float',
+	hidden = true,
 })
 
 function ToggleIPython()
-  ipython:toggle()
+	ipython:toggle()
 end
 
 ----------------------------------
 --       trees config
 ----------------------------------
 require('treesj').setup({
-  use_default_keymaps = false,
+	use_default_keymaps = false,
 })
 
 --       trouble config
 ----------------------------------
 require('trouble').setup({
-  action_keys = {
-    close = { 'q', '<F3>' },
-    hover = 'i',
-  },
-  auto_preview = false,
-  padding = false,
-  use_diagnostic_signs = true,
+	action_keys = {
+		close = { 'q', '<F3>' },
+		hover = 'i',
+	},
+	auto_preview = false,
+	padding = false,
+	use_diagnostic_signs = true,
 })
 
 ----------------------------------
@@ -1999,350 +2000,352 @@ require('trouble').setup({
 local command_center = require('command_center')
 
 command_center.add({
-  {
-    description = 'Open keymap',
-    cmd = '<cmd>WhichKey<cr>',
-  },
-  {
-    description = 'Find file',
-    cmd = '<cmd>Telescope find_files<cr>',
-  },
-  {
-    description = 'Open recent file',
-    cmd = '<cmd>Telescope oldfiles prompt_title=Recents<cr>',
-  },
-  {
-    description = 'Search in current file',
-    cmd = '<cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false, prompt_title = "", layout_config = { height = 40 }}))<cr>',
-  },
-  {
-    description = 'Live grep',
-    cmd = '<cmd>Telescope live_grep hidden=true<cr>',
-  },
-  {
-    description = 'Open new file',
-    cmd = '<cmd>tabnew<cr>',
-  },
-  {
-    description = 'Change working directory',
-    cmd = '<cmd>Telescope cder<cr>',
-  },
-  {
-    description = 'Close current file',
-    cmd = '<cmd>Bdelete<cr>',
-  },
-  {
-    description = 'Save current file',
-    cmd = '<cmd>w<cr>',
-  },
-  {
-    description = 'Save all files',
-    cmd = '<cmd>wa<cr>',
-  },
-  {
-    description = 'Discard changes to current file',
-    cmd = '<cmd>e!<cr>',
-  },
-  {
-    description = 'Reload current file',
-    cmd = '<cmd>e<cr>',
-  },
-  {
-    description = 'Save and quit',
-    cmd = '<cmd>wq<cr>',
-  },
-  {
-    description = 'Quit',
-    cmd = '<cmd>qa<cr>',
-  },
-  {
-    description = 'Force quit',
-    cmd = '<cmd>q!<cr>',
-  },
-  {
-    description = 'Toggle format on save',
-    cmd = '<cmd>lua ToggleFormatOnSave()<cr>',
-  },
-  {
-    description = 'Toggle format notifications',
-    cmd = '<cmd>lua ToggleFormatNotifications()<cr>',
-  },
-  {
-    description = 'Open workspace',
-    cmd = '<cmd>Telescope workspaces<cr>',
-  },
-  {
-    description = 'Open vertical split',
-    cmd = '<cmd>vsp<cr>',
-  },
-  {
-    description = 'Open horizontal split',
-    cmd = '<cmd>sp<cr>',
-  },
-  {
-    description = 'Select all',
-    cmd = '<cmd>call feedkeys("GVgg")<cr>',
-  },
-  {
-    description = 'Upload buffer to ix.io',
-    cmd = '<cmd>PP<cr>',
-  },
-  {
-    description = 'Trim trailing whitespace',
-    cmd = '<cmd>%s/\\s\\+$//<cr><cmd>nohlsearch<cr>',
-  },
-  {
-    description = 'Reload config',
-    cmd = '<cmd>source ~/.config/nvim/init.lua<cr><cmd>lua notify("Config reloaded", "info", { title = "🦁 Lionvim"})<cr>',
-  },
-  {
-    description = 'Rename symbol under cursor',
-    cmd = '<cmd>lua vim.lsp.buf.rename()<cr>',
-  },
-  {
-    description = 'Format file',
-    cmd = '<cmd>lua Format()<cr>',
-  },
-  {
-    description = 'Open command history',
-    cmd = '<cmd>Telescope command_history<cr>',
-  },
-  {
-    description = 'Open search history',
-    cmd = '<cmd>Telescope search_history<cr>',
-  },
-  {
-    description = 'Open jump list',
-    cmd = '<cmd>Telescope jumplist<cr>',
-  },
-  {
-    description = 'Open marks',
-    cmd = '<cmd>Telescope marks<cr>',
-  },
-  {
-    description = 'Open config',
-    cmd = '<cmd>e $MYVIMRC | :cd %:p:h <cr>',
-  },
-  {
-    description = 'Open filetype list',
-    cmd = '<cmd>Telescope filetypes<cr>',
-  },
-  {
-    description = 'Open symbol map',
-    cmd = '<cmd>Telescope symbols<cr>',
-  },
-  {
-    description = 'Open vim options',
-    cmd = '<cmd>Telescope vim_options<cr>',
-  },
-  {
-    description = 'Open man pages',
-    cmd = '<cmd>Telescope man_pages<cr>',
-  },
-  {
-    description = 'Open spell suggest',
-    cmd = '<cmd>Telescope spell_suggest<cr>',
-  },
-  {
-    description = 'Open git branches',
-    cmd = '<cmd>Telescope git_branches<cr>',
-  },
-  {
-    description = 'Open git files',
-    cmd = '<cmd>Telescope git_files<cr>',
-  },
-  {
-    description = 'Open git status',
-    cmd = '<cmd>Telescope git_status<cr>',
-  },
-  {
-    description = 'Generate gitignore file',
-    cmd = '<cmd>Gitignore<cr>',
-  },
-  {
-    description = 'Open quickfix history',
-    cmd = '<cmd>Telescope quickfixhistory<cr>',
-  },
-  {
-    description = 'Open type definitions',
-    cmd = '<cmd>Telescope lsp_type_definitions<cr>',
-  },
-  {
-    description = 'Open document symbols',
-    cmd = '<cmd>Telescope lsp_document_symbols<cr>',
-  },
-  {
-    description = 'Open treesitter',
-    cmd = '<cmd>Telescope treesitter<cr>',
-  },
-  {
-    description = 'Open diagnostics',
-    cmd = '<cmd>TroubleToggle<cr>',
-  },
-  {
-    description = 'Open quickfix menu',
-    cmd = '<cmd>Telescope quickfix<cr>',
-  },
-  {
-    description = 'Open definitions',
-    cmd = '<cmd>Telescope lsp_definitions<cr>',
-  },
-  {
-    description = 'Open references',
-    cmd = '<cmd>Telescope lsp_references<cr>',
-  },
-  {
-    description = 'Open implementations',
-    cmd = '<cmd>Telescope lsp_implementations<cr>',
-  },
-  {
-    description = 'Open dynamic workspace symbols',
-    cmd = '<cmd>Telescope lsp_dynamic_workspace_symbols<cr>',
-  },
-  {
-    description = 'Open DAP commands',
-    cmd = '<cmd>Telescope dap commands<cr>',
-  },
-  {
-    description = 'Open DAP configurations',
-    cmd = '<cmd>Telescope dap configurations<cr>',
-  },
-  {
-    description = 'Open DAP breakpoints',
-    cmd = '<cmd>Telescope dap breakpoints<cr>',
-  },
-  {
-    description = 'Open DAP variables',
-    cmd = '<cmd>Telescope dap variables<cr>',
-  },
-  {
-    description = 'Open DAP frames',
-    cmd = '<cmd>Telescope dap frames<cr>',
-  },
-  {
-    description = 'Open references for symbol under cursor',
-    cmd = '<cmd>lua require("goto-preview").goto_preview_references()<cr>',
-  },
-  {
-    description = 'Open definition for symbol under cursor',
-    cmd = '<cmd>lua require("goto-preview").goto_definition()<cr>',
-  },
-  {
-    description = 'Open implementation for symbol under cursor',
-    cmd = '<cmd>lua require("goto-preview").goto_implementation()<cr>',
-  },
-  {
-    description = 'Close all preview windows',
-    cmd = '<cmd>lua require("goto-preview").close_all_win()<cr>',
-  },
-  {
-    description = 'Change colorscheme',
-    cmd = '<cmd>lua require("telescope.builtin").colorscheme(require("telescope.themes").get_dropdown({ layout_config = { height = 20 }}))<cr>',
-  },
-  {
-    description = 'Toggle cursor line',
-    cmd = '<cmd>set cursorline!<cr>',
-  },
-  {
-    description = 'Toggle spell checker',
-    cmd = '<cmd>set spell!<cr>',
-  },
-  {
-    description = 'Toggle relative number',
-    cmd = '<cmd>set relativenumber!<cr>',
-  },
-  {
-    description = 'Toggle search highlighting',
-    cmd = '<cmd>set hlsearch!<cr>',
-  },
-  {
-    description = 'Toggle live code execution',
-    cmd = '<cmd>SnipLive<cr>',
-  },
-  {
-    description = 'Toggle file tree',
-    cmd = '<cmd>NeoTreeShowToggle<cr>',
-  },
-  {
-    description = 'Toggle symbols outline',
-    cmd = '<cmd>SymbolsOutline<cr>',
-  },
-  {
-    description = 'Open floating terminal',
-    cmd = '<cmd>ToggleTerm direction=float<cr>',
-  },
-  {
-    description = 'Toggle terminal in horizontal split',
-    cmd = '<cmd>lua ToggleHorizontalTerminal()<cr>',
-  },
-  {
-    description = 'Open lazygit',
-    cmd = '<cmd>lua ToggleLazygit()<cr>',
-  },
-  {
-    description = 'Open vtop',
-    cmd = '<cmd>lua ToggleVtop()<cr>',
-  },
-  {
-    description = 'Open ipython',
-    cmd = '<cmd>lua ToggleIPython()<cr>',
-  },
-  {
-    description = 'Install LSP server',
-    cmd = '<cmd>LspInstall<cr>',
-  },
-  {
-    description = 'Open LSP info',
-    cmd = '<cmd>LspInfo<cr>',
-  },
-  {
-    description = 'Restart LSP server',
-    cmd = '<cmd>LspRestart<cr>',
-  },
-  {
-    description = 'Check health',
-    cmd = '<cmd>checkhealth<cr>',
-  },
-  {
-    description = 'Lazy install',
-    cmd = '<cmd>Lazy cnstall<cr>',
-  },
-  {
-    description = 'Lazy update',
-    cmd = '<cmd>Lazy update<cr>',
-  },
-  {
-    description = 'Lazy sync',
-    cmd = '<cmd>Lazy sync<cr>',
-  },
-  {
-    description = 'Lazy clean',
-    cmd = '<cmd>Lazy clean<cr>',
-  },
-  {
-    description = 'Lazy health',
-    cmd = '<cmd>Lazy health<cr>',
-  },
-  {
-    description = 'Start live markdown preview',
-    cmd = '<cmd>lua require("peek").open()<cr>',
-  },
-  {
-    description = 'Stop live markdown preview',
-    cmd = '<cmd>lua require("peek").close()<cr>',
-  },
-  {
-    description = 'Make it rain',
-    cmd = '<cmd>CellularAutomaton make_it_rain<cr>',
-  },
-  {
-    description = 'Play game of life',
-    cmd = '<cmd>CellularAutomaton game_of_life<cr>',
-  },
-  {
-    description = 'Edit directory in a buffer',
-    cmd = '<cmd>Oil --float .<cr>',
-  },
+	{
+		description = 'Open keymap',
+		cmd = '<cmd>WhichKey<cr>',
+	},
+	{
+		description = 'Find file',
+		cmd = '<cmd>Telescope find_files<cr>',
+	},
+	{
+		description = 'Open recent file',
+		cmd = '<cmd>Telescope oldfiles prompt_title=Recents<cr>',
+	},
+	{
+		description = 'Search in current file',
+		cmd =
+		'<cmd>lua require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({ previewer = false, prompt_title = "", layout_config = { height = 40 }}))<cr>',
+	},
+	{
+		description = 'Live grep',
+		cmd = '<cmd>Telescope live_grep hidden=true<cr>',
+	},
+	{
+		description = 'Open new file',
+		cmd = '<cmd>tabnew<cr>',
+	},
+	{
+		description = 'Change working directory',
+		cmd = '<cmd>Telescope cder<cr>',
+	},
+	{
+		description = 'Close current file',
+		cmd = '<cmd>Bdelete<cr>',
+	},
+	{
+		description = 'Save current file',
+		cmd = '<cmd>w<cr>',
+	},
+	{
+		description = 'Save all files',
+		cmd = '<cmd>wa<cr>',
+	},
+	{
+		description = 'Discard changes to current file',
+		cmd = '<cmd>e!<cr>',
+	},
+	{
+		description = 'Reload current file',
+		cmd = '<cmd>e<cr>',
+	},
+	{
+		description = 'Save and quit',
+		cmd = '<cmd>wq<cr>',
+	},
+	{
+		description = 'Quit',
+		cmd = '<cmd>qa<cr>',
+	},
+	{
+		description = 'Force quit',
+		cmd = '<cmd>q!<cr>',
+	},
+	{
+		description = 'Toggle format on save',
+		cmd = '<cmd>lua ToggleFormatOnSave()<cr>',
+	},
+	{
+		description = 'Toggle format notifications',
+		cmd = '<cmd>lua ToggleFormatNotifications()<cr>',
+	},
+	{
+		description = 'Open workspace',
+		cmd = '<cmd>Telescope workspaces<cr>',
+	},
+	{
+		description = 'Open vertical split',
+		cmd = '<cmd>vsp<cr>',
+	},
+	{
+		description = 'Open horizontal split',
+		cmd = '<cmd>sp<cr>',
+	},
+	{
+		description = 'Select all',
+		cmd = '<cmd>call feedkeys("GVgg")<cr>',
+	},
+	{
+		description = 'Upload buffer to ix.io',
+		cmd = '<cmd>PP<cr>',
+	},
+	{
+		description = 'Trim trailing whitespace',
+		cmd = '<cmd>%s/\\s\\+$//<cr><cmd>nohlsearch<cr>',
+	},
+	{
+		description = 'Reload config',
+		cmd = '<cmd>source ~/.config/nvim/init.lua<cr><cmd>lua notify("Config reloaded", "info", { title = "🦁 Lionvim"})<cr>',
+	},
+	{
+		description = 'Rename symbol under cursor',
+		cmd = '<cmd>lua vim.lsp.buf.rename()<cr>',
+	},
+	{
+		description = 'Format file',
+		cmd = '<cmd>lua Format()<cr>',
+	},
+	{
+		description = 'Open command history',
+		cmd = '<cmd>Telescope command_history<cr>',
+	},
+	{
+		description = 'Open search history',
+		cmd = '<cmd>Telescope search_history<cr>',
+	},
+	{
+		description = 'Open jump list',
+		cmd = '<cmd>Telescope jumplist<cr>',
+	},
+	{
+		description = 'Open marks',
+		cmd = '<cmd>Telescope marks<cr>',
+	},
+	{
+		description = 'Open config',
+		cmd = '<cmd>e $MYVIMRC | :cd %:p:h <cr>',
+	},
+	{
+		description = 'Open filetype list',
+		cmd = '<cmd>Telescope filetypes<cr>',
+	},
+	{
+		description = 'Open symbol map',
+		cmd = '<cmd>Telescope symbols<cr>',
+	},
+	{
+		description = 'Open vim options',
+		cmd = '<cmd>Telescope vim_options<cr>',
+	},
+	{
+		description = 'Open man pages',
+		cmd = '<cmd>Telescope man_pages<cr>',
+	},
+	{
+		description = 'Open spell suggest',
+		cmd = '<cmd>Telescope spell_suggest<cr>',
+	},
+	{
+		description = 'Open git branches',
+		cmd = '<cmd>Telescope git_branches<cr>',
+	},
+	{
+		description = 'Open git files',
+		cmd = '<cmd>Telescope git_files<cr>',
+	},
+	{
+		description = 'Open git status',
+		cmd = '<cmd>Telescope git_status<cr>',
+	},
+	{
+		description = 'Generate gitignore file',
+		cmd = '<cmd>Gitignore<cr>',
+	},
+	{
+		description = 'Open quickfix history',
+		cmd = '<cmd>Telescope quickfixhistory<cr>',
+	},
+	{
+		description = 'Open type definitions',
+		cmd = '<cmd>Telescope lsp_type_definitions<cr>',
+	},
+	{
+		description = 'Open document symbols',
+		cmd = '<cmd>Telescope lsp_document_symbols<cr>',
+	},
+	{
+		description = 'Open treesitter',
+		cmd = '<cmd>Telescope treesitter<cr>',
+	},
+	{
+		description = 'Open diagnostics',
+		cmd = '<cmd>TroubleToggle<cr>',
+	},
+	{
+		description = 'Open quickfix menu',
+		cmd = '<cmd>Telescope quickfix<cr>',
+	},
+	{
+		description = 'Open definitions',
+		cmd = '<cmd>Telescope lsp_definitions<cr>',
+	},
+	{
+		description = 'Open references',
+		cmd = '<cmd>Telescope lsp_references<cr>',
+	},
+	{
+		description = 'Open implementations',
+		cmd = '<cmd>Telescope lsp_implementations<cr>',
+	},
+	{
+		description = 'Open dynamic workspace symbols',
+		cmd = '<cmd>Telescope lsp_dynamic_workspace_symbols<cr>',
+	},
+	{
+		description = 'Open DAP commands',
+		cmd = '<cmd>Telescope dap commands<cr>',
+	},
+	{
+		description = 'Open DAP configurations',
+		cmd = '<cmd>Telescope dap configurations<cr>',
+	},
+	{
+		description = 'Open DAP breakpoints',
+		cmd = '<cmd>Telescope dap breakpoints<cr>',
+	},
+	{
+		description = 'Open DAP variables',
+		cmd = '<cmd>Telescope dap variables<cr>',
+	},
+	{
+		description = 'Open DAP frames',
+		cmd = '<cmd>Telescope dap frames<cr>',
+	},
+	{
+		description = 'Open references for symbol under cursor',
+		cmd = '<cmd>lua require("goto-preview").goto_preview_references()<cr>',
+	},
+	{
+		description = 'Open definition for symbol under cursor',
+		cmd = '<cmd>lua require("goto-preview").goto_definition()<cr>',
+	},
+	{
+		description = 'Open implementation for symbol under cursor',
+		cmd = '<cmd>lua require("goto-preview").goto_implementation()<cr>',
+	},
+	{
+		description = 'Close all preview windows',
+		cmd = '<cmd>lua require("goto-preview").close_all_win()<cr>',
+	},
+	{
+		description = 'Change colorscheme',
+		cmd =
+		'<cmd>lua require("telescope.builtin").colorscheme(require("telescope.themes").get_dropdown({ layout_config = { height = 20 }}))<cr>',
+	},
+	{
+		description = 'Toggle cursor line',
+		cmd = '<cmd>set cursorline!<cr>',
+	},
+	{
+		description = 'Toggle spell checker',
+		cmd = '<cmd>set spell!<cr>',
+	},
+	{
+		description = 'Toggle relative number',
+		cmd = '<cmd>set relativenumber!<cr>',
+	},
+	{
+		description = 'Toggle search highlighting',
+		cmd = '<cmd>set hlsearch!<cr>',
+	},
+	{
+		description = 'Toggle live code execution',
+		cmd = '<cmd>SnipLive<cr>',
+	},
+	{
+		description = 'Toggle file tree',
+		cmd = '<cmd>Neotree toggle<cr>',
+	},
+	{
+		description = 'Toggle symbols outline',
+		cmd = '<cmd>SymbolsOutline<cr>',
+	},
+	{
+		description = 'Open floating terminal',
+		cmd = '<cmd>ToggleTerm direction=float<cr>',
+	},
+	{
+		description = 'Toggle terminal in horizontal split',
+		cmd = '<cmd>lua ToggleHorizontalTerminal()<cr>',
+	},
+	{
+		description = 'Open lazygit',
+		cmd = '<cmd>lua ToggleLazygit()<cr>',
+	},
+	{
+		description = 'Open vtop',
+		cmd = '<cmd>lua ToggleVtop()<cr>',
+	},
+	{
+		description = 'Open ipython',
+		cmd = '<cmd>lua ToggleIPython()<cr>',
+	},
+	{
+		description = 'Install LSP server',
+		cmd = '<cmd>LspInstall<cr>',
+	},
+	{
+		description = 'Open LSP info',
+		cmd = '<cmd>LspInfo<cr>',
+	},
+	{
+		description = 'Restart LSP server',
+		cmd = '<cmd>LspRestart<cr>',
+	},
+	{
+		description = 'Check health',
+		cmd = '<cmd>checkhealth<cr>',
+	},
+	{
+		description = 'Lazy install',
+		cmd = '<cmd>Lazy cnstall<cr>',
+	},
+	{
+		description = 'Lazy update',
+		cmd = '<cmd>Lazy update<cr>',
+	},
+	{
+		description = 'Lazy sync',
+		cmd = '<cmd>Lazy sync<cr>',
+	},
+	{
+		description = 'Lazy clean',
+		cmd = '<cmd>Lazy clean<cr>',
+	},
+	{
+		description = 'Lazy health',
+		cmd = '<cmd>Lazy health<cr>',
+	},
+	{
+		description = 'Start live markdown preview',
+		cmd = '<cmd>lua require("peek").open()<cr>',
+	},
+	{
+		description = 'Stop live markdown preview',
+		cmd = '<cmd>lua require("peek").close()<cr>',
+	},
+	{
+		description = 'Make it rain',
+		cmd = '<cmd>CellularAutomaton make_it_rain<cr>',
+	},
+	{
+		description = 'Play game of life',
+		cmd = '<cmd>CellularAutomaton game_of_life<cr>',
+	},
+	{
+		description = 'Edit directory in a buffer',
+		cmd = '<cmd>Oil --float .<cr>',
+	},
 })
 
 ----------------------------------
@@ -2351,240 +2354,240 @@ command_center.add({
 local wk = require('which-key')
 
 wk.setup({
-  ignore_missing = true,
-  plugins = {
-    marks = false,
-    registers = false,
-    presets = {
-      operators = false,
-      motions = false,
-      nav = false,
-      g = false,
-    },
-  },
-  key_labels = {
-    ['<C-C>'] = 'Ctrl + c',
-    ['<C-B>'] = 'Ctrl + b',
-    ['<C-H>'] = 'Ctrl + h',
-    ['<C-J>'] = 'Ctrl + j',
-    ['<C-K>'] = 'Ctrl + k',
-    ['<C-L>'] = 'Ctrl + l',
-    ['<C-F>'] = 'Ctrl + f',
-    ['<C-N>'] = 'Ctrl + n',
-    ['<C-O>'] = 'Ctrl + o',
-    ['<C-Q>'] = 'Ctrl + q',
-    ['<C-S>'] = 'Ctrl + s',
-    ['<C-V>'] = 'Ctrl + v',
-    ['<c-w>'] = 'Ctrl + w',
-    ['<C-X>'] = 'Ctrl + x',
-    ['<F1>'] = 'F1',
-    ['<F2>'] = 'F2',
-    ['<F3>'] = 'F3',
-    ['<F4>'] = 'F4',
-    ['<F5>'] = 'F5',
-    ['<F6>'] = 'F6',
-    ['<F7>'] = 'F7',
-    ['<S-Right>'] = 'Shift + ',
-    ['<S-Left>'] = 'Shift + ',
-    ['<S-Up>'] = 'Shift + ',
-    ['<S-Down>'] = 'Shift + ',
-    ['<space>'] = 'Space',
-    ['<leader>'] = ',',
-  },
+	ignore_missing = true,
+	plugins = {
+		marks = false,
+		registers = false,
+		presets = {
+			operators = false,
+			motions = false,
+			nav = false,
+			g = false,
+		},
+	},
+	key_labels = {
+		['<C-C>'] = 'Ctrl + c',
+		['<C-B>'] = 'Ctrl + b',
+		['<C-H>'] = 'Ctrl + h',
+		['<C-J>'] = 'Ctrl + j',
+		['<C-K>'] = 'Ctrl + k',
+		['<C-L>'] = 'Ctrl + l',
+		['<C-F>'] = 'Ctrl + f',
+		['<C-N>'] = 'Ctrl + n',
+		['<C-O>'] = 'Ctrl + o',
+		['<C-Q>'] = 'Ctrl + q',
+		['<C-S>'] = 'Ctrl + s',
+		['<C-V>'] = 'Ctrl + v',
+		['<c-w>'] = 'Ctrl + w',
+		['<C-X>'] = 'Ctrl + x',
+		['<F1>'] = 'F1',
+		['<F2>'] = 'F2',
+		['<F3>'] = 'F3',
+		['<F4>'] = 'F4',
+		['<F5>'] = 'F5',
+		['<F6>'] = 'F6',
+		['<F7>'] = 'F7',
+		['<S-Right>'] = 'Shift + ',
+		['<S-Left>'] = 'Shift + ',
+		['<S-Up>'] = 'Shift + ',
+		['<S-Down>'] = 'Shift + ',
+		['<space>'] = 'Space',
+		['<leader>'] = ',',
+	},
 })
 
 wk.register({
-  c = {
-    a = {
-      c = 'a class',
-      f = 'a function',
-    },
-    i = {
-      c = 'a class',
-      f = 'a function',
-    },
-    d = 'Change working directory',
-    s = 'Change surrounding',
-  },
-  b = {
-    name = 'Debug',
-    b = 'Toggle breakpoint',
-    c = 'Continue',
-    e = 'Evaluate expression under cursor',
-    f = 'List frames',
-    i = 'Step into',
-    l = 'List breakpoints',
-    o = 'Step over',
-    O = 'Step out',
-    t = 'Terminate',
-    v = 'List variables',
-  },
-  d = {
-    name = 'Delete',
-    a = {
-      name = 'Text objects',
-      c = 'a class',
-      f = 'a function',
-    },
-    i = {
-      c = 'a class',
-      f = 'a function',
-    },
-    s = 'Surrounding',
-  },
-  e = {
-    name = 'Code execution',
-    c = 'Clear all execution results',
-    l = 'Toggle live code execution',
-    r = 'Execute current line',
-    q = 'Stop currently executing code',
-  },
-  f = {
-    name = 'Search',
-    b = 'Search open buffer names',
-    f = 'Search for filename',
-    g = 'Live grep',
-    h = 'Search howdoi',
-    r = 'Search for recent file',
-    s = 'Search for symbol',
-    w = 'Search pattern in current file',
-    z = 'Search for filename with fzf',
-  },
-  g = {
-    name = 'Goto/Comments',
-    b = 'Toggle comment blockwise',
-    c = 'Toggle comment linewise',
-    ['cc'] = 'Toggle comment for current line',
-    ['ca'] = {
-      c = 'a class',
-      f = 'a function',
-    },
-    ['ci'] = {
-      c = 'a class',
-      f = 'a function',
-    },
-    d = 'Goto definition for symbol',
-    D = 'Goto declaration for symbol',
-    i = 'Goto implementation for symbol',
-    p = 'Open definition preview for symbol',
-    P = 'Close all definition preview windows',
-    o = 'Goto header/implementation file',
-    r = 'Open references for symbol in quickfix',
-    R = 'Search references for symbol',
-    s = 'Switch symbol under cursor',
-  },
-  q = {
-    name = 'Quit',
-    a = 'Quit all without saving',
-    f = 'Force quit without saving',
-    s = 'Save all and quit',
-    q = 'Close current buffer',
-    w = 'Save and quit',
-  },
-  r = {
-    name = 'Refactor',
-    f = 'Format file',
-    g = 'Replace all',
-    l = 'Replace on line only',
-    n = 'Rename symbol under cursor',
-    s = 'Replace multiple patterns',
-    t = {
-      name = 'Trim',
-      w = 'Trim ^M carriage characters',
-      m = 'Trim trailing whitespace',
-    },
-    w = 'Replace word under cursor',
-  },
-  s = 'Jump to text forwards',
-  S = 'Jump to text backwards',
-  v = {
-    name = 'Visual Mode',
-    r = 'Execute code selection',
-  },
-  w = {
-    name = 'Jump',
-    s = 'Jump to text in any window',
-    o = 'Open workspace',
-    w = 'Jump to buffer',
-  },
-  ['<space>'] = {
-    name = 'Util',
-    a = 'Open code action menu',
-    c = 'Open command palette',
-    d = 'Open type definition for symbol',
-    h = 'Open signature help',
-    f = 'Open finder for symbol',
-    o = 'Toggle function outline',
-    i = 'Preview symbol information',
-    s = 'Toggle symbol outline',
-    t = 'Toggle diagnostics menu',
-    w = {
-      name = 'Workspace',
-      a = 'Add workspace folder',
-      l = 'List workspace folders',
-      r = 'Remove workspace folder',
-    },
-  },
-  ['<leader>'] = {
-    name = 'Misc',
-    b = 'Toggle git blame',
-    c = {
-      'Open ChatGPT',
-    },
-    g = 'Toggle lazygit',
-    i = 'Toggle ipython',
-    j = 'Toggle spliting/joining code block',
-    l = 'Change colorscheme',
-    p = 'Upload buffer to ix.io',
-    n = {
-      name = 'Show notes command palette',
-      d = "Go to today's note",
-      f = 'Search for a note by title',
-      l = 'Insert a link to a note',
-      i = 'Paste an image and insert link',
-      n = 'Create a new note',
-      s = 'Search within notes',
-    },
-    s = 'Open nvim config',
-    t = 'Toggle floating terminal',
-    u = 'Toggle undo tree',
-    v = 'Toggle vtop',
-    x = 'Toggle horizontal terminal',
-    ['<space>'] = 'Toggle search results highlight',
-  },
-  ['?'] = 'Open keymap',
-  ['/'] = 'Search',
-  [']'] = 'Increment node selection',
-  ['['] = 'Decrement node selection',
-  ['<c-b>'] = 'Toggle DAP UI',
-  ['<c-c>'] = 'Edit directory in buffer',
-  ['<c-f>'] = 'Toggle file tree',
-  ['<c-h>'] = 'Go to window left',
-  ['<c-j>'] = 'Go to window down',
-  ['<c-k>'] = 'Go to window up',
-  ['<c-l>'] = 'Go to window right',
-  ['<c-q>'] = 'Close focused window',
-  ['<c-n>'] = 'New file',
-  ['<c-o>'] = 'Open file',
-  ['<c-s>'] = 'Save current buffer',
-  ['<c-v>'] = 'Split window vertically',
-  ['<c-x>'] = 'Split window horizontally',
-  ['<F1>'] = 'Goto previous location',
-  ['<F2>'] = 'Goto next location',
-  ['<F4>'] = 'Search man pages',
-  ['<F5>'] = 'Search help tags',
-  ['<F6>'] = 'Open verbose keymap',
-  ['<s-left>'] = 'Move buffer left',
-  ['<s-right>'] = 'Move buffer right',
-  ['<s-up>'] = 'Move line up',
-  ['<s-down>'] = 'Move line down',
+	c = {
+		a = {
+			c = 'a class',
+			f = 'a function',
+		},
+		i = {
+			c = 'a class',
+			f = 'a function',
+		},
+		d = 'Change working directory',
+		s = 'Change surrounding',
+	},
+	b = {
+		name = 'Debug',
+		b = 'Toggle breakpoint',
+		c = 'Continue',
+		e = 'Evaluate expression under cursor',
+		f = 'List frames',
+		i = 'Step into',
+		l = 'List breakpoints',
+		o = 'Step over',
+		O = 'Step out',
+		t = 'Terminate',
+		v = 'List variables',
+	},
+	d = {
+		name = 'Delete',
+		a = {
+			name = 'Text objects',
+			c = 'a class',
+			f = 'a function',
+		},
+		i = {
+			c = 'a class',
+			f = 'a function',
+		},
+		s = 'Surrounding',
+	},
+	e = {
+		name = 'Code execution',
+		c = 'Clear all execution results',
+		l = 'Toggle live code execution',
+		r = 'Execute current line',
+		q = 'Stop currently executing code',
+	},
+	f = {
+		name = 'Search',
+		b = 'Search open buffer names',
+		f = 'Search for filename',
+		g = 'Live grep',
+		h = 'Search howdoi',
+		r = 'Search for recent file',
+		s = 'Search for symbol',
+		w = 'Search pattern in current file',
+		z = 'Search for filename with fzf',
+	},
+	g = {
+		name = 'Goto/Comments',
+		b = 'Toggle comment blockwise',
+		c = 'Toggle comment linewise',
+		['cc'] = 'Toggle comment for current line',
+		['ca'] = {
+			c = 'a class',
+			f = 'a function',
+		},
+		['ci'] = {
+			c = 'a class',
+			f = 'a function',
+		},
+		d = 'Goto definition for symbol',
+		D = 'Goto declaration for symbol',
+		i = 'Goto implementation for symbol',
+		p = 'Open definition preview for symbol',
+		P = 'Close all definition preview windows',
+		o = 'Goto header/implementation file',
+		r = 'Open references for symbol in quickfix',
+		R = 'Search references for symbol',
+		s = 'Switch symbol under cursor',
+	},
+	q = {
+		name = 'Quit',
+		a = 'Quit all without saving',
+		f = 'Force quit without saving',
+		s = 'Save all and quit',
+		q = 'Close current buffer',
+		w = 'Save and quit',
+	},
+	r = {
+		name = 'Refactor',
+		f = 'Format file',
+		g = 'Replace all',
+		l = 'Replace on line only',
+		n = 'Rename symbol under cursor',
+		s = 'Replace multiple patterns',
+		t = {
+			name = 'Trim',
+			w = 'Trim ^M carriage characters',
+			m = 'Trim trailing whitespace',
+		},
+		w = 'Replace word under cursor',
+	},
+	s = 'Jump to text forwards',
+	S = 'Jump to text backwards',
+	v = {
+		name = 'Visual Mode',
+		r = 'Execute code selection',
+	},
+	w = {
+		name = 'Jump',
+		s = 'Jump to text in any window',
+		o = 'Open workspace',
+		w = 'Jump to buffer',
+	},
+	['<space>'] = {
+		name = 'Util',
+		a = 'Open code action menu',
+		c = 'Open command palette',
+		d = 'Open type definition for symbol',
+		h = 'Open signature help',
+		f = 'Open finder for symbol',
+		o = 'Toggle function outline',
+		i = 'Preview symbol information',
+		s = 'Toggle symbol outline',
+		t = 'Toggle diagnostics menu',
+		w = {
+			name = 'Workspace',
+			a = 'Add workspace folder',
+			l = 'List workspace folders',
+			r = 'Remove workspace folder',
+		},
+	},
+	['<leader>'] = {
+		name = 'Misc',
+		b = 'Toggle git blame',
+		c = {
+			'Open ChatGPT',
+		},
+		g = 'Toggle lazygit',
+		i = 'Toggle ipython',
+		j = 'Toggle spliting/joining code block',
+		l = 'Change colorscheme',
+		p = 'Upload buffer to ix.io',
+		n = {
+			name = 'Show notes command palette',
+			d = "Go to today's note",
+			f = 'Search for a note by title',
+			l = 'Insert a link to a note',
+			i = 'Paste an image and insert link',
+			n = 'Create a new note',
+			s = 'Search within notes',
+		},
+		s = 'Open nvim config',
+		t = 'Toggle floating terminal',
+		u = 'Toggle undo tree',
+		v = 'Toggle vtop',
+		x = 'Toggle horizontal terminal',
+		['<space>'] = 'Toggle search results highlight',
+	},
+	['?'] = 'Open keymap',
+	['/'] = 'Search',
+	[']'] = 'Increment node selection',
+	['['] = 'Decrement node selection',
+	['<c-b>'] = 'Toggle DAP UI',
+	['<c-c>'] = 'Edit directory in buffer',
+	['<c-f>'] = 'Toggle file tree',
+	['<c-h>'] = 'Go to window left',
+	['<c-j>'] = 'Go to window down',
+	['<c-k>'] = 'Go to window up',
+	['<c-l>'] = 'Go to window right',
+	['<c-q>'] = 'Close focused window',
+	['<c-n>'] = 'New file',
+	['<c-o>'] = 'Open file',
+	['<c-s>'] = 'Save current buffer',
+	['<c-v>'] = 'Split window vertically',
+	['<c-x>'] = 'Split window horizontally',
+	['<F1>'] = 'Goto previous location',
+	['<F2>'] = 'Goto next location',
+	['<F4>'] = 'Search man pages',
+	['<F5>'] = 'Search help tags',
+	['<F6>'] = 'Open verbose keymap',
+	['<s-left>'] = 'Move buffer left',
+	['<s-right>'] = 'Move buffer right',
+	['<s-up>'] = 'Move line up',
+	['<s-down>'] = 'Move line down',
 })
 
 ----------------------------------
 --      workspaces config
 ----------------------------------
 require('workspaces').setup({
-  hooks = {
-    open = { 'Telescope oldfiles prompt_title=Recents' },
-  },
+	hooks = {
+		open = { 'Telescope oldfiles prompt_title=Recents' },
+	},
 })
