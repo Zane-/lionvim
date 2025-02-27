@@ -1,6 +1,7 @@
 --================================
 --        Lionvim Config
 --
+--
 -- Author: Zane B.
 -- Last Modified: 2023-04-27
 -- Dependencies:
@@ -388,6 +389,7 @@ local plugins = {
   -- DAP
   'mfussenegger/nvim-dap', -- debugger
   'mfussenegger/nvim-dap-python', -- debugger config for python
+	'nvim-neotest/nvim-nio', -- req for dap
   'jay-babu/mason-nvim-dap.nvim', -- dap installer
   'nvim-telescope/telescope-dap.nvim',
   'rcarriga/nvim-dap-ui', -- UI for debugger
@@ -783,9 +785,7 @@ require('auto-session').setup({
 ----------------------------------
 --     better-escape config
 ----------------------------------
-require('better_escape').setup({
-  mapping = { 'jk' },
-})
+require('better_escape').setup()
 
 ----------------------------------
 --       bufferline config
