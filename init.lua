@@ -7,7 +7,7 @@
 -- Dependencies:
 --   bat
 --   deno (for markdown previews)
---   exa,
+--   eja,
 --   fd,
 --   fzf > 0.30.0,
 --   howdoi
@@ -26,7 +26,8 @@ local hi = vim.api.nvim_set_hl
 local notify = notify
 local opt = vim.opt
 
-local function map(mode, shortcut, command) vim.api.nvim_set_keymap(
+local function map(mode, shortcut, command)
+	vim.api.nvim_set_keymap(
 		mode,
 		shortcut,
 		command,
@@ -1889,7 +1890,7 @@ require('telescope').setup({
 				'.',
 				os.getenv('HOME'),
 			},
-			previewer_command = 'exa '
+			previewer_command = 'eza '
 					.. '-a '
 					.. '--color=always '
 					.. '-T '
